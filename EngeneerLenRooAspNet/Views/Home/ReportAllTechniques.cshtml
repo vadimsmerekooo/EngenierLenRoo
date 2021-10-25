@@ -1,7 +1,7 @@
 @model ReportCheckViewModel
 
 @{
-    ViewData["Title"] = "Отчет по 071 счету";
+    ViewData["Title"] = "Отчет по МОЛ";
 }
 
 <nav aria-label="breadcrumb">
@@ -9,16 +9,17 @@
         <li class="breadcrumb-item">
             <a asp-action="Index">Кабинеты</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Отчет по 071 счету</li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
     </ol>
 </nav>
 <table class="table table-bordered">
     <thead class="thead-light">
     <tr class="text-center">
+        <th scope="col" class="col-3">Инвентарный номер</th>
         <th scope="col" class="col-3">Название</th>
         <th scope="col" class="col-2">Тип</th>
         <th scope="col" class="col-2">Общее кол-во</th>
-        <th scope="col" class="col-5">Кабинеты</th>
+        <th scope="col" class="col-5">Кабинет(-ы)</th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +28,7 @@
         foreach (var item in Model.Checks)
         {
             <tr>
+                <th scope="row" class="col-3">@item.InventoryNumber</th>
                 <th scope="row" class="col-3">@item.Name</th>
                 <th scope="row" class="col-2">@item.TypeTechnique</th>
                 <th scope="row" class="col-2">@item.Count()</th>
@@ -42,7 +44,7 @@
     else
     {
         <tr class="text-center">
-            <th scope="row" colspan="4">Техники на 071 счете не обнаружено.</th>
+            <th scope="row" colspan="4">Техники на МОЛ не обнаружено.</th>
         </tr>
     }
     </tbody>

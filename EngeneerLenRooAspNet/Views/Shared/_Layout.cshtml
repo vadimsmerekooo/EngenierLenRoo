@@ -1,4 +1,6 @@
-﻿@using EngeneerLenRooAspNet.Services
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,15 +23,34 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Кабинеты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Report071Check">Отчет по 071 счету</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="SearchExtended">Расширенный поиск</a>
-                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Кабинеты
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Index"><i class="bi bi-list-nested text-primary"></i> Список кабинетов</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Create"><i class="bi bi-plus text-success"></i> Добавить кабинет</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="ReportAllTechniques"><i class="bi bi-clipboard-data text-info"></i> Отчет по МОЛ</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="Report071Check"><i class="bi bi-clipboard-data text-info"></i> Отчет по 071 счету</a>
+                                <a class="dropdown-item" asp-controller="Home" asp-action="SearchExtended"><i class="bi bi-search text-primary"></i> Расширенный поиск</a>
+                            </div>
+                        </li>
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Управление
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Users" asp-action="Index"><i class="bi bi-people text-primary"></i> Пользователи</a>
+                                    <a class="dropdown-item" asp-controller="Role" asp-action="Index"><i class="bi bi-file-lock text-danger"></i> Уровни доступа</a>
+                                    <a class="dropdown-item" asp-controller="Role" asp-action="Create"><i class="bi bi-unlock text-danger"></i> Добавить уровень доступа</a>
+                                </div>
+                            </li>
+                        }
+                    }
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>

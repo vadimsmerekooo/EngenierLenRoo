@@ -104,7 +104,8 @@ namespace EngeneerLenRooAspNet.Controllers
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == id))
                 return NotFound();
 
-            Cabinet cabinet = await _context.Cabinets.Include(cab => cab.Employees).ThenInclude(emp => emp.Techniques).ThenInclude(th => th.Employee)
+            Cabinet cabinet = await _context.Cabinets.Include(cab => cab.Employees).ThenInclude(emp => emp.Techniques)
+                .ThenInclude(th => th.Employee)
                 .FirstOrDefaultAsync(cab => cab.Id == id);
 
             List<Technique> techniques = new List<Technique>();
@@ -120,19 +121,27 @@ namespace EngeneerLenRooAspNet.Controllers
                     Fio = employee.Fio,
                     CabinetTechniques = new List<ReportCabinetTechnique>()
                     {
-                        new ReportCabinetTechnique("Системных блоков", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Pc)),
-                        new ReportCabinetTechnique("Мониторов", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Monitor)),
-                        new ReportCabinetTechnique("Мышек", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Mouse)),
-                        new ReportCabinetTechnique("Клавиатур", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Keyboard)),
-                        new ReportCabinetTechnique("Принтеров", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Printer)),
-                        new ReportCabinetTechnique("ИБП", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Ups)),
-                        new ReportCabinetTechnique("Сетевых фильтров", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Filter)),
-                        new ReportCabinetTechnique("Модемов", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Modem)),
-                        new ReportCabinetTechnique("Другое", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Other)),
+                        new ReportCabinetTechnique("Системных блоков",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Pc)),
+                        new ReportCabinetTechnique("Мониторов",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Monitor)),
+                        new ReportCabinetTechnique("Мышек",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Mouse)),
+                        new ReportCabinetTechnique("Клавиатур",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Keyboard)),
+                        new ReportCabinetTechnique("Принтеров",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Printer)),
+                        new ReportCabinetTechnique("ИБП",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Ups)),
+                        new ReportCabinetTechnique("Сетевых фильтров",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Filter)),
+                        new ReportCabinetTechnique("Модемов",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Modem)),
+                        new ReportCabinetTechnique("Другое",
+                            employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Other)),
                     }
                 });
             }
-
 
 
             ReportCabinetTechniqueViewModel viewModel = new ReportCabinetTechniqueViewModel()
@@ -140,15 +149,23 @@ namespace EngeneerLenRooAspNet.Controllers
                 Cabinet = cabinet,
                 CabinetTechnique = new List<ReportCabinetTechnique>()
                 {
-                    new ReportCabinetTechnique("Системных блоков", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Pc)),
-                    new ReportCabinetTechnique("Мониторов", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Monitor)),
-                    new ReportCabinetTechnique("Мышек", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Mouse)),
-                    new ReportCabinetTechnique("Клавиатур", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Keyboard)),
-                    new ReportCabinetTechnique("Принтеров", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Printer)),
+                    new ReportCabinetTechnique("Системных блоков",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Pc)),
+                    new ReportCabinetTechnique("Мониторов",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Monitor)),
+                    new ReportCabinetTechnique("Мышек",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Mouse)),
+                    new ReportCabinetTechnique("Клавиатур",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Keyboard)),
+                    new ReportCabinetTechnique("Принтеров",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Printer)),
                     new ReportCabinetTechnique("ИБП", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Ups)),
-                    new ReportCabinetTechnique("Сетевых фильтров", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Filter)),
-                    new ReportCabinetTechnique("Модемов", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Modem)),
-                    new ReportCabinetTechnique("Другое", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Other)),
+                    new ReportCabinetTechnique("Сетевых фильтров",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Filter)),
+                    new ReportCabinetTechnique("Модемов",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Modem)),
+                    new ReportCabinetTechnique("Другое",
+                        techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Other)),
                 },
                 EmployeeTechniques = employeeTechniques
             };
@@ -228,23 +245,33 @@ namespace EngeneerLenRooAspNet.Controllers
 
             List<Cabinet> searchCabResult = databaseCabinetsResult
                 .Where(cab
-                    => model.CabinetFormModel.IsNull() || (IsOne(cab.Name, model.CabinetFormModel.Name) == TypeSearchEqualsParams.Found
-                                                           && IsTwo(cab.Phone, model.CabinetFormModel.Phone) == TypeSearchEqualsParams.Found
-                                                           || IsOne(cab.Name, model.CabinetFormModel.Name) == TypeSearchEqualsParams.IsNull
-                                                           && IsTwo(cab.Phone, model.CabinetFormModel.Phone) == TypeSearchEqualsParams.Found
-                                                           || IsOne(cab.Name, model.CabinetFormModel.Name) == TypeSearchEqualsParams.Found
-                                                           && IsTwo(cab.Phone, model.CabinetFormModel.Phone) == TypeSearchEqualsParams.IsNull)
+                    => model.CabinetFormModel.IsNull() ||
+                       (IsOne(cab.Name, model.CabinetFormModel.Name) == TypeSearchEqualsParams.Found
+                        && IsTwo(cab.Phone, model.CabinetFormModel.Phone) == TypeSearchEqualsParams.Found
+                        || IsOne(cab.Name, model.CabinetFormModel.Name) == TypeSearchEqualsParams.IsNull
+                        && IsTwo(cab.Phone, model.CabinetFormModel.Phone) == TypeSearchEqualsParams.Found
+                        || IsOne(cab.Name, model.CabinetFormModel.Name) == TypeSearchEqualsParams.Found
+                        && IsTwo(cab.Phone, model.CabinetFormModel.Phone) == TypeSearchEqualsParams.IsNull)
                 )
                 .ToList();
 
             foreach (Cabinet cabinet in searchCabResult)
             {
                 cabinet.Employees = cabinet.Employees.Where(emp =>
-                    model.EmployeeFormModel.IsNull()
-                    || (!(IsOne(emp.Fio, model.EmployeeFormModel.Fio) != TypeSearchEqualsParams.IsNull && IsOne(emp.Fio, model.EmployeeFormModel.Fio) == TypeSearchEqualsParams.NotFound)
-                        && !(IsTwo(emp.IpComputer, model.EmployeeFormModel.IpComputer) != TypeSearchEqualsParams.IsNull && IsTwo(emp.IpComputer, model.EmployeeFormModel.IpComputer) == TypeSearchEqualsParams.NotFound)
-                        && !(IsTwo(emp.NumberPcMap, model.EmployeeFormModel.NumberPcMap) != TypeSearchEqualsParams.IsNull && IsTwo(emp.NumberPcMap, model.EmployeeFormModel.NumberPcMap) == TypeSearchEqualsParams.NotFound)
-                        && !(IsOne(emp.UserMap, model.EmployeeFormModel.UserMap) != TypeSearchEqualsParams.IsNull && IsOne(emp.UserMap, model.EmployeeFormModel.UserMap) == TypeSearchEqualsParams.NotFound)))
+                        model.EmployeeFormModel.IsNull()
+                        || (!(IsOne(emp.Fio, model.EmployeeFormModel.Fio) != TypeSearchEqualsParams.IsNull &&
+                              IsOne(emp.Fio, model.EmployeeFormModel.Fio) == TypeSearchEqualsParams.NotFound)
+                            && !(IsTwo(emp.IpComputer, model.EmployeeFormModel.IpComputer) !=
+                                 TypeSearchEqualsParams.IsNull &&
+                                 IsTwo(emp.IpComputer, model.EmployeeFormModel.IpComputer) ==
+                                 TypeSearchEqualsParams.NotFound)
+                            && !(IsTwo(emp.NumberPcMap, model.EmployeeFormModel.NumberPcMap) !=
+                                 TypeSearchEqualsParams.IsNull &&
+                                 IsTwo(emp.NumberPcMap, model.EmployeeFormModel.NumberPcMap) ==
+                                 TypeSearchEqualsParams.NotFound)
+                            && !(IsOne(emp.UserMap, model.EmployeeFormModel.UserMap) != TypeSearchEqualsParams.IsNull &&
+                                 IsOne(emp.UserMap, model.EmployeeFormModel.UserMap) ==
+                                 TypeSearchEqualsParams.NotFound)))
                     .ToList();
 
                 foreach (Employee employee in cabinet.Employees)
@@ -252,10 +279,13 @@ namespace EngeneerLenRooAspNet.Controllers
                     employee.Techniques = employee.Techniques.Where(th =>
                             model.TechniqueFormModel.IsNull()
                             || !((IsOne(th.Name, model.TechniqueFormModel.Name) != TypeSearchEqualsParams.IsNull
-                            && IsOne(th.Name, model.TechniqueFormModel.Name) == TypeSearchEqualsParams.NotFound)
-                            || !(IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) != TypeSearchEqualsParams.IsNull
-                            && IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) == TypeSearchEqualsParams.Found)
-                            && !(model.TechniqueFormModel.TypeTechnique != TypeTechnique.All && th.TypeTechnique == model.TechniqueFormModel.TypeTechnique)))
+                                  && IsOne(th.Name, model.TechniqueFormModel.Name) == TypeSearchEqualsParams.NotFound)
+                                 || !(IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) !=
+                                      TypeSearchEqualsParams.IsNull
+                                      && IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) ==
+                                      TypeSearchEqualsParams.Found)
+                                 && !(model.TechniqueFormModel.TypeTechnique != TypeTechnique.All &&
+                                      th.TypeTechnique == model.TechniqueFormModel.TypeTechnique)))
                         .ToList();
                 }
             }
@@ -266,7 +296,8 @@ namespace EngeneerLenRooAspNet.Controllers
             }
             else
             {
-                model.Cabinets = searchCabResult.Where(cab => cab.Employees.Count > 0 && cab.Employees.Any(emp => emp.Techniques.Count != 0)).ToList();
+                model.Cabinets = searchCabResult.Where(cab =>
+                    cab.Employees.Count > 0 && cab.Employees.Any(emp => emp.Techniques.Count != 0)).ToList();
             }
 
             return View(nameof(SearchExtended), model);
@@ -296,7 +327,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 cabinet.Name = cabinet.Name.Trim();
                 _context.Cabinets.Update(cabinet);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Info), new { id = cabinet.Id });
+                return RedirectToAction(nameof(Info), new {id = cabinet.Id});
             }
 
             ModelState.AddModelError("", "Форма не заполнена!");
@@ -330,12 +361,113 @@ namespace EngeneerLenRooAspNet.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("info-mol-check")]
+        public async Task<IActionResult> ReportAllTechniques()
+        {
+            ReportCheckViewModel viewModel = new ReportCheckViewModel();
+
+            List<Technique> techniques =
+                await _context.Techniques
+                    .Include(th => th.Employee)
+                    .ThenInclude(emp => emp.Cabinet)
+                    .Where(th => th.EmployeeId != null && th.Employee.CabinetId != null)
+                    .ToListAsync();
+
+            foreach (Technique technique in techniques)
+            {
+                if (technique.InventoryNumber == 71)
+                {
+                    if (viewModel.Checks.Any(ch => ch.Name == technique.Name))
+                    {
+                        if (viewModel.Checks.Any(ch =>
+                            ch.Name == technique.Name && ch.InventoryNumber == 71 &&
+                            ch.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
+                        {
+                            viewModel.Checks.Any(ch => ch.Name == technique.Name && ch.InventoryNumber == 71 &&
+                                                       ch.Cabinets.FirstOrDefault(cab =>
+                                                               cab.Name == technique.Employee.Cabinet.Name &&
+                                                               ch.InventoryNumber == 71)
+                                                           .Counter());
+                        }
+                        else
+                        {
+                            if (viewModel.Checks.Any(ch => ch.Name == technique.Name &&
+                                                           ch.InventoryNumber == 71))
+                            {
+                                viewModel.Checks.FirstOrDefault(ch => ch.Name == technique.Name &&
+                                                                      ch.InventoryNumber == 71).Cabinets.Add(
+                                    new ReportCheckCabinet()
+                                    {
+                                        Name = technique.Employee.Cabinet.Name,
+                                        CabinetId = technique.Employee.Cabinet.Id
+                                    });
+                            }
+                            else
+                            {
+                                viewModel.Checks.Add(new ReportCheck()
+                                {
+                                    Name =  technique.Name,
+                                    InventoryNumber = technique.InventoryNumber,
+                                    TypeTechnique = technique.TypeTechnique,
+                                    Cabinets = new List<ReportCheckCabinet>()
+                                    {
+                                        new ReportCheckCabinet()
+                                        {
+                                            Name = technique.Employee.Cabinet.Name,
+                                            CabinetId = technique.Employee.Cabinet.Id
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    else
+                    {
+                        viewModel.Checks.Add(new ReportCheck()
+                        {
+                            Name = technique.Name,
+                            InventoryNumber = technique.InventoryNumber,
+                            TypeTechnique = technique.TypeTechnique,
+                            Cabinets = new List<ReportCheckCabinet>()
+                            {
+                                new ReportCheckCabinet()
+                                {
+                                    Name = technique.Employee.Cabinet.Name,
+                                    CabinetId = technique.Employee.Cabinet.Id
+                                }
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    viewModel.Checks.Add(new ReportCheck()
+                    {
+                        Name = technique.Name,
+                        TypeTechnique = technique.TypeTechnique,
+                        InventoryNumber = technique.InventoryNumber,
+                        Cabinets = new List<ReportCheckCabinet>()
+                        {
+                            new()
+                            {
+                                Name = technique.Employee.Cabinet.Name,
+                                CabinetId = technique.Employee.CabinetId
+                            }
+                        }
+                    });
+                }
+            }
+
+
+            viewModel.Checks = viewModel.Checks.OrderBy(x => x.InventoryNumber).ToList();
+
+            return View(viewModel);
+        }
 
         [Route("info-071-check")]
         public async Task<IActionResult> Report071Check()
         {
-
-            Report071CheckViewModel viewModel = new Report071CheckViewModel();
+            ReportCheckViewModel viewModel = new ReportCheckViewModel();
 
             List<Technique> techniques =
                 await _context.Techniques
@@ -348,29 +480,34 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 if (technique.TypeTechnique != TypeTechnique.Modem)
                 {
-                    if (viewModel.Checks.Any(th => th.TypeTechnique == technique.TypeTechnique && th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
+                    if (viewModel.Checks.Any(th =>
+                        th.TypeTechnique == technique.TypeTechnique &&
+                        th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
                     {
-                        if (viewModel.Checks.Any(th => th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
+                        if (viewModel.Checks.Any(th =>
+                            th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
                         {
                             viewModel.Checks.Where(th => th.TypeTechnique == technique.TypeTechnique).Any(th =>
-                                th.Cabinets.FirstOrDefault(cab => cab.Name == technique.Employee.Cabinet.Name).Counter());
+                                th.Cabinets.FirstOrDefault(cab => cab.Name == technique.Employee.Cabinet.Name)
+                                    .Counter());
                         }
                         else
                         {
-                            viewModel.Checks.FirstOrDefault(th => th.TypeTechnique == technique.TypeTechnique)?.Cabinets.Add(new Report071CheckCabinet()
-                            {
-                                Name = technique.Employee.Cabinet.Name,
-                                CabinetId = technique.Employee.CabinetId
-                            });
+                            viewModel.Checks.FirstOrDefault(th => th.TypeTechnique == technique.TypeTechnique)?.Cabinets
+                                .Add(new ReportCheckCabinet()
+                                {
+                                    Name = technique.Employee.Cabinet.Name,
+                                    CabinetId = technique.Employee.CabinetId
+                                });
                         }
                     }
                     else
                     {
-                        viewModel.Checks.Add(new Report071Check()
+                        viewModel.Checks.Add(new ReportCheck()
                         {
                             Name = technique.Name,
                             TypeTechnique = technique.TypeTechnique,
-                            Cabinets = new List<Report071CheckCabinet>()
+                            Cabinets = new List<ReportCheckCabinet>()
                             {
                                 new()
                                 {
@@ -388,13 +525,6 @@ namespace EngeneerLenRooAspNet.Controllers
 
             return View(viewModel);
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
 
         private bool IsContains(object firstParm, string search)
         {

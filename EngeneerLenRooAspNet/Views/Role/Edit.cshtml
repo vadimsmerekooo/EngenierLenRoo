@@ -1,0 +1,31 @@
+@using Microsoft.AspNetCore.Identity
+@model ChangeRoleViewModel
+ 
+@{
+    ViewData["Title"] = $"Изменение уровня доступа для пользователя {Model.UserEmail}";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Управление</li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+
+ 
+<form asp-action="EditModel" method="post">
+    <input type="hidden" name="userId" value="@Model.UserId" />
+    <div class="form-group">
+        @if (Model.AllRoles.Count == 0)
+        {
+            <h4>Список уровней доступа пуст.</h4>
+        }
+        @foreach (IdentityRole role in Model.AllRoles)
+        {
+            <input type="checkbox" name="roles" value="@role.Name"
+                   @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")/>@role.Name
+            <br/>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

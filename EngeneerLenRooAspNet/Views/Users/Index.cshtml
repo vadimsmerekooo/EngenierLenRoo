@@ -1,0 +1,32 @@
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+ 
+@{
+    ViewData["Title"] = "Список пользователей";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Управление</li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+<table class="table">
+    
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td class="text-center">
+                Список пользователей пуст.
+            </td>
+        </tr>
+    }
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-controller="Role" asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
+            </td>
+        </tr>
+    }
+</table>

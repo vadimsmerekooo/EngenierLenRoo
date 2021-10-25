@@ -29,10 +29,11 @@ namespace EngeneerLenRooAspNet
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseStatusCodePagesWithRedirects("/error/{0}");
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/error/{0}");
                 app.UseHsts();
             }
 

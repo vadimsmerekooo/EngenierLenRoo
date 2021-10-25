@@ -16,10 +16,10 @@ namespace EngeneerLenRooAspNet.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<MainContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("MainContextConnection")));
+                    options.UseSqlServer("Server=82.209.211.198;Database=EngeneerLenRoo;User Id=programmerlenroo; Password=Qwerty123456!"));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<MainContext>();
                 services.ConfigureApplicationCookie(options =>
                 {
