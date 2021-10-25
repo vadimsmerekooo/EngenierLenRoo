@@ -1,0 +1,70 @@
+﻿@model ReportCabinetTechniqueViewModel
+@{
+    ViewData["Title"] = "Отчет техники по кабинету";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <a asp-action="Info" asp-route-id="@Model.Cabinet.Id">Кабинет @Model.Cabinet.Name</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+
+<h4>Общий отчет по кабинету</h4>
+<hr/>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr class="text-center">
+        <th scope="col">Тип</th>
+        <th scope="col">Общее кол-во</th>
+        <th scope="col">071 счет</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.CabinetTechnique)
+    {
+        <tr>
+            <th scope="row">@item.Name</th>
+            <th scope="row">@item.GetCountTechnique()</th>
+            <th scope="row">
+                @item.GetCount071Technique()
+            </th>
+        </tr>
+    }
+</table>
+<br/>
+<h4>По каждому сотруднику кабинета</h4>
+<hr/>
+@foreach (var employee in Model.EmployeeTechniques)
+{
+    <h5>@employee.Fio</h5>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr class="text-center">
+            <th scope="col">Тип</th>
+            <th scope="col">Общее кол-во</th>
+            <th scope="col">071 счет</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in employee.CabinetTechniques)
+        {
+        <tr>
+            <th scope="row">@item.Name</th>
+            <th scope="row">@item.GetCountTechnique()</th>
+            <th scope="row">
+                @item.GetCount071Technique()
+            </th>
+        </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<br/>
+<a class="btn btn-primary" asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id">Назад</a>

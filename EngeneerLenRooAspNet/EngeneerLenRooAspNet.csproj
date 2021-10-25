@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <UserSecretsId>aspnet-EngeneerLenRooAspNet-782E5E36-F3AF-46BB-8ECA-D6F973D1B601</UserSecretsId>
+        <Configurations>Debug;Release</Configurations>
     </PropertyGroup>
 
     <ItemGroup>

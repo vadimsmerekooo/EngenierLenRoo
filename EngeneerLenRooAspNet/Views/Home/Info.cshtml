@@ -51,6 +51,9 @@
                 <h5>Номер телефона: @(Model.Phone == 0 ? "Отсутвует" : DomainConfig.DomainPhone + Model.Phone)</h5>
             </div>
             <div class="col text-right">
+                <a class="btn btn-info" asp-controller="Home" asp-action="ReportCabinetTechnique" asp-route-id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Отчет по технике">
+                    <i class="bi bi-clipboard-data"></i>
+                </a>
                 <a class="btn btn-success" asp-controller="Employee" asp-action="Create" asp-route-cabinetId="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить сотрудника">
                     <i class="bi bi-person-plus-fill"></i>
                 </a>

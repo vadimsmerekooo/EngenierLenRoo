@@ -165,7 +165,7 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
 
-        [Route("technique/change-employee")]
+        [Route("technique/change-employee/{id}")]
         public async Task<IActionResult> ChangeEmployee(string id)
         {
             if (!await _context.Techniques.AnyAsync(th => th.Id == id))
@@ -179,8 +179,7 @@ namespace EngeneerLenRooAspNet.Controllers
             Cabinet cabinet = technique.Employee.Cabinet;
 
             List<Cabinet> cabinets = await _context.Cabinets
-                .Where(cab => cab.Employees.Count > 0 
-                              && (cab.Employees.All(emp => emp.Id != employee.Id) && cab.Employees.Count >= 1))
+                .Where(cab => cab.Employees.Count > 0)
                 .OrderBy(cab => cab.Name)
                 .ToListAsync();
 

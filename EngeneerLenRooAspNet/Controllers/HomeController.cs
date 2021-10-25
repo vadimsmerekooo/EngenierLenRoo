@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using EngeneerLenRooAspNet.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -97,6 +98,63 @@ namespace EngeneerLenRooAspNet.Controllers
             return View(cabinet);
         }
 
+        [Route("cabinet/report-technique")]
+        public async Task<IActionResult> ReportCabinetTechnique(string id)
+        {
+            if (!await _context.Cabinets.AnyAsync(cab => cab.Id == id))
+                return NotFound();
+
+            Cabinet cabinet = await _context.Cabinets.Include(cab => cab.Employees).ThenInclude(emp => emp.Techniques).ThenInclude(th => th.Employee)
+                .FirstOrDefaultAsync(cab => cab.Id == id);
+
+            List<Technique> techniques = new List<Technique>();
+            foreach (Employee employee in cabinet.Employees)
+                techniques.AddRange(employee.Techniques);
+
+            List<ReportEmployeeTechnique> employeeTechniques = new List<ReportEmployeeTechnique>();
+
+            foreach (Employee employee in cabinet.Employees)
+            {
+                employeeTechniques.Add(new ReportEmployeeTechnique()
+                {
+                    Fio = employee.Fio,
+                    CabinetTechniques = new List<ReportCabinetTechnique>()
+                    {
+                        new ReportCabinetTechnique("Системных блоков", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Pc)),
+                        new ReportCabinetTechnique("Мониторов", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Monitor)),
+                        new ReportCabinetTechnique("Мышек", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Mouse)),
+                        new ReportCabinetTechnique("Клавиатур", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Keyboard)),
+                        new ReportCabinetTechnique("Принтеров", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Printer)),
+                        new ReportCabinetTechnique("ИБП", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Ups)),
+                        new ReportCabinetTechnique("Сетевых фильтров", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Filter)),
+                        new ReportCabinetTechnique("Модемов", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Modem)),
+                        new ReportCabinetTechnique("Другое", employee.Techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Other)),
+                    }
+                });
+            }
+
+
+
+            ReportCabinetTechniqueViewModel viewModel = new ReportCabinetTechniqueViewModel()
+            {
+                Cabinet = cabinet,
+                CabinetTechnique = new List<ReportCabinetTechnique>()
+                {
+                    new ReportCabinetTechnique("Системных блоков", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Pc)),
+                    new ReportCabinetTechnique("Мониторов", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Monitor)),
+                    new ReportCabinetTechnique("Мышек", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Mouse)),
+                    new ReportCabinetTechnique("Клавиатур", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Keyboard)),
+                    new ReportCabinetTechnique("Принтеров", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Printer)),
+                    new ReportCabinetTechnique("ИБП", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Ups)),
+                    new ReportCabinetTechnique("Сетевых фильтров", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Filter)),
+                    new ReportCabinetTechnique("Модемов", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Modem)),
+                    new ReportCabinetTechnique("Другое", techniques.FindAll(th => th.TypeTechnique == TypeTechnique.Other)),
+                },
+                EmployeeTechniques = employeeTechniques
+            };
+            return View(viewModel);
+        }
+
 
         [Route("cabinet/employee/search")]
         public async Task<IActionResult> SearchInCab(string id, string search)
@@ -181,7 +239,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
             foreach (Cabinet cabinet in searchCabResult)
             {
-                cabinet.Employees = cabinet.Employees.Where(emp => 
+                cabinet.Employees = cabinet.Employees.Where(emp =>
                     model.EmployeeFormModel.IsNull()
                     || (!(IsOne(emp.Fio, model.EmployeeFormModel.Fio) != TypeSearchEqualsParams.IsNull && IsOne(emp.Fio, model.EmployeeFormModel.Fio) == TypeSearchEqualsParams.NotFound)
                         && !(IsTwo(emp.IpComputer, model.EmployeeFormModel.IpComputer) != TypeSearchEqualsParams.IsNull && IsTwo(emp.IpComputer, model.EmployeeFormModel.IpComputer) == TypeSearchEqualsParams.NotFound)
@@ -192,10 +250,10 @@ namespace EngeneerLenRooAspNet.Controllers
                 foreach (Employee employee in cabinet.Employees)
                 {
                     employee.Techniques = employee.Techniques.Where(th =>
-                            model.TechniqueFormModel.IsNull() 
-                            || !((IsOne(th.Name, model.TechniqueFormModel.Name) != TypeSearchEqualsParams.IsNull 
+                            model.TechniqueFormModel.IsNull()
+                            || !((IsOne(th.Name, model.TechniqueFormModel.Name) != TypeSearchEqualsParams.IsNull
                             && IsOne(th.Name, model.TechniqueFormModel.Name) == TypeSearchEqualsParams.NotFound)
-                            || !(IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) != TypeSearchEqualsParams.IsNull 
+                            || !(IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) != TypeSearchEqualsParams.IsNull
                             && IsTwo(th.InventoryNumber, model.TechniqueFormModel.InventoryNumber) == TypeSearchEqualsParams.Found)
                             && !(model.TechniqueFormModel.TypeTechnique != TypeTechnique.All && th.TypeTechnique == model.TechniqueFormModel.TypeTechnique)))
                         .ToList();
@@ -238,7 +296,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 cabinet.Name = cabinet.Name.Trim();
                 _context.Cabinets.Update(cabinet);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Info), new {id = cabinet.Id});
+                return RedirectToAction(nameof(Info), new { id = cabinet.Id });
             }
 
             ModelState.AddModelError("", "Форма не заполнена!");
@@ -278,7 +336,7 @@ namespace EngeneerLenRooAspNet.Controllers
         {
 
             Report071CheckViewModel viewModel = new Report071CheckViewModel();
-            
+
             List<Technique> techniques =
                 await _context.Techniques
                     .Include(th => th.Employee)
@@ -290,7 +348,7 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 if (technique.TypeTechnique != TypeTechnique.Modem)
                 {
-                    if (viewModel.Checks.Any(th => th.TypeTechnique == technique.TypeTechnique))
+                    if (viewModel.Checks.Any(th => th.TypeTechnique == technique.TypeTechnique && th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
                     {
                         if (viewModel.Checks.Any(th => th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
                         {
@@ -324,8 +382,9 @@ namespace EngeneerLenRooAspNet.Controllers
                     }
                 }
             }
-            
-            
+
+
+            viewModel.Checks = viewModel.Checks.OrderBy(x => x.Name).ToList();
 
             return View(viewModel);
         }
@@ -333,7 +392,7 @@ namespace EngeneerLenRooAspNet.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
 
