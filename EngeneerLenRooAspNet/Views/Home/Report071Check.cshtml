@@ -1,0 +1,49 @@
+@model Report071CheckViewModel
+
+@{
+    ViewData["Title"] = "Отчет по 071 счету";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Отчет по 071 счету</li>
+    </ol>
+</nav>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr class="text-center">
+        <th scope="col" class="col-3">Название</th>
+        <th scope="col" class="col-2">Тип</th>
+        <th scope="col" class="col-2">Общее кол-во</th>
+        <th scope="col" class="col-5">Кабинеты</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.Checks.Count != 0)
+    {
+        foreach (var item in Model.Checks)
+        {
+            <tr>
+                <th scope="row" class="col-3">@item.Name</th>
+                <th scope="row" class="col-2">@item.TypeTechnique</th>
+                <th scope="row" class="col-2">@item.Count()</th>
+                <th scope="row" class="col-5">
+                    @foreach (var itemCheck in item.Cabinets)
+                    {
+                        <a class="btn-link" asp-action="Info" asp-route-id="@itemCheck.CabinetId">@($"{itemCheck.Name}(x{itemCheck.Count}),")</a>
+                    }
+                </th>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr class="text-center">
+            <th scope="row" colspan="4">Техники на 071 счете не обнаружено.</th>
+        </tr>
+    }
+    </tbody>
+</table>

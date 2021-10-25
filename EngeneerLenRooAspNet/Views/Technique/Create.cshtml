@@ -1,0 +1,50 @@
+@using EngeneerLenRooAspNet.ViewModels
+@model TechniquesViewModel
+
+@{
+    ViewData["Title"] = "Добавление техники";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id">Кабинет @Model.Cabinet.Name</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id">@Model.Employee.Fio</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Technique" asp-action="Index" asp-route-empId="@Model.Employee.Id">Тип техники</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Technique.TypeTechnique</li>
+    </ol>
+</nav>
+
+<form asp-action="CreateModel">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div style="display: none;">
+        <input asp-for="EmployeeId" readonly>
+    </div>
+    <div class="form-group">
+        <label asp-for="Technique.TypeTechnique"></label>
+        <input asp-for="Technique.TypeTechnique" class="form-control" readonly>
+        <span asp-validation-for="Technique.TypeTechnique" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Technique.Name"></label>
+        <input asp-for="Technique.Name" class="form-control">
+        <span asp-validation-for="Technique.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Technique.InventoryNumber"></label>
+        <input asp-for="Technique.InventoryNumber" class="form-control">
+        <span asp-validation-for="Technique.InventoryNumber" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Добавить</button>
+    <a class="btn btn-primary" asp-action="Index" asp-route-empId="@Model.Employee.Id">Отмена</a>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,110 @@
+@using EngeneerLenRooAspNet.ViewModels
+@model TechniquesViewModel
+
+@{
+    ViewData["Title"] = "Тип техники";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id">Кабинет @Model.Cabinet.Name</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id">@Model.Employee.Fio</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Тип техники</li>
+    </ol>
+</nav>
+<h5>Для добавления техники, выберите нужный вариант из предложенных ниже</h5>
+<hr/>
+<div class="row text-center border-warning">
+    <div class="col">
+        <h6>Компьютер</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Pc">
+            <div class="card border-primary">
+                <i class="bi bi-laptop" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <h6>Монитор</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Monitor">
+            <div class="card border-primary">
+                <i class="bi bi-display" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <h6>Принтер</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Printer">
+            <div class="card border-primary">
+                <i class="bi bi-printer" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <h6>Мышь</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Mouse">
+            <div class="card border-primary">
+                <i class="bi bi-mouse2" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <h6>Клавиатура</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Keyboard">
+            <div class="card border-primary">
+                <i class="bi bi-keyboard" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    
+</div>
+<br/>
+<div class="row text-center border-primary">
+    <div class="col">
+            <h6>ИБП</h6>
+            <hr/>
+            <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Ups">
+                <div class="card border-primary">
+                    <i class="bi bi-broadcast" style="font-size: 5rem;"></i>
+                </div>
+            </a>
+        </div>
+    <div class="col">
+        <h6>Сетевой фильтр</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Filter">
+            <div class="card border-primary">
+                <i class="bi bi-broadcast" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <h6>Модем</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Modem">
+            <div class="card border-primary">
+                <i class="bi bi-wifi" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <h6>Другое</h6>
+        <hr/>
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Other">
+            <div class="card border-primary">
+                <i class="bi bi-bug" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+</div>

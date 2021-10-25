@@ -1,0 +1,51 @@
+@model Employee
+
+@{
+    ViewData["Title"] = "Добавление сотрудника";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id">Кабинет @Model.Cabinet.Name</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Добавление сотрудника</li>
+    </ol>
+</nav>
+
+<form method="post" asp-action="CreateModel">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input asp-for="CabinetId" style="display: none;" value="@Model.Cabinet.Id"/>
+    <div class="form-group">
+        <label asp-for="Fio"></label>
+        <input asp-for="Fio" class="form-control"/>
+        <span asp-validation-for="Fio" class="text-danger"></span>
+    </div>
+    <div class="row form-group">
+        <div class="col">
+            <label asp-for="IpComputer"></label>
+            <input asp-for="IpComputer" class="form-control"/>
+            <span asp-validation-for="IpComputer" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="NumberPcMap"></label>
+            <input asp-for="NumberPcMap" class="form-control"/>
+            <span asp-validation-for="NumberPcMap" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="UserMap"></label>
+            <input asp-for="UserMap" class="form-control"/>
+            <span asp-validation-for="UserMap" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Добавить</button>
+        <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Cabinet.Id" class="btn btn-primary">Отмена</a>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,14 @@
+﻿.main{
+  margin-top: 75px;
+}
+.card-technique{
+  margin: 10px;
+}
+.card-index{
+  margin: 10px;
+  width: 300px;
+}
+.nav-tabs .nav-link.active{
+  color: #28A745;
+  border-color: #28A745;
+}

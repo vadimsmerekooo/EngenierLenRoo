@@ -1,0 +1,27 @@
+@model EmployeeTechniquesViewModel
+
+@if (Model.Techniques.Count != 0)
+{
+    <div class="d-flex flex-wrap justify-content-start">
+        @{
+            foreach (Technique technique in Model.Techniques)
+            {
+                <div class="card card-technique border-primary text-left">
+                    <div class="card-body">
+                        <h5 class="card-title">@technique.Name</h5>
+                        <h6 class="card-subtitle mb-2">@technique.InventoryNumber</h6>
+                        <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
+                        <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
+                        <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post" >
+                            <a href="javascript:{}"  onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+else
+{
+    <h6>Список инвентаря пользователя пуст.</h6>
+}

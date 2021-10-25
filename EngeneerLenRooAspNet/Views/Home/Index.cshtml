@@ -1,0 +1,108 @@
+﻿@using EngeneerLenRooAspNet.Services
+@model List<Cabinet>
+@{
+    ViewData["Title"] = "Инвентарь";
+    var isSearch = ViewData["Search"] ?? false;
+    var searchString = (bool) isSearch ? (string) ViewData["SearchString"] : "";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (!(bool) isSearch)
+        {
+            <li class="breadcrumb-item active" aria-current="page">Кабинеты</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item">
+                <a asp-action="Index">Кабинеты</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Поиск кабинета @searchString</li>
+        }
+    </ol>
+</nav>
+<nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
+    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Create"><i class="bi bi-plus-square"></i> Добавить кабинет</a>
+    <a class="btn btn-info my-2" asp-action="Report071Check">Отчет по 071 счету</a>
+    <form class="form-inline my-2 my-lg-0" asp-action="Search">
+        <div class="row">
+            <div class="col-lg-7 col-sm-12" style="display: flex;">
+                <input class="form-control" name="search" type="search" placeholder="Поиск кабинета" aria-label="Поиск кабинета">
+                <button class="btn btn-success mr-2" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+            <div class="col-lg mr-2">
+                <a class="btn btn-success" asp-controller="Home" asp-action="SearchExtended"><i class="bi bi-search"></i> Расширенный</a>
+            </div>
+        </div>
+    </form>
+</nav>
+
+@{
+    if (Model.Count != 0)
+    {
+        <div class="d-flex flex-wrap justify-content-start">
+            @foreach (var item in Model)
+            {
+                <div class="card card-index border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Кабинет: @item.Name</h5>
+                        <h6 class="card-subtitle mb-2">Сотрудников: @item.Employees.Count</h6>
+                        <p class="card-text">
+                            Компьютеров: @(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Pc))).
+                            Мониторов: @(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Monitor))).
+                            Клавиатур: @(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Keyboard))).
+                            Мышек: @(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Mouse))).
+                            Принтеров: @(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Printer))).
+                        </p>
+                        <a class="card-link" asp-action="Info" asp-route-id="@item.Id">Просмотреть </a>
+                        <form style="display: inline-block;" id="delete_cab_@(item.Id)_form" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                            <a href="javascript:{}" onclick="document.getElementById('delete_cab_@(item.Id)_form').submit();" class="card-link text-danger">Удалить кабинет</a>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h3>Список кабинетов пуст</h3>
+    }
+}
+
+
+@* <div class="row"> *@
+@*     <div class="col"> *@
+@*         <div class="card border-primary"> *@
+@*             <div class="card-body"> *@
+@*                 <h5 class="card-title">Кабинет: 248</h5> *@
+@*                 <h6 class="card-subtitle mb-2">Сотрудников: 4</h6> *@
+@*                 <p class="card-text">Компьютеров: 4. Мониторов: 5. Клавиатур: 4. Мышек: 4. Принтеров: 5.</p> *@
+@*                 <a href="#" class="card-link">Просмотреть </a> *@
+@*                 <a href="#" class="card-link text-danger">Удалить кабинет</a> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="col"> *@
+@*         <div class="card border-primary"> *@
+@*             <div class="card-body"> *@
+@*                 <h5 class="card-title">Кабинет: 248</h5> *@
+@*                 <h6 class="card-subtitle mb-2">Сотрудников: 4</h6> *@
+@*                 <p class="card-text">Компьютеров: 4. Мониторов: 5. Клавиатур: 4. Мышек: 4. Принтеров: 5.</p> *@
+@*                 <a href="#" class="card-link">Просмотреть </a> *@
+@*                 <a href="#" class="card-link text-danger">Удалить кабинет</a> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="col"> *@
+@*         <div class="card border-primary"> *@
+@*             <div class="card-body"> *@
+@*                 <h5 class="card-title">Кабинет: 248</h5> *@
+@*                 <h6 class="card-subtitle mb-2">Сотрудников: 4</h6> *@
+@*                 <p class="card-text">Компьютеров: 4. Мониторов: 5. Клавиатур: 4. Мышек: 4. Принтеров: 5.</p> *@
+@*                 <a href="#" class="card-link">Просмотреть</a> *@
+@*                 <a href="#" class="card-link text-danger">Удалить кабинет</a> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@

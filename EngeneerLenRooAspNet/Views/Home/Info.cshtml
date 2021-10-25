@@ -1,0 +1,178 @@
+@using EngeneerLenRooAspNet.ViewModels
+@using EngeneerLenRooAspNet.Services
+@model Cabinet
+
+@{
+    ViewData["Title"] = "Кабинет: " + Model.Name;
+    var isSearch = ViewData["Search"] ?? false;
+    var searchString = (bool) isSearch ? (string) ViewData["SearchString"] : "";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (!(bool) isSearch)
+        {
+            <li class="breadcrumb-item">
+                <a asp-action="Index">Кабинеты</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Кабинет @Model.Name</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item">
+                <a asp-action="Index">Кабинеты</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a asp-action="Info" asp-route-id="@Model.Id">Кабинет @Model.Name</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Поиск по кабинету: @searchString</li>
+        }
+    </ol>
+</nav>
+<nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
+    <form class="form-inline my-2 my-lg-0" asp-action="SearchInCab" asp-route-id="@Model.Id">
+        <div class="row">
+            <div class="col-8 ">
+                <input class="form-control mr-sm-2" name="search" type="search" placeholder="Поиск по кабинету" aria-label="Поиск по кабинету">
+            </div>
+            <div class="col-4">
+                <button class="btn btn-success " type="submit">Поиск</button>
+            </div>
+        </div>
+    </form>
+</nav>
+<br/>
+
+
+<div class="card border-danger">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h4>Кабинет: @Model.Name</h4>
+                <h5>Номер телефона: @(Model.Phone == 0 ? "Отсутвует" : DomainConfig.DomainPhone + Model.Phone)</h5>
+            </div>
+            <div class="col text-right">
+                <a class="btn btn-success" asp-controller="Employee" asp-action="Create" asp-route-cabinetId="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить сотрудника">
+                    <i class="bi bi-person-plus-fill"></i>
+                </a>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Изменить кабинет">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <form id="cabinet_@(Model.Id)_delete_form" style="display: inline-block;" method="post" asp-action="Delete" asp-route-id="@Model.Id">
+                    <a href="javascript:{}" onclick="document.getElementById('cabinet_@(Model.Id)_delete_form').submit();" class="btn btn-danger">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </form>
+            </div>
+        </div>
+        <hr/>
+        <h5>Сотрудников: @Model.Employees.Count</h5>
+        @foreach (Employee employee in Model.Employees.OrderByDescending(c => c.Techniques.Count))
+        {
+            <div class="card border-warning">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5>@employee.Fio</h5>
+                            <h6>Ip: @(employee.IpComputer != null && employee.IpComputer != 0 ? DomainConfig.DomainPcAddress + employee.IpComputer : "Отсутвует"). Map №: @employee.NumberPcMap. Map Логин: @employee.UserMap</h6>
+                        </div>
+                        <div class="col text-light text-right">
+                            <a class="btn btn-success" asp-controller="Technique" asp-action="Index" asp-route-cabId="@Model.Id" asp-route-empId="@employee.Id"  data-toggle="tooltip" data-placement="bottom" title="Добавить технику">
+                                <i class="bi bi-plus"></i> <i class="bi bi-laptop"></i>
+                            </a>
+                            <a class="btn btn-primary" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id"  data-toggle="tooltip" data-placement="bottom" title="Изменить сотрудника">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a class="btn btn-info" asp-controller="Employee" asp-action="ChangeCabinet" asp-route-id="@employee.Id" data-toggle="tooltip" data-placement="bottom" title="Переместить сотрудника в другой кабинет">
+                                <i class="bi bi-box-arrow-right"></i>
+                            </a>
+                            <form id="employee_@(employee.Id)_delete_form" style="display: inline-block;" method="post" asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.Id" asp-route-cabinetId="@employee.CabinetId">
+                                <a href="javascript:{}" onclick="document.getElementById('employee_@(employee.Id)_delete_form').submit();" class="btn btn-danger">
+                                    <i class="bi bi-person-x-fill"></i>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="card text-center">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#pc-@employee.Id.Substring(0, 4)" aria-selected="true">
+                                    Системные блоки (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Pc))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#monitor-@employee.Id.Substring(0, 4)">
+                                    Мониторы (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Monitor))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#printer-@employee.Id.Substring(0, 4)">
+                                    Принтеры (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Printer))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#mouse-@employee.Id.Substring(0, 4)">
+                                    Мышки (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Mouse))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#keyboard-@employee.Id.Substring(0, 4)">
+                                    Клавиатуры (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Keyboard))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#ups-@employee.Id.Substring(0, 4)">
+                                    ИБП (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Ups))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#filter-@employee.Id.Substring(0, 4)">
+                                    Сетевые фильтры (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Filter))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#modem-@employee.Id.Substring(0, 4)">
+                                    Модем (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Modem))
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#other-@employee.Id.Substring(0, 4)">
+                                    Другое (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Other))
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="pc-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Pc, Model.Id, @employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="monitor-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Monitor, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="printer-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Printer, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="mouse-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Mouse, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="keyboard-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Keyboard, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="ups-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Ups, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="filter-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Filter, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="modem-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Modem, Model.Id, employee.Id))"/>
+                            </div>
+                            <div class="tab-pane fade" id="other-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Other, Model.Id, employee.Id))"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

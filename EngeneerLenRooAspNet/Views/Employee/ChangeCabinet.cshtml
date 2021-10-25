@@ -1,0 +1,47 @@
+@model EmployeeChangeCabinetViewModel
+@{
+    ViewData["Title"] = "Перемещение сотрудника в кабинет";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Employee.CabinetId">Кабинет @Model.Employee.Cabinet.Name</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Employee.CabinetId">@Model.Employee.Fio</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Перемещение в кабинет</li>
+    </ol>
+</nav>
+<br/>
+<div class="row">
+    <div class="col-lg-8 col-sm-12">
+        <h4>Перемещение сотрудника: @Model.Employee.Fio, из кабинета @Model.Employee.Cabinet.Name</h4>
+    </div>
+    <div class="col-lg-1 col-sm-2">
+        <i class="bi bi-arrow-right"></i>
+    </div>
+    <div class="col-lg-3 col-sm-10">
+        <form method="post" asp-action="ChangeCabinetModel">
+            <div style="display: none;">
+                <input asp-for="Employee.Id">
+                <input asp-for="Employee.CabinetId">
+            </div>
+            <select asp-for="SelectCabinetId" class="custom-select">
+                @foreach (Cabinet cabinet in Model.Cabinets)
+                {
+                    <option value="@cabinet.Id">@cabinet.Name</option>
+                }
+            </select>
+            <label asp-for="IsWithTechniques">
+                                        <input asp-for="IsWithTechniques" />
+                                        @Html.DisplayNameFor(m => m.IsWithTechniques)
+                                    </label>
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </form>
+    </div>
+</div>

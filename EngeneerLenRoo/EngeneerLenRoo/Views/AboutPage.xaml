@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngeneerLenRoo.Views.AboutPage"
+             xmlns:cabinetlocal="clr-namespace:EngeneerLenRoo.ViewModels.CabinetModel;assembly=EngeneerLenRoo"
+             xmlns:local="clr-namespace:EngeneerLenRoo.ViewModels"  
+             xmlns:model="clr-namespace:EngeneerLenRoo.Models"  
+             Title="{Binding Title}"
+             Visual="Material">
+
+    <RefreshView x:DataType="local:InventoryViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                        ItemsSource="{Binding Cabinets}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Cabinet">
+                        <Label Text="{Binding Name}" 
+                               LineBreakMode="NoWrap" 
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="16" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:InventoryViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+    </RefreshView>
+
+</ContentPage>
