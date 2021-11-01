@@ -1,4 +1,4 @@
-@* @model AboutWorkingViewModel *@
+@model AboutWorkingViewModel
 @{
     ViewData["Title"] = "Посхалки для программиста Филиала.";
 }
@@ -64,7 +64,7 @@
                 <partial name="AboutPartial/Cartrige"/>
             </div>
             <div class="tab-pane fade" id="list-map" role="tabpanel" aria-labelledby="list-map-list">
-                <partial name="AboutPartial/Map"/>
+                <partial name="AboutPartial/Map" model="@Model.Employees"/>
             </div>
             <div class="tab-pane fade" id="list-fm" role="tabpanel" aria-labelledby="list-fm-list">
                 <partial name="AboutPartial/FM"/>

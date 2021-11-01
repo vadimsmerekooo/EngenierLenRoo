@@ -1,4 +1,4 @@
-@* @model List<Employee> *@
+@model List<Employee>
 
 <h5>Тааааакссс МАААААП... Что это такое, и с чем его едят? По порядку</h5>
 <hr/>
@@ -70,19 +70,48 @@
             <th scope="col">Фамилия</th>
             <th scope="col">Логин</th>
             <th scope="col">Кабинет</th>
+            <th scope="col">___</th>
+            <th scope="col">#</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Логин</th>
+            <th scope="col">Кабинет</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            @* @{ *@
-            @*     foreach (Employee employee in Model) *@
-            @*     { *@
-            @*         <th scope="row">@employee.NumberPcMap</th> *@
-            @*         <td>@employee.Fio.Split(' ')[0]</td> *@
-            @*         <td>@employee.UserMap</td> *@
-            @*         <td>@employee.Cabinet.Name</td> *@
-            @*     } *@
-            @* } *@
+            <th scope="row" colspan="4">
+                @foreach (Employee employee in Model.Take(34))
+                {
+                    <table class="col">
+                        <tbody>
+                        <tr>
+                            <td scope="col">@employee.NumberPcMap</td>
+                            <td scope="col">@employee.Fio?.Split(' ')[0]</td>
+                            <td scope="col">@employee?.UserMap</td>
+                            <td scope="col">@employee?.Cabinet.Name</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                }
+            </th>
+            <th scope="row">
+                
+            </th>
+            <th scope="row" colspan="4">
+                @foreach (Employee employee in Model.Skip(34))
+                {
+                    <table class="col">
+                        <tbody>
+                        <tr>
+                            <td scope="col">@employee.NumberPcMap</td>
+                            <td scope="col">@employee.Fio?.Split(' ')[0]</td>
+                            <td scope="col">@employee?.UserMap</td>
+                            <td scope="col">@employee?.Cabinet.Name</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                }
+            </th>
         </tr>
         </tbody>
     </table>

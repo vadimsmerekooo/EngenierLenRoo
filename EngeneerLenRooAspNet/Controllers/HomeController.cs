@@ -574,15 +574,39 @@ namespace EngeneerLenRooAspNet.Controllers
         [Route("about-of-working-in-filial")]
         public async Task<IActionResult> AboutWorking()
         {
-            // var emp = await _context.Employees.Include(x => x.Cabinet)
-            //     .Where(n => n.NumberPcMap != null && n.NumberPcMap != 0).OrderBy(x => x.NumberPcMap).ToListAsync();
-            //
-            // AboutWorkingViewModel viewModel = new AboutWorkingViewModel()
-            // {
-            //     Employees = emp
-            // };
+            int countPcMap = 68;
+            List<Employee> model = new List<Employee>();
+            var emp = await _context.Employees.Include(x => x.Cabinet)
+                .Where(n => n.NumberPcMap != null && n.NumberPcMap != 0).OrderBy(x => x.NumberPcMap).ToListAsync();
 
-            return View();
+
+            for (int i = 1; i < countPcMap + 1; i++)
+            {
+                if (emp.Any(pc => pc.NumberPcMap == i))
+                {
+                    model.Add(emp.FirstOrDefault(c => c.NumberPcMap == i));
+                }
+                else
+                {
+                    model.Add(new Employee()
+                    {
+                        NumberPcMap = i,
+                        Fio = "",
+                        Cabinet = new Cabinet()
+                        {
+                            Name = ""
+                        }
+                    });
+                }
+            }
+            
+            
+            AboutWorkingViewModel viewModel = new AboutWorkingViewModel()
+            {
+                Employees = model
+            };
+
+            return View(viewModel);
         }
         
         
