@@ -21,17 +21,20 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -77,8 +80,26 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password + "!");
                 if (result.Succeeded)
                 {
+                    IdentityUser identityUser = await _userManager.FindByEmailAsync(user.Email);
+                    List<string> roles = new List<string>() { "Undefined" };
+                    if (identityUser != null)
+                    {
+                        var userRoles = await _userManager.GetRolesAsync(identityUser);
+                        var allRoles = _roleManager.Roles.ToList();
+                        var addedRoles = roles.Except(userRoles);
+                        var removedRoles = userRoles.Except(roles);
+                    
+                        await _userManager.AddToRolesAsync(identityUser, addedRoles);
+                    
+                        await _userManager.RemoveFromRolesAsync(identityUser, removedRoles);
+                    }
+                    
+                    
+                    
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    
+                    
+                    
                 }
                 foreach (var error in result.Errors)
                 {

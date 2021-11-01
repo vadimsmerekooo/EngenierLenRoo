@@ -14,7 +14,11 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Data
         public DbSet<Cabinet> Cabinets { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Technique> Techniques { get; set; }
-        
+
+        public MainContext()
+        {
+            
+        }
         
         public MainContext(DbContextOptions<MainContext> options)
             : base(options)

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EngeneerLenRooAspNet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Программист")]
     public class RoleController : Controller
     {
         RoleManager<IdentityRole> _roleManager;

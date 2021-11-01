@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EngeneerLenRooAspNet.Controllers
 {
     [Authorize]
+    [Authorize(Roles = "Программист")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -305,6 +306,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
         [Route("cabinet/edit")]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Edit(string id)
         {
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == id))
@@ -320,6 +322,7 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
         [Route("cabinet/edit/model")]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> EditModel(Cabinet cabinet)
         {
             if (ModelState.IsValid)
@@ -337,6 +340,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("cabinet/delete")]
         [HttpPost]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Delete(string id)
         {
             if (!await _context.Cabinets.AnyAsync(cabinetId => cabinetId.Id == id))
@@ -406,7 +410,7 @@ namespace EngeneerLenRooAspNet.Controllers
                             {
                                 viewModel.Checks.Add(new ReportCheck()
                                 {
-                                    Name =  technique.Name,
+                                    Name = technique.Name,
                                     InventoryNumber = technique.InventoryNumber,
                                     TypeTechnique = technique.TypeTechnique,
                                     Cabinets = new List<ReportCheckCabinet>()
@@ -441,20 +445,33 @@ namespace EngeneerLenRooAspNet.Controllers
                 }
                 else
                 {
-                    viewModel.Checks.Add(new ReportCheck()
+                    if (viewModel.Checks.Any(ch => ch.InventoryNumber == technique.InventoryNumber && ch.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
                     {
-                        Name = technique.Name,
-                        TypeTechnique = technique.TypeTechnique,
-                        InventoryNumber = technique.InventoryNumber,
-                        Cabinets = new List<ReportCheckCabinet>()
+                        viewModel.Checks.FirstOrDefault(ch =>
+                                ch.InventoryNumber == technique.InventoryNumber &&
+                                ch.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)).Name =
+                            $"{technique.Name} КОМПЛЕКТ";
+                        viewModel.Checks.FirstOrDefault(ch =>
+                                ch.InventoryNumber == technique.InventoryNumber &&
+                                ch.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)).TypeTechnique = TypeTechnique.All;
+                    }
+                    else
+                    {
+                        viewModel.Checks.Add(new ReportCheck()
                         {
-                            new()
+                            Name = technique.Name,
+                            TypeTechnique = technique.TypeTechnique,
+                            InventoryNumber = technique.InventoryNumber,
+                            Cabinets = new List<ReportCheckCabinet>()
                             {
-                                Name = technique.Employee.Cabinet.Name,
-                                CabinetId = technique.Employee.CabinetId
+                                new()
+                                {
+                                    Name = technique.Employee.Cabinet.Name,
+                                    CabinetId = technique.Employee.CabinetId
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
 
@@ -480,25 +497,49 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 if (technique.TypeTechnique != TypeTechnique.Modem)
                 {
-                    if (viewModel.Checks.Any(th =>
-                        th.TypeTechnique == technique.TypeTechnique &&
-                        th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
+                    
+                    if (viewModel.Checks.Any(ch => ch.Name == technique.Name))
                     {
-                        if (viewModel.Checks.Any(th =>
-                            th.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
+                        if (viewModel.Checks.Any(ch =>
+                            ch.Name == technique.Name && ch.InventoryNumber == 71 &&
+                            ch.Cabinets.Any(cab => cab.Name == technique.Employee.Cabinet.Name)))
                         {
-                            viewModel.Checks.Where(th => th.TypeTechnique == technique.TypeTechnique).Any(th =>
-                                th.Cabinets.FirstOrDefault(cab => cab.Name == technique.Employee.Cabinet.Name)
-                                    .Counter());
+                            viewModel.Checks.Any(ch => ch.Name == technique.Name && ch.InventoryNumber == 71 &&
+                                                       ch.Cabinets.FirstOrDefault(cab =>
+                                                               cab.Name == technique.Employee.Cabinet.Name &&
+                                                               ch.InventoryNumber == 71)
+                                                           .Counter());
                         }
                         else
                         {
-                            viewModel.Checks.FirstOrDefault(th => th.TypeTechnique == technique.TypeTechnique)?.Cabinets
-                                .Add(new ReportCheckCabinet()
+                            if (viewModel.Checks.Any(ch => ch.Name == technique.Name &&
+                                                           ch.InventoryNumber == 71))
+                            {
+                                viewModel.Checks.FirstOrDefault(ch => ch.Name == technique.Name &&
+                                                                      ch.InventoryNumber == 71).Cabinets.Add(
+                                    new ReportCheckCabinet()
+                                    {
+                                        Name = technique.Employee.Cabinet.Name,
+                                        CabinetId = technique.Employee.Cabinet.Id
+                                    });
+                            }
+                            else
+                            {
+                                viewModel.Checks.Add(new ReportCheck()
                                 {
-                                    Name = technique.Employee.Cabinet.Name,
-                                    CabinetId = technique.Employee.CabinetId
+                                    Name = technique.Name,
+                                    InventoryNumber = technique.InventoryNumber,
+                                    TypeTechnique = technique.TypeTechnique,
+                                    Cabinets = new List<ReportCheckCabinet>()
+                                    {
+                                        new ReportCheckCabinet()
+                                        {
+                                            Name = technique.Employee.Cabinet.Name,
+                                            CabinetId = technique.Employee.Cabinet.Id
+                                        }
+                                    }
                                 });
+                            }
                         }
                     }
                     else
@@ -506,13 +547,14 @@ namespace EngeneerLenRooAspNet.Controllers
                         viewModel.Checks.Add(new ReportCheck()
                         {
                             Name = technique.Name,
+                            InventoryNumber = technique.InventoryNumber,
                             TypeTechnique = technique.TypeTechnique,
                             Cabinets = new List<ReportCheckCabinet>()
                             {
-                                new()
+                                new ReportCheckCabinet()
                                 {
                                     Name = technique.Employee.Cabinet.Name,
-                                    CabinetId = technique.Employee.CabinetId
+                                    CabinetId = technique.Employee.Cabinet.Id
                                 }
                             }
                         });
@@ -522,9 +564,32 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
             viewModel.Checks = viewModel.Checks.OrderBy(x => x.Name).ToList();
-
+            
             return View(viewModel);
         }
+
+
+
+
+        [Route("about-of-working-in-filial")]
+        public async Task<IActionResult> AboutWorking()
+        {
+            // var emp = await _context.Employees.Include(x => x.Cabinet)
+            //     .Where(n => n.NumberPcMap != null && n.NumberPcMap != 0).OrderBy(x => x.NumberPcMap).ToListAsync();
+            //
+            // AboutWorkingViewModel viewModel = new AboutWorkingViewModel()
+            // {
+            //     Employees = emp
+            // };
+
+            return View();
+        }
+        
+        
+        
+        
+        
+        
 
         private bool IsContains(object firstParm, string search)
         {

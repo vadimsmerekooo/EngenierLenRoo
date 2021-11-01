@@ -1,4 +1,5 @@
 @using EngeneerLenRooAspNet.ViewModels
+@using EngeneerLenRooAspNet.Services
 @model TechniquesViewModel
 
 @{
@@ -42,9 +43,17 @@
         <input asp-for="Technique.InventoryNumber" class="form-control">
         <span asp-validation-for="Technique.InventoryNumber" class="text-danger"></span>
     </div>
+    @if (Model.Technique.TypeTechnique == TypeTechnique.Pc)
+    {
+        <div class="custom-control custom-switch">
+            <input asp-for="IsKomplect" type="checkbox" class="custom-control-input">
+            <label asp-for="IsKomplect" class="custom-control-label">Добавить сразу комплект</label>
+        </div>
+    }
     <button type="submit" class="btn btn-success">Добавить</button>
     <a class="btn btn-primary" asp-action="Index" asp-route-empId="@Model.Employee.Id">Отмена</a>
 </form>
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

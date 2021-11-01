@@ -1,0 +1,95 @@
+@* @model AboutWorkingViewModel *@
+@{
+    ViewData["Title"] = "Посхалки для программиста Филиала.";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+<h6 class="text-muted">Информация действительная на: 27.10.2021г.</h6>
+<div class="row">
+    <div class="col-lg-4 col-sm">
+        <button id="button-collapse-main" class="navbar-toggler d-sm-none justify-content-between" type="button" data-toggle="collapse" data-target=".main-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            Общее о работе
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="main-collapse collapse  d-sm-block justify-content-between list-group" id="list-main-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-main-list" data-toggle="list" href="#list-main" role="tab" aria-controls="main">Общее</a>
+            <a class="list-group-item list-group-item-action" id="list-phones-list" data-toggle="list" href="#list-phones" role="tab" aria-controls="phones">Телефоны</a>
+            <a class="list-group-item list-group-item-action" id="list-accounts-list" data-toggle="list" href="#list-accounts" role="tab" aria-controls="accounts">Аккануты и пароли</a>
+            <a class="list-group-item list-group-item-action" id="list-mainip-list" data-toggle="list" href="#list-mainip" role="tab" aria-controls="mainip">Основные IP адресса в филиале</a>
+            <a class="list-group-item list-group-item-action" id="list-usefulprograms-list" data-toggle="list" href="#list-usefulprograms" role="tab" aria-controls="usefulprograms">Полезные программы</a>
+            <a class="list-group-item list-group-item-action" id="list-cartrige-list" data-toggle="list" href="#list-cartrige" role="tab" aria-controls="cartrige">Картриджы</a>
+        </div>
+        <hr/>
+        <button id="button-collapse-program" class="navbar-toggler d-sm-none justify-content-between" type="button" data-toggle="collapse" data-target=".programs-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            Программы
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="programs-collapse collapse  d-sm-block justify-content-between list-group" id="list-programs-tab" role="tablist">
+            <a class="list-group-item list-group-item-action" id="list-map-list" data-toggle="list" href="#list-map" role="tab" aria-controls="map">МАП</a>
+            <a class="list-group-item list-group-item-action" id="list-fm-list" data-toggle="list" href="#list-fm" role="tab" aria-controls="fm">Распорядитель средств(FM)</a>
+            <a class="list-group-item list-group-item-action" id="list-tk-list" data-toggle="list" href="#list-tk" role="tab" aria-controls="tk">Клиент ТК</a>
+            <a class="list-group-item list-group-item-action" id="list-asb-list" data-toggle="list" href="#list-asb" role="tab" aria-controls="asb">Клиент Банк</a>
+            <a class="list-group-item list-group-item-action" id="list-sed-list" data-toggle="list" href="#list-sed" role="tab" aria-controls="sed">СЕД (СМДО)</a>
+            <a class="list-group-item list-group-item-action" id="list-nces-list" data-toggle="list" href="#list-nces" role="tab" aria-controls="nces">НЦЭУ</a>
+            <a class="list-group-item list-group-item-action" id="list-avest-list" data-toggle="list" href="#list-avest" role="tab" aria-controls="avest">Авест Персональный менеджер сертфиикатов</a>
+            <a class="list-group-item list-group-item-action" id="list-ecp-list" data-toggle="list" href="#list-ecp" role="tab" aria-controls="ecp">ЭЦП ключ и сертификаты</a>
+            <a class="list-group-item list-group-item-action" id="list-deti-list" data-toggle="list" href="#list-deti" role="tab" aria-controls="deti">БД Дети и сироты</a>
+        </div>
+        <hr class="d-sm-none"/>
+    </div>
+    <div class="col-lg-8 col-sm">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-main" role="tabpanel" aria-labelledby="list-main-list">
+                <partial name="AboutPartial/Main"/>
+            </div>
+            <div class="tab-pane fade" id="list-phones" role="tabpanel" aria-labelledby="list-phones-list">
+                <partial name="AboutPartial/Phone"/>
+            </div>
+            <div class="tab-pane fade" id="list-accounts" role="tabpanel" aria-labelledby="list-accounts-list">
+                <partial name="AboutPartial/Accounts"/>
+            </div>
+            <div class="tab-pane fade" id="list-mainip" role="tabpanel" aria-labelledby="list-mainip-list">
+                <partial name="AboutPartial/MainIpAddress"/>
+            </div>
+            <div class="tab-pane fade" id="list-usefulprograms" role="tabpanel" aria-labelledby="list-usefulprograms-list">
+                <partial name="AboutPartial/UsefulPrograms"/>
+            </div>
+            <div class="tab-pane fade" id="list-cartrige" role="tabpanel" aria-labelledby="list-cartrige-list">
+                <partial name="AboutPartial/Cartrige"/>
+            </div>
+            <div class="tab-pane fade" id="list-map" role="tabpanel" aria-labelledby="list-map-list">
+                <partial name="AboutPartial/Map"/>
+            </div>
+            <div class="tab-pane fade" id="list-fm" role="tabpanel" aria-labelledby="list-fm-list">
+                <partial name="AboutPartial/FM"/>
+            </div>
+            <div class="tab-pane fade" id="list-tk" role="tabpanel" aria-labelledby="list-tk-list">
+                <partial name="AboutPartial/KlientTk"/>
+            </div>
+            <div class="tab-pane fade" id="list-asb" role="tabpanel" aria-labelledby="list-asb-list">
+                <partial name="AboutPartial/AsbBank"/>
+            </div>
+            <div class="tab-pane fade" id="list-sed" role="tabpanel" aria-labelledby="list-sed-list">
+                <partial name="AboutPartial/Sed"/>
+            </div>
+            <div class="tab-pane fade" id="list-nces" role="tabpanel" aria-labelledby="list-nces-list">
+                <partial name="AboutPartial/Nces"/>
+            </div>
+            <div class="tab-pane fade" id="list-avest" role="tabpanel" aria-labelledby="list-avest-list">
+                <partial name="AboutPartial/Avest"/>
+            </div>
+            <div class="tab-pane fade" id="list-ecp" role="tabpanel" aria-labelledby="list-ecp-list">
+                <partial name="AboutPartial/ECP"/>
+            </div>
+            <div class="tab-pane fade" id="list-deti" role="tabpanel" aria-labelledby="list-deti-list">
+                <partial name="AboutPartial/BDDetiSiroty"/>
+            </div>
+        </div>
+    </div>
+</div>

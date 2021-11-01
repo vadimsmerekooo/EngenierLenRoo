@@ -44,6 +44,7 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
         [Route("technique/create/{empId}/{typeTechnique}")]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Create(string empId, TypeTechnique typeTechnique)
         {
             if (!await _context.Employees.AnyAsync(emp => emp.Id == empId))
@@ -70,6 +71,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("technique/createmodel")]
         [HttpPost]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> CreateModel(TechniquesViewModel model)
         {
             if (!await _context.Employees.AnyAsync(emp => emp.Id == model.EmployeeId))
@@ -79,21 +81,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
             Employee employee = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == model.EmployeeId);
             Cabinet cabinet = await _context.Cabinets.FirstOrDefaultAsync(cab => cab.Id == employee.CabinetId);
-
-            if (ModelState.IsValid)
-            {
-                if (model.Technique.InventoryNumber == 0)
-                {
-                    model.Technique.InventoryNumber = 071;
-                }
-
-                employee.Techniques.Add(model.Technique);
-                _context.Employees.Update(employee);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Info", "Home", new {id = employee.CabinetId});
-            }
-
-
+         
             TechniquesViewModel viewModel = new TechniquesViewModel()
             {
                 Cabinet = cabinet,
@@ -101,10 +89,66 @@ namespace EngeneerLenRooAspNet.Controllers
                 EmployeeId = model.EmployeeId,
                 Technique = model.Technique
             };
+            
+            if (ModelState.IsValid)
+            {
+                if (model.IsKomplect && model.Technique.InventoryNumber == 0 || model.Technique.InventoryNumber == 71)
+                {
+                    ModelState.AddModelError("", "Если вы добавляете полностью комплект, инвентраный номер не должен ровняться 0 или 071.");
+                    return View(nameof(Create), viewModel);
+                }
+
+
+                if (model.IsKomplect)
+                {
+                    List<Technique> komplect = new List<Technique>()
+                    {
+                        new Technique()
+                        {
+                            Name = model.Technique.Name, InventoryNumber = model.Technique.InventoryNumber,
+                            TypeTechnique = TypeTechnique.Pc
+                        },
+                        new Technique()
+                        {
+                            Name = model.Technique.Name, InventoryNumber = model.Technique.InventoryNumber,
+                            TypeTechnique = TypeTechnique.Monitor
+                        },
+                        new Technique()
+                        {
+                            Name = model.Technique.Name, InventoryNumber = model.Technique.InventoryNumber,
+                            TypeTechnique = TypeTechnique.Mouse
+                        },
+                        new Technique()
+                        {
+                            Name = model.Technique.Name, InventoryNumber = model.Technique.InventoryNumber,
+                            TypeTechnique = TypeTechnique.Keyboard
+                        }
+                    };
+                    
+                    employee.Techniques.AddRange(komplect);
+                    _context.Employees.Update(employee);
+                    await _context.SaveChangesAsync();
+                    viewModel.Employee = employee;
+                    return RedirectToAction("Info", "Home", new {id = employee.CabinetId});
+                }
+                else
+                {
+                    model.Technique.InventoryNumber = model.Technique.InventoryNumber == 0
+                        ? 071
+                        : model.Technique.InventoryNumber;
+                    employee.Techniques.Add(model.Technique);
+                    _context.Employees.Update(employee);
+                    await _context.SaveChangesAsync();
+                    viewModel.Employee = employee;
+                    return RedirectToAction("Info", "Home", new {id = employee.CabinetId});
+                }
+                
+            }
             return View(nameof(Create), viewModel);
         }
 
         [Route("technique/edit/{id}/{empId}")]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Edit(string id, string empId)
         {
             if (!await _context.Techniques.AnyAsync(t => t.Id == id))
@@ -131,6 +175,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("technique/edit/model")]
         [HttpPost]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> EditModel(TechniquesViewModel model)
         {
             if (!await _context.Employees.AnyAsync(emp => emp.Id == model.EmployeeId))
@@ -166,6 +211,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
         [Route("technique/change-employee/{id}")]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> ChangeEmployee(string id)
         {
             if (!await _context.Techniques.AnyAsync(th => th.Id == id))
@@ -197,6 +243,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("technique/change-technique/select-employee")]
         [HttpPost]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> ChangeTechniqueSelectEmployee(TechniqueChangeEmployeeViewModel model)
         {
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == model.SelectCabinetId) ||
@@ -225,6 +272,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("technique/change-employee-model")]
         [HttpPost]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> ChangeEmployeeModel(TechniqueChangeEmployeeViewModel model)
         {
             if (!await _context.Employees.AnyAsync(emp => emp.Id == model.SelectEmployeeId) ||
@@ -244,6 +292,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("technique/delete/{id}/{cabId}")]
         [HttpPost]
+        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Delete(string id, string cabId)
         {
             if (!await _context.Techniques.AnyAsync(th => th.Id == id))

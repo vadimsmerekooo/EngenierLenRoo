@@ -10,5 +10,6 @@ namespace EngeneerLenRooAspNet.ViewModels
         [Required]
         public string EmployeeId { get; set; }
         public Technique Technique { get; set; }
+        public bool IsKomplect { get; set; }
     }
 }

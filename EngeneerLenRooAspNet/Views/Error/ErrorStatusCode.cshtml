@@ -27,6 +27,13 @@
     </form>
 </nav>
 
-<h3>@ViewData["Title"]</h3>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Вернуться на галвную страницу</a>
-    <a class="btn btn-success mr-2" asp-controller="Home" asp-action="SearchExtended">Расширенный поиск</a>
+<div class="row text-center">
+    <div class="col">
+        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 15rem;"></i>
+    </div>
+    <div class="col my-auto">
+        <h3>@ViewData["Title"]</h3>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Вернуться на галвную страницу</a>
+        <a class="btn btn-success mr-2" asp-controller="Home" asp-action="SearchExtended">Расширенный поиск</a>
+    </div>
+</div>

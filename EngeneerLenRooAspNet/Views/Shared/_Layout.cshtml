@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
+@model List<Employee>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +49,9 @@
                                     <a class="dropdown-item" asp-controller="Role" asp-action="Index"><i class="bi bi-file-lock text-danger"></i> Уровни доступа</a>
                                     <a class="dropdown-item" asp-controller="Role" asp-action="Create"><i class="bi bi-unlock text-danger"></i> Добавить уровень доступа</a>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font-weight-bold text-warning" asp-action="AboutWorking">Заметки по работе</a>
                             </li>
                         }
                     }

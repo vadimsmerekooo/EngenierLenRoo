@@ -4,16 +4,26 @@
     ViewData["Title"] = "Добавление кабинета";
 }
 
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control"/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Phone"></label>
-        <input asp-for="Phone" class="form-control" />
+        <input asp-for="Phone" class="form-control"/>
         <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -21,6 +31,7 @@
         <a asp-action="Index" class="btn btn-primary">Отмена</a>
     </div>
 </form>
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

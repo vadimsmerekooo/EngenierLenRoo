@@ -18,7 +18,16 @@ namespace EngeneerLenRooAspNet.Areas.Identity
                 services.AddDbContext<MainContext>(options =>
                     options.UseSqlServer("Server=82.209.211.198;Database=EngeneerLenRoo;User Id=programmerlenroo; Password=Qwerty123456!"));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<IdentityUser>(options =>
+                    {
+                        options.SignIn.RequireConfirmedAccount = true;
+                        options.Password.RequiredLength = 5;  
+                        options.Password.RequireNonAlphanumeric = false;   
+                        options.Password.RequireLowercase = false; 
+                        options.Password.RequireUppercase = false; 
+                        options.Password.RequireDigit = false; 
+                        
+                    })
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<MainContext>();
                 services.ConfigureApplicationCookie(options =>

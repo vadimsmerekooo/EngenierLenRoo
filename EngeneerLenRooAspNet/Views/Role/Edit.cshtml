@@ -22,10 +22,12 @@
         }
         @foreach (IdentityRole role in Model.AllRoles)
         {
-            <input type="checkbox" name="roles" value="@role.Name"
-                   @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")/>@role.Name
-            <br/>
+            <div class="custom-control custom-switch">
+                <input id="ch@(role.Name)" type="checkbox" class="custom-control-input" name="roles" value="@role.Name" @(Model.UserRoles.Contains(role.Name) ? "checked" : "")>
+                <label for="ch@(role.Name)" class="custom-control-label">@role.Name</label>
+            </div>
         }
     </div>
     <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a class="btn btn-danger" asp-controller="Users" asp-action="Index">Отмена</a>
 </form>
