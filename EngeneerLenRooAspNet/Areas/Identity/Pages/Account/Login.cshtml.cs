@@ -76,7 +76,8 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password + "!", Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -86,6 +87,11 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "Ваш профиль не активирован! Обратитесь к системному администратору.");
+                    return Page();
+                }
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
@@ -93,7 +99,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Ошибка авторизации.");
+                    ModelState.AddModelError(string.Empty, "Ошибка авторизации. Введен неверный логин или пароль.");
                     return Page();
                 }
             }

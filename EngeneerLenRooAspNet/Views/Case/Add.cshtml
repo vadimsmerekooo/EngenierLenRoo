@@ -1,0 +1,29 @@
+﻿@model CartridgeViewModel
+@{
+    ViewData["Title"] = "Добавление картриджа";
+}
+
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employee"></label>
+        <select asp-for="EmployeeId" asp-items="ViewBag.Employees" class="employeeId custom-select" id="employeeId">
+            @*@foreach(var emp in Model.Employees)
+            {
+                <option value="@emp.Id">@emp.Fio</option>
+            }*@
+        </select>
+        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+        <input asp-for="CaseId" style="display: none;"/>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success">Добавить</button>
+        <a asp-action="Index" class="btn btn-primary">Отмена</a>
+    </div>
+</form>

@@ -12,28 +12,3 @@
         <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
     </ol>
 </nav>
-<nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
-    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Create"><i class="bi bi-plus-square"></i> Добавить кабинет</a>
-    <a class="btn btn-info my-2" asp-controller="Home" asp-action="Report071Check">Отчет по 071 счету</a>
-    <form class="form-inline my-2 my-lg-0" asp-controller="Home" asp-action="Search">
-        <div class="row">
-            <div class="col">
-                <input class="form-control" name="search" type="search" placeholder="Поиск кабинета" aria-label="Поиск кабинета">
-                <button class="btn btn-success mr-2" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-</nav>
-
-<div class="row text-center">
-    <div class="col">
-        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 15rem;"></i>
-    </div>
-    <div class="col my-auto">
-        <h3>@ViewData["Title"]</h3>
-        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Вернуться на галвную страницу</a>
-        <a class="btn btn-success mr-2" asp-controller="Home" asp-action="SearchExtended">Расширенный поиск</a>
-    </div>
-</div>

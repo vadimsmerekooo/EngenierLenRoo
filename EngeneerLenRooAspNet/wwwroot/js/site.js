@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿window.addEventListener('DOMContentLoaded', event => {
+    const datatablesSimple = document.getElementById('datatablesSimple');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple, {
+            labels: {
+                placeholder: "Поиск...",
+                searchTitle: "Поиск в таблице",
+                perPage: "кол-во элементов",
+                noRows: "Не найдено элементов",
+                noResults: "Нет результатов, соответствующих вашему поисковому запросу",
+                info: "Отображение записей от {start} до {end} из {rows}.",
+            },
+            perPage: 25
+        });
+    }
+});

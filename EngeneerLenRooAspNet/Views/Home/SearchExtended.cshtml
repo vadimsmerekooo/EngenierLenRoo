@@ -2,7 +2,7 @@
 @model EngeneerLenRooAspNet.ViewModels.SearchExtendedViewModel
 
 @{
-    ViewData["Title"] = "Расширенный поиск";
+    ViewData["Title"] = "Поиск по сотрудникам";
 }
 
 <nav aria-label="breadcrumb">
@@ -13,159 +13,52 @@
         <li class="breadcrumb-item active" aria-current="page">
             Расширенный поиск
         </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Поиск по сотрудникам
+        </li>
     </ol>
 </nav>
-
-<nav class="navbar navbar-light bg-secondary text-light">
-    <div class="col">
-        <form method="post" asp-action="SearchExtendedModel">
-            <div class="row">
-                <button type="submit" class="btn btn-success mr-2">Найти по параметрам <i class="bi bi-search"></i> </button>
-
-                <a id="showParameters" class="btn btn-primary mr-2" onclick="showParams();">Скрыть параметры <i class="bi bi-arrow-bar-up"></i></a>
-
-                <a class="btn btn-info mr-2" asp-action="SearchExtended">Очистить параметры <img src="https://img.icons8.com/color/20/000000/broom.png"/></a>
-            </div>
-            <hr/>
-            <div id="paramsDivFirstRow" class="row">
-                <div class="col-lg col-sm-12 bg-dark border border-primary rounded" style="margin: 5px;">
-                    <h6>Кабинет</h6>
-                    <div class="form-group">
-                        <label asp-for="CabinetFormModel.Name"></label>
-                        <input asp-for="CabinetFormModel.Name" class="form-control">
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Сотрудники
                     </div>
-                    <div class="form-group">
-                        <label asp-for="CabinetFormModel.Phone"></label>
-                        <input asp-for="CabinetFormModel.Phone" class="form-control">
-                    </div>
-                </div>
-                <div class="col-lg col-sm-12 bg-dark border border-danger rounded" style="margin: 5px;">
-                    <h6>Инвентарь</h6>
-                    <div class="form-group">
-                        <label asp-for="TechniqueFormModel.Name"></label>
-                        <input asp-for="TechniqueFormModel.Name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TechniqueFormModel.InventoryNumber"></label>
-                        <input asp-for="TechniqueFormModel.InventoryNumber" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="TechniqueFormModel.TypeTechnique"></label>
-                        <select asp-for="TechniqueFormModel.TypeTechnique" class="form-control">
-                            <option value="9" selected>Все</option>
-                            <option value="0">Компьютер</option>
-                            <option value="1">Монитор</option>
-                            <option value="2">Принтер</option>
-                            <option value="3">Мышь</option>
-                            <option value="4">Клавиатура</option>
-                            <option value="5">ИБП</option>
-                            <option value="6">Сетевой фильтр</option>
-                            <option value="7">Модем</option>
-                            <option value="8">Другое</option>
-                        </select>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>ФИО</th>
+                                    <th>Описание</th>
+                                    <th>Кабинет</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>ФИО</th>
+                                    <th>Описание</th>
+                                    <th>Кабинет</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model.Employees)
+                                {
+                                    <tr>
+                                        <th>@item.Fio</th>
+                                        <th>@item.Description</th>
+                                        <th>
+                                            <a class="btn-link" asp-action="Info" asp-route-id="@item.Cabinet.Id">@item.Cabinet.Name</a>
+                                        </th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <hr/>
-            <div id="paramsDivSecondRow" class="row bg-dark border border-success rounded">
-                <div class="col">
-                    <h6>Сотрудник</h6>
-                    <div class="row">
-                        <div class="col">
-                            <label asp-for="EmployeeFormModel.Fio"></label>
-                            <input asp-for="EmployeeFormModel.Fio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row" style="margin-bottom: 15px;">
-                        <div class="col-lg col-sm-12">
-                            <label asp-for="EmployeeFormModel.IpComputer"></label>
-                            <input asp-for="EmployeeFormModel.IpComputer" class="form-control">
-                        </div>
-                        <div class="col-lg col-sm-12">
-                            <label asp-for="EmployeeFormModel.UserMap"></label>
-                            <input asp-for="EmployeeFormModel.UserMap" class="form-control">
-                        </div>
-                        <div class="col-lg col-sm-12">
-                            <label asp-for="EmployeeFormModel.NumberPcMap"></label>
-                            <input asp-for="EmployeeFormModel.NumberPcMap" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </main>
     </div>
-</nav>
-<br/>
-<h3>Результат</h3>
-@foreach (Cabinet cab in Model.Cabinets)
-{
-    <div class="card border-danger">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <h5>Кабинет: @cab.Name</h5>
-                    <h6>Номер телефона: @(cab.Phone == 0 ? "Отсутвует" : DomainConfig.DomainPhone + cab.Phone)</h6>
-                </div>
-                <div class="col text-right">
-                    <a class="btn btn-primary" asp-action="Info" asp-route-id="@cab.Id">Просмотреть <i class="bi bi-box-arrow-right"></i></a>
-                </div>
-            </div>
-            @foreach (Employee employee in cab.Employees.OrderByDescending(c => c.Techniques.Count))
-            {
-                if (!Model.EmployeeFormModel.IsNull())
-                {
-                    <div class="card border-warning">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5>@employee.Fio</h5>
-                                    <h6>Ip: @(DomainConfig.DomainPcAddress + employee.IpComputer). Map №: @employee.NumberPcMap. Map Логин: @employee.UserMap</h6>
-                                </div>
-                                <div class="col text-light text-right">
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="card text-center">
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    @{
-                                        if (employee.Techniques.Count != 0)
-                                        {
-                                            foreach (Technique technique in employee.Techniques)
-                                            {
-                                                <div class="card card-technique border-primary text-left">
-                                                    <div class="card-body">
-                                                        <h5>Тип: @technique.TypeTechnique</h5>
-                                                        <h5 class="card-title">@technique.Name</h5>
-                                                        <h6 class="card-subtitle mb-2">@technique.InventoryNumber</h6>
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <h5>Список техники пуст</h5>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-    </div>
-}
-<script>
-function showParams() {
-      $("#paramsDivSecondRow").slideToggle("slow");
-      $("#paramsDivFirstRow").slideToggle("slow");
-      var but = document.getElementById("showParameters");
-      if (but.innerHTML === 'Скрыть параметры <i class="bi bi-arrow-bar-up"></i> ')
-          {
-              but.innerHTML = 'Показать параметры <i class="bi bi-arrow-bar-down"></i>';
-          }
-      else{
-              but.innerHTML = 'Скрыть параметры <i class="bi bi-arrow-bar-up"></i>';
-          }
-      }
-</script>
+</div>

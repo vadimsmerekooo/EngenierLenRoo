@@ -1,5 +1,4 @@
 @using EngeneerLenRooAspNet.ViewModels
-@using EngeneerLenRooAspNet.Services
 @model TechniquesViewModel
 
 @{
@@ -33,6 +32,23 @@
         <input asp-for="Technique.TypeTechnique" class="form-control" readonly>
         <span asp-validation-for="Technique.TypeTechnique" class="text-danger"></span>
     </div>
+    @if (Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc 
+    || Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Modem 
+    || Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+    {
+        <div class="col">
+            <label asp-for="Technique.IpComputer"></label>
+            <div class="row">
+                <div class="col-2">
+                    <h6>192.168.100. - </h6>
+                </div>
+                <div class="col">
+                    <input asp-for="Technique.IpComputer" class="form-control" />
+                </div>
+            </div>
+            <span asp-validation-for="Technique.IpComputer" class="text-danger"></span>
+        </div>
+    }
     <div class="form-group">
         <label asp-for="Technique.Name"></label>
         <input asp-for="Technique.Name" class="form-control">
@@ -43,17 +59,23 @@
         <input asp-for="Technique.InventoryNumber" class="form-control">
         <span asp-validation-for="Technique.InventoryNumber" class="text-danger"></span>
     </div>
-    @if (Model.Technique.TypeTechnique == TypeTechnique.Pc)
+    @if(Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc
+    || Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Monitor
+    || Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Keyboard
+    || Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Mouse)
     {
-        <div class="custom-control custom-switch">
-            <input asp-for="IsKomplect" type="checkbox" class="custom-control-input">
-            <label asp-for="IsKomplect" class="custom-control-label">Добавить сразу комплект</label>
+        <div class="form-group">
+            <div class="checkbox">
+                <label asp-for="IsComplect">
+                    <input asp-for="IsComplect" />
+                    @Html.DisplayNameFor(m => m.IsComplect)
+                </label>
+            </div>
         </div>
     }
     <button type="submit" class="btn btn-success">Добавить</button>
     <a class="btn btn-primary" asp-action="Index" asp-route-empId="@Model.Employee.Id">Отмена</a>
 </form>
-
 @section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
 }

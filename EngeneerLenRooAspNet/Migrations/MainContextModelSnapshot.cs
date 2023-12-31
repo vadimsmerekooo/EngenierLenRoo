@@ -30,12 +30,75 @@ namespace EngeneerLenRooAspNet.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Phone")
-                        .HasMaxLength(2)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Cabinets");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Cartridge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CaseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateGet")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateSet")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmployeeId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsIssued")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CaseId");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.ToTable("Cartridges");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Case", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateGet")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateSend")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("NumberAct")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cases");
                 });
 
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Employee", b =>
@@ -47,17 +110,11 @@ namespace EngeneerLenRooAspNet.Migrations
                     b.Property<string>("CabinetId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Fio")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IpComputer")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumberPcMap")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserMap")
+                    b.Property<string>("Fio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -78,6 +135,9 @@ namespace EngeneerLenRooAspNet.Migrations
 
                     b.Property<long>("InventoryNumber")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("IpComputer")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -293,6 +353,23 @@ namespace EngeneerLenRooAspNet.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Cartridge", b =>
+                {
+                    b.HasOne("EngeneerLenRooAspNet.Models.Case", "Case")
+                        .WithMany("Cartridge")
+                        .HasForeignKey("CaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EngeneerLenRooAspNet.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId1");
+
+                    b.Navigation("Case");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Employee", b =>
                 {
                     b.HasOne("EngeneerLenRooAspNet.Models.Cabinet", "Cabinet")
@@ -365,6 +442,11 @@ namespace EngeneerLenRooAspNet.Migrations
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Cabinet", b =>
                 {
                     b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Case", b =>
+                {
+                    b.Navigation("Cartridge");
                 });
 
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Employee", b =>

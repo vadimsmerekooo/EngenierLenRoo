@@ -21,20 +21,17 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -48,16 +45,18 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Поле {0} должно быть заполнено.")]
+            [StringLength(25, ErrorMessage = "{0} должен содержать не менее {2} символов и не более {1}.", MinimumLength = 8)]
             [Display(Name = "Логин")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Поле {0} должно быть заполнено.")]
+            [StringLength(50, ErrorMessage = "{0} должен состоять из {2} и не более {1} символов латинского алфавита, содержать заглавные и строчные буквы, цифры, символы и знаки препинания ! @ $ % ^ & * ( ) _ - +", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Пароль")]
             public string Password { get; set; }
 
+            [Required(ErrorMessage = "Поле {0} должно быть заполнено.")]
             [DataType(DataType.Password)]
             [Display(Name = "Подтверждение пароля")]
             [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
@@ -76,30 +75,11 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = true};
-                var result = await _userManager.CreateAsync(user, Input.Password + "!");
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = false};
+                var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    IdentityUser identityUser = await _userManager.FindByEmailAsync(user.Email);
-                    List<string> roles = new List<string>() { "Undefined" };
-                    if (identityUser != null)
-                    {
-                        var userRoles = await _userManager.GetRolesAsync(identityUser);
-                        var allRoles = _roleManager.Roles.ToList();
-                        var addedRoles = roles.Except(userRoles);
-                        var removedRoles = userRoles.Except(roles);
-                    
-                        await _userManager.AddToRolesAsync(identityUser, addedRoles);
-                    
-                        await _userManager.RemoveFromRolesAsync(identityUser, removedRoles);
-                    }
-                    
-                    
-                    
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    
-                    
-                    
+                    return RedirectToPage("Login");
                 }
                 foreach (var error in result.Errors)
                 {

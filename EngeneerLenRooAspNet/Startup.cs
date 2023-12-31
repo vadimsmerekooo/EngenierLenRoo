@@ -1,14 +1,18 @@
+using EngeneerLenRooAspNet.Areas.Identity.Data;
 using EngeneerLenRooAspNet.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace EngeneerLenRooAspNet
 {
     public class Startup
     {
+        public static readonly List<string> DBMap = new List<string>() { "Центр", "Октябрьский РОО", "Ленинский РОО", "ГрГГ" };
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -18,7 +22,7 @@ namespace EngeneerLenRooAspNet
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.Bind("DomainConfig", new DomainConfig());
+            //Configuration.Bind("DomainConfig", new DomainConfig());
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
         }
@@ -29,11 +33,10 @@ namespace EngeneerLenRooAspNet
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
-                app.UseStatusCodePagesWithRedirects("/error/{0}");
             }
             else
             {
-                app.UseStatusCodePagesWithRedirects("/error/{0}");
+                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 
@@ -52,6 +55,7 @@ namespace EngeneerLenRooAspNet
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            
         }
     }
 }

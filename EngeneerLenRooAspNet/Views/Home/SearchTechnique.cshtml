@@ -1,0 +1,79 @@
+﻿@using EngeneerLenRooAspNet.Services
+@model EngeneerLenRooAspNet.ViewModels.SearchExtendedViewModel
+
+@{
+    ViewData["Title"] = "Поиск по технике";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Расширенный поиск
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Поиск по технике
+        </li>
+    </ol>
+</nav>
+
+<br />
+<h3>Результат</h3>
+
+<div class="accordion" id="accordionExample">
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Техника
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Тип</th>
+                                        <th>Инв. номер</th>
+                                        <th>Ip</th>
+                                        <th>Сотрудник</th>
+                                        <th>Кабинет</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Тип</th>
+                                        <th>Инв. номер</th>
+                                        <th>Ip</th>
+                                        <th>Сотрудник</th>
+                                        <th>Кабинет</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var item in Model.Techniques)
+                                    {
+                                        <tr>
+                                            <th>@item.Name</th>
+                                            <th>@item.TypeTechnique</th>
+                                            <th>@item.InventoryNumber</th>
+                                            <th>@item.IpComputer</th>
+                                            <th>@item.Employee.Fio</th>
+                                            <th>
+                                                <a class="btn-link" asp-action="Info" asp-route-id="@item.Employee.Cabinet.Id">@item.Employee.Cabinet.Name</a>
+                                            </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>

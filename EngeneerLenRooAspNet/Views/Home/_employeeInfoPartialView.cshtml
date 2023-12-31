@@ -9,11 +9,17 @@
                 <div class="card card-technique border-primary text-left">
                     <div class="card-body">
                         <h5 class="card-title">@technique.Name</h5>
-                        <h6 class="card-subtitle mb-2">@technique.InventoryNumber</h6>
+                        <h6 class="card-subtitle mb-2">Инв: @technique.InventoryNumber</h6>
+                        @if (technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc
+                   || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Modem
+                   || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+                        {
+                            <h6 class="card-subtitle mb-2">Ip: @technique.IpComputer</h6>
+                        }
                         <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
                         <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
-                        <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post" >
-                            <a href="javascript:{}"  onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
+                        <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post">
+                            <a href="javascript:{}" onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
                         </form>
                     </div>
                 </div>

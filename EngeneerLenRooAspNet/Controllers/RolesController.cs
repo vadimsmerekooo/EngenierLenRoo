@@ -1,36 +1,26 @@
+﻿using EngeneerLenRooAspNet.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EngeneerLenRooAspNet.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EngeneerLenRooAspNet.Controllers
 {
-    [Authorize(Roles = "Программист")]
-    public class RoleController : Controller
+    public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
         UserManager<IdentityUser> _userManager;
-
-        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
         }
-
-        [Route("roles")]
         public IActionResult Index() => View(_roleManager.Roles.ToList());
-        
 
-        [Route("roles/create")]
         public IActionResult Create() => View();
-
-        [Route("roles/create-model")]
         [HttpPost]
-        public async Task<IActionResult> CreateModel(string name)
+        public async Task<IActionResult> Create(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -47,11 +37,9 @@ namespace EngeneerLenRooAspNet.Controllers
                     }
                 }
             }
-
             return View(name);
         }
 
-        [Route("roles/delete/{id}")]
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
@@ -60,18 +48,18 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 IdentityResult result = await _roleManager.DeleteAsync(role);
             }
-
             return RedirectToAction("Index");
         }
-        
-        
 
-        [Route("roles/edit/{userId}")]
+        public IActionResult UserList() => View(_userManager.Users.ToList());
+
         public async Task<IActionResult> Edit(string userId)
         {
+            // получаем пользователя
             IdentityUser user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
+                // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
                 ChangeRoleViewModel model = new ChangeRoleViewModel
@@ -86,23 +74,27 @@ namespace EngeneerLenRooAspNet.Controllers
 
             return NotFound();
         }
-
-        [Route("roles/edit-model")]
         [HttpPost]
-        public async Task<IActionResult> EditModel(string userId, List<string> roles)
+        public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
+            // получаем пользователя
             IdentityUser user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
+                // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(user);
+                // получаем все роли
+                var allRoles = _roleManager.Roles.ToList();
+                // получаем список ролей, которые были добавлены
                 var addedRoles = roles.Except(userRoles);
+                // получаем роли, которые были удалены
                 var removedRoles = userRoles.Except(roles);
 
                 await _userManager.AddToRolesAsync(user, addedRoles);
 
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
 
-                return RedirectToAction("Index", "Users");
+                return RedirectToAction("UserList");
             }
 
             return NotFound();

@@ -5,6 +5,7 @@
     var isSearch = ViewData["Search"] ?? false;
     var searchString = (bool) isSearch ? (string) ViewData["SearchString"] : "";
 }
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         @if (!(bool) isSearch)
@@ -16,7 +17,7 @@
             <li class="breadcrumb-item">
                 <a asp-action="Index">Кабинеты</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Поиск кабинета: @searchString</li>
+            <li class="breadcrumb-item active" aria-current="page">Поиск кабинета @searchString</li>
         }
     </ol>
 </nav>
@@ -38,7 +39,7 @@
     </form>
 </nav>
 
-@{
+@*@{
     if (Model.Count != 0)
     {
         <div class="d-flex flex-wrap justify-content-start">
@@ -68,41 +69,71 @@
     {
         <h3>Список кабинетов пуст</h3>
     }
-}
+}*@
 
-
-@* <div class="row"> *@
-@*     <div class="col"> *@
-@*         <div class="card border-primary"> *@
-@*             <div class="card-body"> *@
-@*                 <h5 class="card-title">Кабинет: 248</h5> *@
-@*                 <h6 class="card-subtitle mb-2">Сотрудников: 4</h6> *@
-@*                 <p class="card-text">Компьютеров: 4. Мониторов: 5. Клавиатур: 4. Мышек: 4. Принтеров: 5.</p> *@
-@*                 <a href="#" class="card-link">Просмотреть </a> *@
-@*                 <a href="#" class="card-link text-danger">Удалить кабинет</a> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> *@
-@*     <div class="col"> *@
-@*         <div class="card border-primary"> *@
-@*             <div class="card-body"> *@
-@*                 <h5 class="card-title">Кабинет: 248</h5> *@
-@*                 <h6 class="card-subtitle mb-2">Сотрудников: 4</h6> *@
-@*                 <p class="card-text">Компьютеров: 4. Мониторов: 5. Клавиатур: 4. Мышек: 4. Принтеров: 5.</p> *@
-@*                 <a href="#" class="card-link">Просмотреть </a> *@
-@*                 <a href="#" class="card-link text-danger">Удалить кабинет</a> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> *@
-@*     <div class="col"> *@
-@*         <div class="card border-primary"> *@
-@*             <div class="card-body"> *@
-@*                 <h5 class="card-title">Кабинет: 248</h5> *@
-@*                 <h6 class="card-subtitle mb-2">Сотрудников: 4</h6> *@
-@*                 <p class="card-text">Компьютеров: 4. Мониторов: 5. Клавиатур: 4. Мышек: 4. Принтеров: 5.</p> *@
-@*                 <a href="#" class="card-link">Просмотреть</a> *@
-@*                 <a href="#" class="card-link text-danger">Удалить кабинет</a> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> *@
-@* </div> *@
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Кабинеты
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Кабинет</th>
+                                    <th>Cотрудники</th>
+                                    <th>Компьютеры</th>
+                                    <th>Мониторы</th>
+                                    <th>Клавиатуры</th>
+                                    <th>Мыш</th>
+                                    <th>Принтеры</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th>@item.Name</th>
+                                        <th>@item.Employees.Count</th>
+                                        <th>@(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Pc)))</th>
+                                        <th>@(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Monitor)))</th>
+                                        <th>@(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Keyboard)))</th>
+                                        <th>@(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Mouse)))</th>
+                                        <th>@(item.Employees.Sum(th => th.Techniques.Count(pc => pc.TypeTechnique == TypeTechnique.Printer)))</th>
+                                        <th>
+                                            <a class="card-link" asp-action="Info" asp-route-id="@item.Id">Просмотреть </a>
+                                        </th>
+                                        <th>
+                                            <form style="display: inline-block;" id="delete_cab_@(item.Id)_form" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                                <a href="javascript:{}" onclick="document.getElementById('delete_cab_@(item.Id)_form').submit();" class="card-link text-danger">Удалить кабинет</a>
+                                            </form>
+                                        </th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

@@ -7,16 +7,10 @@ namespace EngeneerLenRooAspNet.Models
     {
         [Display(Name = "ФИО")]
         public string Fio { get; set; }
-        [Display(Name = "Ip компьютера")]
-        public int? IpComputer { get; set; }
-        [Display(Name = "Номер пк в МАП")]
-        public int? NumberPcMap { get; set; }
-        [Display(Name = "User в МАП")]
-        public string UserMap { get; set; }
+        [Display(Name = "Дополнительно")]
+        public string Description { get; set; }
 
         public bool IsNull() => string.IsNullOrWhiteSpace(Fio)
-                                && IpComputer == 0
-                                && NumberPcMap == 0
-                                && string.IsNullOrWhiteSpace(UserMap);
+                                && string.IsNullOrWhiteSpace(Description);
     }
 }

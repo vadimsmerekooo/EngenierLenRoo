@@ -1,0 +1,66 @@
+﻿@model Report071CheckViewModel
+
+@{
+    ViewData["Title"] = "Отчет по всей технике";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action="Index">Кабинеты</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Отчет по всей технике</li>
+    </ol>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Техника
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Тип</th>
+                                    <th>Инв. Номер</th>
+                                    <th>Ip</th>
+                                    <th>Сотрудник</th>
+                                    <th>Кол-во</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model.Checks)
+                                {
+                                    <tr>
+                                        <th>@item.Name</th>
+                                        <th>@item.TypeTechnique</th>
+                                        <th>@item.InventoryNumber</th>
+                                        <th>@item.IpComputer</th>
+                                        <th>@(item.InventoryNumber != 71 ? item.Employee.Fio : "-")</th>
+                                        <th>
+                                            @item.CountAll
+                                        </th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

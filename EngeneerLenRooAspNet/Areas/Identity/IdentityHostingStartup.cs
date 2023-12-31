@@ -16,20 +16,14 @@ namespace EngeneerLenRooAspNet.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<MainContext>(options =>
-                    options.UseSqlServer("Server=82.209.211.198;Database=EngeneerLenRoo;User Id=programmerlenroo; Password=Qwerty123456!"));
+                    options.UseSqlServer(
+                        context.Configuration.GetConnectionString("MainContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options =>
-                    {
-                        options.SignIn.RequireConfirmedAccount = true;
-                        options.Password.RequiredLength = 5;  
-                        options.Password.RequireNonAlphanumeric = false;   
-                        options.Password.RequireLowercase = false; 
-                        options.Password.RequireUppercase = false; 
-                        options.Password.RequireDigit = false; 
-                        
-                    })
-                    .AddRoles<IdentityRole>()
+                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<MainContext>();
+                //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<MainContext>();
+
+
                 services.ConfigureApplicationCookie(options =>
                 {
                     options.AccessDeniedPath = "/access-denied";
@@ -39,6 +33,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity
                     options.LoginPath = "/account/signin";
                     options.SlidingExpiration = true;
                 });
+
                 services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
                     opt =>
                     {

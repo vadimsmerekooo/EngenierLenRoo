@@ -21,7 +21,6 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
         [Route("employee/create")]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Create(string cabinetId)
         {
             if (!await _context.Cabinets.AnyAsync(id => id.Id == cabinetId))
@@ -39,7 +38,6 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("employee/createmodel")]
         [HttpPost]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> CreateModel(Employee employee)
         {
             if (ModelState.IsValid)
@@ -70,7 +68,6 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
         [Route("employee/edit")]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Edit(string id)
         {
             if (!await _context.Employees.AnyAsync(emp => emp.Id == id))
@@ -86,7 +83,6 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
         [Route("employee/editmodel")]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> EditModel(Employee employee)
         {
             if (ModelState.IsValid)
@@ -104,7 +100,6 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
         [Route("employee/change-cabinet")]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> ChangeCabinet(string id)
         {
             if (!await _context.Employees.AnyAsync(emp => emp.Id == id))
@@ -125,7 +120,6 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("employee/change-cabinet-model")]
         [HttpPost]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> ChangeCabinetModel(EmployeeChangeCabinetViewModel model)
         {
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == model.SelectCabinetId) ||
@@ -161,9 +155,6 @@ namespace EngeneerLenRooAspNet.Controllers
                 if (changeEmployee != null)
                 {
                     changeEmployee.Fio = employee.Fio;
-                    changeEmployee.IpComputer = employee.IpComputer;
-                    changeEmployee.UserMap = employee.UserMap;
-                    changeEmployee.NumberPcMap = employee.NumberPcMap;
                     changeEmployee.Techniques.AddRange(employee.Techniques);
                     newCabinet.Employees.Add(changeEmployee);
                 }
@@ -185,7 +176,6 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("employee/delete/{id}/{cabinetId}")]
         [HttpPost]
-        [Authorize(Roles = "Программист")]
         public async Task<IActionResult> Delete(string id, string cabinetId)
         {
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == cabinetId))
@@ -225,24 +215,6 @@ namespace EngeneerLenRooAspNet.Controllers
                         .ToListAsync();
                 _context.Employees.RemoveRange(employees);
                 await _context.SaveChangesAsync();
-            }
-
-            if (employee.IpComputer != 0 && employee.IpComputer > 255)
-            {
-                employee.IpComputer = 255;
-                errorsModel.Add("Ip адрес превышает допустимое значение!");
-            }
-
-            if (employee.NumberPcMap != null && employee.NumberPcMap != 0 &&
-                await _context.Employees.AnyAsync(emp => emp.NumberPcMap == employee.NumberPcMap))
-            {
-                errorsModel.Add($"Номер компьютера МАП {employee.NumberPcMap} зарегистрирован в системе!");
-            }
-
-            if (!string.IsNullOrWhiteSpace(employee.UserMap) &&
-                await _context.Employees.AnyAsync(emp => emp.UserMap == employee.UserMap))
-            {
-                errorsModel.Add($"Пользователь МАП{employee.UserMap} зарегистрирован в системе!");
             }
 
             return errorsModel;

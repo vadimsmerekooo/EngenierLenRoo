@@ -1,4 +1,4 @@
-@model ReportCheckViewModel
+@model Report071CheckViewModel
 
 @{
     ViewData["Title"] = "Отчет по 071 счету";
@@ -12,38 +12,53 @@
         <li class="breadcrumb-item active" aria-current="page">Отчет по 071 счету</li>
     </ol>
 </nav>
-<table class="table table-bordered">
-    <thead class="thead-light">
-    <tr class="text-center">
-        <th scope="col" class="col-3">Название</th>
-        <th scope="col" class="col-2">Тип</th>
-        <th scope="col" class="col-2">Общее кол-во</th>
-        <th scope="col" class="col-5">Кабинеты</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if (Model.Checks.Count != 0)
-    {
-        foreach (var item in Model.Checks)
-        {
-            <tr>
-                <th scope="row" class="col-3">@item.Name</th>
-                <th scope="row" class="col-2">@item.TypeTechnique</th>
-                <th scope="row" class="col-2">@item.Count()</th>
-                <th scope="row" class="col-5">
-                    @foreach (var itemCheck in item.Cabinets)
-                    {
-                        <a class="btn-link" asp-action="Info" asp-route-id="@itemCheck.CabinetId">@($"{itemCheck.Name}(x{itemCheck.Count}),")</a>
-                    }
-                </th>
-            </tr>
-        }
-    }
-    else
-    {
-        <tr class="text-center">
-            <th scope="row" colspan="4">Техники на 071 счете не обнаружено.</th>
-        </tr>
-    }
-    </tbody>
-</table>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Инвентарь
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Тип</th>
+                                    <th>Общее кол-во</th>
+                                    <th>Кабинеты</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Тип</th>
+                                    <th>Общее кол-во</th>
+                                    <th>Кабинеты</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model.Checks)
+                                {
+                                <tr>
+                                    <th scope="row" class="col-3">@item.Name</th>
+                                    <th scope="row" class="col-2">@item.TypeTechnique</th>
+                                    <th scope="row" class="col-2">@item.Count()</th>
+                                    <th scope="row" class="col-5">
+                                        @foreach (var itemCheck in item.Cabinets)
+                                        {
+                                            <a class="btn-link" asp-action="Info" asp-route-id="@itemCheck.CabinetId">@($"{itemCheck.Name}(x{itemCheck.Count}),")</a>
+                                        }
+                                    </th>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

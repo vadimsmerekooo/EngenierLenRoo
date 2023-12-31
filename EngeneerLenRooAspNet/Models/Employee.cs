@@ -13,13 +13,10 @@ namespace EngeneerLenRooAspNet.Models
         public string Fio { get; set; }
 
         public List<Technique> Techniques { get; set; } = new List<Technique>();
-        [Display(Name = "Ip компьютера")]
-        public int? IpComputer { get; set; }
-        [Display(Name = "Номер пк в МАП")]
-        public int? NumberPcMap { get; set; }
-        [Display(Name = "User в МАП")]
-        public string UserMap { get; set; }
+        [Display(Name = "Дополнительно")]
+        public string Description { get; set; }
         public string CabinetId { get; set; }
         public Cabinet Cabinet { get; set; }
+        public List<Cartridge> Cartridges { get; set; } = new List<Cartridge>();
     }
 }
