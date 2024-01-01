@@ -1,23 +1,28 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using EngeneerLenRooAspNet.Areas.Identity.Data;
 using EngeneerLenRooAspNet.Models;
 using EngeneerLenRooAspNet.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EngeneerLenRooAspNet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class EmployeeController : Controller
     {
         private MainContext _context;
-
-        public EmployeeController(MainContext context)
+        private UserManager<IdentityUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
+        public EmployeeController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, MainContext context)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [Route("employee/create")]
@@ -25,7 +30,7 @@ namespace EngeneerLenRooAspNet.Controllers
         {
             if (!await _context.Cabinets.AnyAsync(id => id.Id == cabinetId))
             {
-                return RedirectToAction("Info", "Home", new {id = cabinetId});
+                return RedirectToAction("Info", "Home", new { id = cabinetId });
             }
 
             Employee employee = new Employee()
@@ -45,19 +50,41 @@ namespace EngeneerLenRooAspNet.Controllers
                 var isValid = IsValidFormEmployeeAsync(employee).Result;
                 if (isValid is IActionResult)
                 {
-                    return RedirectToAction("Info", "Home", new {id = employee.Cabinet.Id});
+                    return RedirectToAction("Info", "Home", new { id = employee.Cabinet.Id });
                 }
 
                 employee.Cabinet = await _context.Cabinets.FirstOrDefaultAsync(cab => cab.Id == employee.CabinetId);
 
-                if (((List<string>) isValid).Count == 0)
+                if (((List<string>)isValid).Count == 0)
                 {
-                    await _context.Employees.AddAsync(employee);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Info", "Home", new {id = employee.CabinetId});
+                    var user = new IdentityUser { UserName = employee.Fio, Email = employee.Fio, EmailConfirmed = true };
+                    var result = await _userManager.CreateAsync(user, $"centr_edu");
+                    if (result.Succeeded)
+                    {
+                        List<string> role = new List<string>() { "user" };
+                        await _userManager.AddToRolesAsync(user, role);
+                        var userId = await _userManager.FindByNameAsync(employee.Fio);
+                        if (userId == null)
+                        {
+                            foreach (string error in ((List<string>)isValid))
+                                ModelState.AddModelError("Ошибка привязки Id сотрудника.", error);
+                        }
+                        else
+                        {
+                            employee.Id = userId.Id;
+                            await _context.Employees.AddAsync(employee);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction("Info", "Home", new { id = employee.CabinetId });
+                        }
+                    }
+                    else
+                    {
+                        foreach (string error in ((List<string>)isValid))
+                            ModelState.AddModelError("Ошибка создания сотрудника.", error);
+                    }
                 }
 
-                foreach (string error in ((List<string>) isValid))
+                foreach (string error in ((List<string>)isValid))
                     ModelState.AddModelError("", error);
 
                 return View(nameof(Create), employee);
@@ -88,10 +115,23 @@ namespace EngeneerLenRooAspNet.Controllers
             if (ModelState.IsValid)
             {
                 employee.Cabinet = await _context.Cabinets.FirstOrDefaultAsync(cab => cab.Id == employee.CabinetId);
+                var user = await _userManager.FindByIdAsync(employee.Id);
+                if (user != null)
+                {
+                    var resultChangeEmail = await _userManager.SetEmailAsync(user, employee.Fio);
+                    var resultChnageName = await _userManager.SetUserNameAsync(user, employee.Fio);
+                    if (resultChangeEmail.Succeeded && resultChnageName.Succeeded)
+                    {
+                        _context.Employees.Update(employee);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Info", "Home", new { id = employee.CabinetId });
+                    }
+                    else
+                        ModelState.AddModelError("", "Ошибка изменения информации авторизации!");
 
-                _context.Employees.Update(employee);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Info", "Home", new {id = employee.CabinetId});
+                }
+                else
+                    ModelState.AddModelError("", "Ошибка изменения информации! Авторизация пользователя не найдена.");
             }
 
             ModelState.AddModelError("", "Форма не заполнена!");
@@ -134,7 +174,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
             Cabinet oldCabinet = await _context.Cabinets.Include(emp => emp.Employees)
                 .FirstOrDefaultAsync(cab => cab.Id == model.Employee.CabinetId);
-            
+
             if (!model.IsWithTechniques && employee.Techniques.Count != 0)
             {
 
@@ -159,7 +199,7 @@ namespace EngeneerLenRooAspNet.Controllers
                     newCabinet.Employees.Add(changeEmployee);
                 }
                 oldCabinet.Employees.Remove(employee);
-                
+
             }
             else
             {
@@ -170,7 +210,7 @@ namespace EngeneerLenRooAspNet.Controllers
             _context.Cabinets.UpdateRange(newCabinet, oldCabinet);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Info", "Home", new {id = model.SelectCabinetId});
+            return RedirectToAction("Info", "Home", new { id = model.SelectCabinetId });
         }
 
 
@@ -188,14 +228,17 @@ namespace EngeneerLenRooAspNet.Controllers
                     .Include(cab => cab.Cabinet)
                     .Include(th => th.Techniques)
                     .FirstOrDefaultAsync(emp => emp.Id == id);
-                _context.Techniques.RemoveRange(employee.Techniques);
-                _context.Employees.Remove(employee);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Info", "Home", new {id = cabinetId});
+                var user = await _userManager.FindByIdAsync(id);
+                if (user != null && employee != null)
+                {
+                    _context.Techniques.RemoveRange(employee.Techniques);
+                    _context.Employees.Remove(employee);
+                    await _context.SaveChangesAsync();
+                    await _userManager.DeleteAsync(user);
+                }
             }
 
-            return RedirectToAction("Info", "Home", new {id = cabinetId});
+            return RedirectToAction("Info", "Home", new { id = cabinetId });
         }
 
         private async Task<object> IsValidFormEmployeeAsync(Employee employee)
@@ -203,7 +246,7 @@ namespace EngeneerLenRooAspNet.Controllers
             List<string> errorsModel = new List<string>();
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == employee.CabinetId))
             {
-                return RedirectToAction("Info", "Home", new {id = employee.CabinetId});
+                return RedirectToAction("Info", "Home", new { id = employee.CabinetId });
             }
 
             if (await _context.Employees.AnyAsync(emp => emp.Fio == employee.Fio.Trim() && emp.CabinetId != null))

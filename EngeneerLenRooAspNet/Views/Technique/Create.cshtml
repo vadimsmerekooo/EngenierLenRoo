@@ -49,6 +49,14 @@
             <span asp-validation-for="Technique.IpComputer" class="text-danger"></span>
         </div>
     }
+    @if(Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc)
+    {
+        <div class="form-group">
+            <label asp-for="Technique.MapNubmer"></label>
+            <input asp-for="Technique.MapNubmer" class="form-control">
+            <span asp-validation-for="Technique.MapNubmer" class="text-danger"></span>
+        </div>
+    }
     <div class="form-group">
         <label asp-for="Technique.Name"></label>
         <input asp-for="Technique.Name" class="form-control">
@@ -73,6 +81,11 @@
             </div>
         </div>
     }
+    <div class="form-group">
+        <label asp-for="Technique.Description"></label>
+        <textarea asp-for="Technique.Description" class="form-control"></textarea>
+        <span asp-validation-for="Technique.Description" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-success">Добавить</button>
     <a class="btn btn-primary" asp-action="Index" asp-route-empId="@Model.Employee.Id">Отмена</a>
 </form>

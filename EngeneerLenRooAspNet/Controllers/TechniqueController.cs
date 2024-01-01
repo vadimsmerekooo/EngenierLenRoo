@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EngeneerLenRooAspNet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class TechniqueController : Controller
     {
         private MainContext _context;

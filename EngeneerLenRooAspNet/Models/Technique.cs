@@ -13,11 +13,15 @@ namespace EngeneerLenRooAspNet.Models
         public string Name { get; set; }
         [Display(Name = "Тип техники")]
         public TypeTechnique TypeTechnique { get; set; }
+        [Display(Name = "Номер пк в мап")]
+        public int MapNubmer { get; set; }
         [Display(Name = "Ip")]
         public int? IpComputer { get; set; }
         [Display(Name = "Инвентарный номер. Если техника стоит на 071 счете, поле можно оставить пустым!")]
         public long InventoryNumber { get; set; }
-        
+        [Display(Name = "Дополнительно")]
+        public string Description { get; set; }
+
         public string EmployeeId { get; set; }
         public Employee Employee { get; set; }
     }

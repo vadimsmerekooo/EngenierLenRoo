@@ -180,6 +180,7 @@
                                             <th scope="col">Название</th>
                                             <th scope="col">Дата сдачи</th>
                                             <th scope="col">Дата выдачи</th>
+                                            <th scope="col">Приехал с заправки</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -189,6 +190,7 @@
                                                 <th>@cartridge.Name</th>
                                                 <th>@cartridge.DateGet</th>
                                                 <th>@cartridge.DateSet</th>
+                                                <th>@(cartridge.Case.DateGet != null ? "Да" : "Нет")</th>
                                             </tr>
                                         }
                                     </tbody>

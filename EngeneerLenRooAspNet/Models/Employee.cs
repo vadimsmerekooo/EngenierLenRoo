@@ -6,7 +6,6 @@ namespace EngeneerLenRooAspNet.Models
 {
     public class Employee
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         [Display(Name = "Фамилия Имя Отчество")]
         [Required(ErrorMessage = "Поле ФИО не заполнено!")]

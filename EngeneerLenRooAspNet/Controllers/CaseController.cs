@@ -1,5 +1,6 @@
 ﻿using EngeneerLenRooAspNet.Areas.Identity.Data;
 using EngeneerLenRooAspNet.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace EngeneerLenRooAspNet.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CaseController : Controller
     {
         MainContext _context;

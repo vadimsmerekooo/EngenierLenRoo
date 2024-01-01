@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EngeneerLenRooAspNet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -106,6 +106,7 @@ namespace EngeneerLenRooAspNet.Controllers
             Cabinet cabinet = await _context.Cabinets
                 .Include(s => s.Employees)
                 .ThenInclude(c => c.Cartridges)
+                .ThenInclude(c => c.Case)
                 .Include(th => th.Employees)
                 .ThenInclude(s => s.Techniques)
                 .FirstOrDefaultAsync(cabinetId => cabinetId.Id == id);
@@ -332,45 +333,8 @@ namespace EngeneerLenRooAspNet.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-<<<<<<< HEAD
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-=======
-            int countPcMap = 68;
-            List<Employee> model = new List<Employee>();
-            var emp = await _context.Employees.Include(x => x.Cabinet)
-                .Where(n => n.NumberPcMap != null && n.NumberPcMap != 0).OrderBy(x => x.NumberPcMap).ToListAsync();
-
-
-            for (int i = 1; i < countPcMap + 1; i++)
-            {
-                if (emp.Any(pc => pc.NumberPcMap == i))
-                {
-                    model.Add(emp.FirstOrDefault(c => c.NumberPcMap == i));
-                }
-                else
-                {
-                    model.Add(new Employee()
-                    {
-                        NumberPcMap = i,
-                        Fio = "",
-                        Cabinet = new Cabinet()
-                        {
-                            Name = ""
-                        }
-                    });
-                }
-            }
-            
-            
-            AboutWorkingViewModel viewModel = new AboutWorkingViewModel()
-            {
-                Employees = model
-            };
-
-            return View(viewModel);
->>>>>>> 51d028eb037e5712b15a13b9aa5c689964543c01
         }
-
 
         private bool IsContains(object firstParm, string search)
         {

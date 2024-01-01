@@ -81,6 +81,11 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    if (User.IsInRole("admin"))
+                    {
+                        return RedirectToAction("Index", "Chat");
+                    }
+                    else
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -94,7 +99,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Ваш профиль заблокирован.");
                     return RedirectToPage("./Lockout");
                 }
                 else
