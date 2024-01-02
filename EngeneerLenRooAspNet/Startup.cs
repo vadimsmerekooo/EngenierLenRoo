@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EngeneerLenRooAspNet
 {
@@ -25,6 +26,7 @@ namespace EngeneerLenRooAspNet
             //Configuration.Bind("DomainConfig", new DomainConfig());
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,6 +43,7 @@ namespace EngeneerLenRooAspNet
             }
 
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -48,11 +51,13 @@ namespace EngeneerLenRooAspNet
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Chat}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chat-center");
                 endpoints.MapRazorPages();
             });
             

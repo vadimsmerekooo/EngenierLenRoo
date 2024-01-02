@@ -27,7 +27,6 @@ namespace EngeneerLenRooAspNet.Controllers
             _context = context;
         }
 
-        [Route("")]
         [Route("cabinets")]
         public async Task<IActionResult> Index() => View(
                 await _context.Cabinets

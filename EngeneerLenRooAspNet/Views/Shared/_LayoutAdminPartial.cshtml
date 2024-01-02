@@ -1,0 +1,25 @@
+﻿<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Кабинеты</a>
+        <a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="Index">Управление ролями</a>
+        <a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="UserList">Управление пользователями</a>
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Отчет</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ReportTechniqueCheck">Отчет по технике</a>
+        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Report071Check">Отчет по 071 счету</a>
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Расширенный поиск</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchExtended">Поиск по сотрудникам</a>
+        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchTechnique">Поиск по технике</a>
+    </div>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-light" asp-area="" asp-controller="Case" asp-action="Index">Управление картриджами</a>
+</li>
