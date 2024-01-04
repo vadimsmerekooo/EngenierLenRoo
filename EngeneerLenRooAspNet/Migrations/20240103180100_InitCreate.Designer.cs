@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EngeneerLenRooAspNet.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20211012054812_change model Employee")]
-    partial class changemodelEmployee
+    [Migration("20240103180100_InitCreate")]
+    partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,21 @@ namespace EngeneerLenRooAspNet.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ChatEmployee", b =>
+                {
+                    b.Property<string>("ChatUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ChatsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatUsersId", "ChatsId");
+
+                    b.HasIndex("ChatsId");
+
+                    b.ToTable("ChatUsers");
+                });
 
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Cabinet", b =>
                 {
@@ -31,38 +46,144 @@ namespace EngeneerLenRooAspNet.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Phone")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cabinets");
                 });
 
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Cartridge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CaseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateGet")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateSet")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsIssued")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CaseId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Cartridges");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Case", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateGet")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateSend")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("NumberAct")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cases");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("TypeChat")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chats");
+                });
+
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Employee", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CabinetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CabinetId1")
+                    b.Property<string>("CabinetId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IpComputer")
+                    b.HasKey("Id");
+
+                    b.HasIndex("CabinetId");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ChatId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserMap")
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PathFile")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CabinetId1");
+                    b.HasIndex("ChatId");
 
-                    b.ToTable("Employees");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Technique", b =>
@@ -71,13 +192,23 @@ namespace EngeneerLenRooAspNet.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("InventoryNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("IpComputer")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MapNubmer")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypeTechnique")
@@ -290,13 +421,58 @@ namespace EngeneerLenRooAspNet.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ChatEmployee", b =>
+                {
+                    b.HasOne("EngeneerLenRooAspNet.Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("ChatUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EngeneerLenRooAspNet.Models.Chat", null)
+                        .WithMany()
+                        .HasForeignKey("ChatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Cartridge", b =>
+                {
+                    b.HasOne("EngeneerLenRooAspNet.Models.Case", "Case")
+                        .WithMany("Cartridge")
+                        .HasForeignKey("CaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EngeneerLenRooAspNet.Models.Employee", "Employee")
+                        .WithMany("Cartridges")
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Case");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Employee", b =>
                 {
                     b.HasOne("EngeneerLenRooAspNet.Models.Cabinet", "Cabinet")
                         .WithMany("Employees")
-                        .HasForeignKey("CabinetId1");
+                        .HasForeignKey("CabinetId");
 
                     b.Navigation("Cabinet");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Message", b =>
+                {
+                    b.HasOne("EngeneerLenRooAspNet.Models.Chat", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId");
+
+                    b.HasOne("EngeneerLenRooAspNet.Models.Employee", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Technique", b =>
@@ -364,8 +540,20 @@ namespace EngeneerLenRooAspNet.Migrations
                     b.Navigation("Employees");
                 });
 
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Case", b =>
+                {
+                    b.Navigation("Cartridge");
+                });
+
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.Chat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Employee", b =>
                 {
+                    b.Navigation("Cartridges");
+
                     b.Navigation("Techniques");
                 });
 #pragma warning restore 612, 618

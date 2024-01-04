@@ -1,18 +1,40 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model EngeneerLenRooAspNet.Models.ChangeRoleViewModel
+@{
+    ViewData["Title"] = $"Изменение ролей для пользователя {Model.UserEmail}";
+}
 
-<h2>Изменение ролей для пользователя @Model.UserEmail</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            Управление
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-action="UserList">Список пользователей</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Изменение ролей доступа пользователя @Model.UserEmail</li>
+    </ol>
+</nav>
+<nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
+    <a class="btn btn-success" asp-area="" asp-action="Create"><i class="bi bi-plus-square"></i> Добавить роль</a>
+    <a class="btn btn-info my-2" asp-action="UserList">Список пользователей</a>
+</nav>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" name="userId" value="@Model.UserId" />
-    <div class="form-group">
-        @foreach (IdentityRole role in Model.AllRoles)
-        {
-            <input type="checkbox" name="roles" value="@role.Name"
-            @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" name="userId" value="@Model.UserId" />
+            <div class="form-group">
+                @foreach (IdentityRole role in Model.AllRoles)
+                {
+                    <input type="checkbox" name="roles" value="@role.Name"
+                    @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />
 
-            @role.Name <br />
-        }
+                    @role.Name <br />
+                }
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-danger" asp-action="UserList">Отмена</a>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-</form>
+</div>

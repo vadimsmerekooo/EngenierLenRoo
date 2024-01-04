@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using EngeneerLenRooAspNet.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
 {
@@ -16,15 +18,18 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly MainContext _context;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            MainContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -83,10 +88,10 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     if (User.IsInRole("admin"))
                     {
-                        return RedirectToAction("Index", "Chat");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
-                    return LocalRedirect(returnUrl);
+                        return RedirectToAction("Index", "Chat");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -104,6 +109,30 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    var users = await _context.Users.ToListAsync();
+                    foreach (var userItem in users)
+                    {
+                        if(userItem.Email.Split(' ').First() == Input.Email)
+                        {
+                            result = await _signInManager.PasswordSignInAsync(userItem.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+                            if (result.Succeeded)
+                            {
+                                _logger.LogInformation("User logged in.");
+                                if (User.IsInRole("admin"))
+                                {
+                                    return RedirectToAction("Index", "Home");
+                                }
+                                else
+                                    return RedirectToAction("Index", "Chat");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError(string.Empty, "Ошибка авторизации. Введен неверный логин или пароль.");
+                                return Page();
+                            }
+                        }
+                    }
                     ModelState.AddModelError(string.Empty, "Ошибка авторизации. Введен неверный логин или пароль.");
                     return Page();
                 }

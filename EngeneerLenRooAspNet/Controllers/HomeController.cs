@@ -65,14 +65,14 @@ namespace EngeneerLenRooAspNet.Controllers
                 result.Where(cab => cab.Name.Contains(search.Trim(), StringComparison.OrdinalIgnoreCase)).ToList());
         }
 
-        [Route("cabinet/create")]
+        [Route("/cabinet/create")]
         public IActionResult Create()
         {
             return View();
         }
 
 
-        [Route("cabinet/create")]
+        [Route("/cabinet/create")]
         [HttpPost]
         public async Task<IActionResult> Create(Cabinet cabinet)
         {
@@ -94,7 +94,7 @@ namespace EngeneerLenRooAspNet.Controllers
             return View(cabinet);
         }
 
-        [Route("cabinet/info")]
+        [Route("/cabinet/info")]
         public async Task<IActionResult> Info(string id)
         {
             if (!await _context.Cabinets.AnyAsync(cabinetId => cabinetId.Id == id))
@@ -113,7 +113,7 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
 
-        [Route("cabinet/employee/search")]
+        [Route("/cabinet/employee/search")]
         public async Task<IActionResult> SearchInCab(string id, string search)
         {
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == id))
@@ -172,7 +172,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
 
-        [Route("cabinet/edit")]
+        [Route("cabinets/edit")]
         public async Task<IActionResult> Edit(string id)
         {
             if (!await _context.Cabinets.AnyAsync(cab => cab.Id == id))
@@ -187,7 +187,7 @@ namespace EngeneerLenRooAspNet.Controllers
             return View(cabinet);
         }
 
-        [Route("cabinet/edit/model")]
+        [Route("cabinets/edit/model")]
         public async Task<IActionResult> EditModel(Cabinet cabinet)
         {
             if (ModelState.IsValid)
@@ -203,7 +203,7 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
 
-        [Route("cabinet/delete")]
+        [Route("cabinets/delete")]
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
@@ -230,7 +230,7 @@ namespace EngeneerLenRooAspNet.Controllers
         }
 
 
-        [Route("info-071-check")]
+        [Route("/info-071-check")]
         public async Task<IActionResult> Report071Check()
         {
 
@@ -287,7 +287,7 @@ namespace EngeneerLenRooAspNet.Controllers
             return View(viewModel);
         }
 
-        [Route("info-technique-check")]
+        [Route("/info-technique-check")]
         public async Task<IActionResult> ReportTechniqueCheck()
         {
             Report071CheckViewModel viewModel = new Report071CheckViewModel();

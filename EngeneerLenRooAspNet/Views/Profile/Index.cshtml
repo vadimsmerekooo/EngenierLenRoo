@@ -1,0 +1,142 @@
+﻿@using EngeneerLenRooAspNet.Services;
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Профиль";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Профиль</li>
+    </ol>
+</nav>
+<div class="card border-warning">
+    <div class="card-body">
+        @*<div class="row">
+            <div class="col">
+                <h5>@Model.Employee.Fio</h5>
+            </div>
+            <div class="col text-light text-right">
+                <a class="btn btn-success" asp-controller="Technique" asp-action="Index" asp-route-cabId="@Model.Employee.Cabinet.Id" asp-route-empId="@Model.Employee.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить технику">
+                    <i class="bi bi-plus"></i> <i class="bi bi-laptop"></i>
+                </a>
+                <a class="btn btn-primary" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id" data-toggle="tooltip" data-placement="bottom" title="Изменить сотрудника">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a class="btn btn-info" asp-controller="Employee" asp-action="ChangeCabinet" asp-route-id="@employee.Id" data-toggle="tooltip" data-placement="bottom" title="Переместить сотрудника в другой кабинет">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+                <form id="employee_@(Model.Employee.Id)_delete_form" style="display: inline-block;" method="post" asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.Id" asp-route-cabinetId="@employee.CabinetId">
+                    <a href="javascript:{}" onclick="document.getElementById('employee_@(employee.Id)_delete_form').submit();" class="btn btn-danger">
+                        <i class="bi bi-person-x-fill"></i>
+                    </a>
+                </form>
+            </div>
+        </div>
+        <hr />*@
+        <div class="card text-center">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#pc-@Model.Employee.Id.Substring(0, 4)" aria-selected="true">
+                        Системные блоки (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Pc))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#monitor-@Model.Employee.Id.Substring(0, 4)">
+                        Мониторы (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Monitor))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#printer-@Model.Employee.Id.Substring(0, 4)">
+                        Принтеры (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Printer))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#mouse-@Model.Employee.Id.Substring(0, 4)">
+                        Мышки (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Mouse))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#keyboard-@Model.Employee.Id.Substring(0, 4)">
+                        Клавиатуры (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Keyboard))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#ups-@Model.Employee.Id.Substring(0, 4)">
+                        ИБП (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Ups))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#filter-@Model.Employee.Id.Substring(0, 4)">
+                        Сетевые фильтры (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Filter))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#modem-@Model.Employee.Id.Substring(0, 4)">
+                        Модем (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Modem))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#other-@Model.Employee.Id.Substring(0, 4)">
+                        Другое (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Other))
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#cartridge-@Model.Employee.Id.Substring(0, 4)">
+                        История картриджей
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="pc-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Pc, Model.Employee.Cabinet.Id, @Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="monitor-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Monitor, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="printer-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Printer, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="mouse-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Mouse, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="keyboard-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Keyboard, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="ups-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Ups, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="filter-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Filter, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="modem-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Modem, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="other-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Other, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="cartridge-@Model.Employee.Id.Substring(0, 4)">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Дата сдачи</th>
+                                <th scope="col">Дата выдачи</th>
+                                <th scope="col">Приехал с заправки</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cartridge in Model.Employee.Cartridges.OrderByDescending(d => d.DateGet))
+                            {
+                                <tr class="@(cartridge.IsIssued ? "table-success" : "")">
+                                    <th>@cartridge.Name</th>
+                                    <th>@cartridge.DateGet</th>
+                                    <th>@cartridge.DateSet</th>
+                                    <th>@(cartridge.Case.DateGet != null ? "Да" : "Нет")</th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

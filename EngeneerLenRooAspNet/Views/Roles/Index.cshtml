@@ -1,20 +1,63 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Список ролей доступа";
+}
 
-<h2>Список ролей</h2>
-<table class="table">
-    @foreach (var role in Model)
-    {
-        <tr>
-            <td>@role.Name</td>
-            <td>
-                <form asp-action="Delete" asp-route-id="@role.Id" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        Удалить
-                    </button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
-<a asp-action="Create">Добавить роль</a>
-<a asp-action="UserList">Список пользователей</a>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            Управление
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Список ролей доступа</li>
+    </ol>
+</nav>
+<nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
+    <a class="btn btn-success" asp-area="" asp-action="Create"><i class="bi bi-plus-square"></i> Добавить роль</a>
+    <a class="btn btn-info my-2" asp-action="UserList">Список пользователей</a>
+</nav>
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Роли доступа
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var role in Model)
+                                {
+                                    <tr>
+                                        <th>@role.Name</th>
+                                        <th>
+                                            <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    Удалить
+                                                </button>
+                                            </form>
+                                        </th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

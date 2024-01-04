@@ -17,5 +17,6 @@ namespace EngeneerLenRooAspNet.Models
         public string CabinetId { get; set; }
         public Cabinet Cabinet { get; set; }
         public List<Cartridge> Cartridges { get; set; } = new List<Cartridge>();
+        public virtual List<Chat> Chats { get; set; } = new List<Chat>(); 
     }
 }

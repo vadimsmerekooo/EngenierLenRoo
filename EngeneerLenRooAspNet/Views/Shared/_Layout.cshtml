@@ -31,12 +31,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Chat" asp-action="Index">Общий чат</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Chat" asp-action="Index">История сдачи картриджей</a>
-                            </li>
                             @if (User.IsInRole("admin"))
                             {
                                 <partial name="_LayoutAdminPartial" />
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Index">Профиль</a>
+                                </li>
                             }
                         </ul>
                     }
@@ -57,5 +60,10 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        function scrollToLowerChat() {
+            $('.chatroombox').scrollTop(@int.MaxValue);
+        }
+    </script>
 </body>
 </html>

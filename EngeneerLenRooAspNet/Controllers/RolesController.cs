@@ -23,6 +23,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
         [Route("/roles/create")]
         public IActionResult Create() => View();
+        [Route("/roles/create")]
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
@@ -78,6 +79,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
             return NotFound();
         }
+        [Route("/users/roles/edit")]
         [HttpPost]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {

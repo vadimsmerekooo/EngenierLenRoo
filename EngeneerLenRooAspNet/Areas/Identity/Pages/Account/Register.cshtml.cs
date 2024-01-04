@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using EngeneerLenRooAspNet.Areas.Identity.Data;
+using EngeneerLenRooAspNet.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +23,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly MainContext _context;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
@@ -28,12 +31,14 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            MainContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -79,6 +84,13 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    Employee employee = new Employee()
+                    {
+                        Fio = user.Email,
+                        Id = user.Id
+                    };
+                    _context.Employees.Add(employee);
+                    await _context.SaveChangesAsync();
                     return RedirectToPage("Login");
                 }
                 foreach (var error in result.Errors)

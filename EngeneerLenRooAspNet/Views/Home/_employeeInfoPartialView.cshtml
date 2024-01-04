@@ -10,18 +10,21 @@
                     <div class="card-body">
                         <h6>@technique.Name</h6>
                         <h6>Инв: @technique.InventoryNumber</h6>
-                        @if (technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc
-                   || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Modem
-                   || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+                        @if (User.IsInRole("admin"))
                         {
-                            <h6>Ip: @technique.IpComputer; Номер МАП: @technique.MapNubmer</h6>
+                            @if (technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc
+                       || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Modem
+                       || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+                            {
+                                <h6>Ip: @technique.IpComputer; Номер МАП: @technique.MapNubmer</h6>
+                            }
+                            <p>@technique.Description</p>
+                            <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
+                            <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
+                            <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post">
+                                <a href="javascript:{}" onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
+                            </form>
                         }
-                        <p>@technique.Description</p>
-                        <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
-                        <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
-                        <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post">
-                            <a href="javascript:{}" onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
-                        </form>
                     </div>
                 </div>
             }

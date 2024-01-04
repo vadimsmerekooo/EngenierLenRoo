@@ -1,5 +1,22 @@
 ﻿@model string
+@{
+    ViewData["Title"] = $"Создание новой роли";
+}
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            Управление
+        </li>
+        <li class="breadcrumb-item">
+            <a asp-action="Index">Список ролей</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Создание новой роли</li>
+    </ol>
+</nav>
+<nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
+    <a class="btn btn-info my-2" asp-action="UserList">Список пользователей</a>
+</nav>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Create" method="post">
@@ -8,4 +25,5 @@
         <input name="name" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Добавить</button>
+    <a class="btn btn-danger" asp-action="Index">Отмена</a>
 </form>
