@@ -41,8 +41,10 @@
 .rounded-lg {
     border-radius: 0.5rem;
 }
+.chat-list-body{
+    max-width: 250px;
+}
 .media-body{
-    max-width: 300px;
     flex-wrap: wrap;
     word-wrap: anywhere;
 }

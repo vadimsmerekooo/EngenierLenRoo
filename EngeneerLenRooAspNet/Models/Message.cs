@@ -13,6 +13,7 @@ namespace EngeneerLenRooAspNet.Models
         public string PathFile { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Now;
         public Employee User { get; set; }
+        public Chat Chat { get; set; }
         public StatusMessage Status { get; set; }
     }
     public enum StatusMessage

@@ -1,0 +1,62 @@
+﻿@model ChatViewModel
+<div class="list-group rounded-0">
+    @if (Model.Chats.Count == 0)
+    {
+        <div class="bg-gray px-4 py-2 bg-light">
+            <p class="h6 mb-0 py-1">Список чатов пуст.</p>
+        </div>
+    }
+    @foreach (var chat in Model.Chats)
+    {
+        if (chat.TypeChat is TypeChat.Direct)
+        {
+            <a class="list-group-item list-group-item-action @(Model.ChatActive?.Id == chat.Id ? "active" : "") rounded-0" asp-action="Index" asp-route-id="@chat.Id">
+                <div class="media">
+                    <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                    <div class="media-body chat-list-body ml-4">
+                        <div class="align-items-center justify-content-between mb-1">
+                            <h6 class="mb-0">@chat.ChatUsers.FirstOrDefault(u => u.Id != Model.User.Id).Fio</h6>
+                            @if (chat.Messages.Count != 0)
+                            {
+                                <small class="small font-weight-bold">
+                                    @chat.Messages.OrderByDescending(d => d.DateTime).First()?.DateTime.ToShortDateString()
+                                    @chat.Messages.OrderByDescending(d => d.DateTime).First()?.DateTime.ToShortTimeString()
+                                </small>
+                            }
+                            else
+                            {
+                                <small class="small font-weight-bold">
+                                    Чат пуст.
+                                </small>
+                            }
+                        </div>
+                        @if (chat.Messages.Count != 0)
+                        {
+                            <p class="font-italic mb-0 text-small text-truncate">@chat.Messages.OrderByDescending(d => d.DateTime).First().Text</p>
+                        }
+                    </div>
+                </div>
+            </a>
+        }
+    }
+    <div class="bg-gray px-4 py-2 bg-light">
+        <p class="h5 mb-0 py-1">Пользователи</p>
+    </div>
+
+    @foreach (var employee in Model.Employees)
+    {
+        if (!Model.Chats.Any(u => u.ChatUsers.Any(emp => emp.Fio == employee.Fio)) && !employee.Fio.Contains("admin"))
+        {
+            <a class="list-group-item list-group-item-action rounded-0" asp-action="CreateDialog" asp-route-employeeId="@employee.Id">
+                <div class="media">
+                    <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                    <div class="media-body chat-list-body ml-4">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <h6 class="mb-0">@employee.Fio</h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>

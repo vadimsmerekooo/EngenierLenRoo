@@ -22,7 +22,7 @@
 <div class="container py-5 px-4">
     <div class="row rounded-lg overflow-hidden shadow">
         <!-- Users box-->
-        <div class="col-5 px-0">
+        <div class="col-4 px-0">
             <div class="bg-white">
 
                 <div class="bg-gray px-4 py-2 bg-light">
@@ -44,13 +44,14 @@
                                 <a class="list-group-item list-group-item-action @(Model.ChatActive?.Id == chat.Id ? "active" : "") rounded-0" asp-action="Index" asp-route-id="@chat.Id">
                                     <div class="media">
                                         <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                        <div class="media-body ml-4">
+                                        <div class="media-body chat-list-body ml-4">
                                             <div class="align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">@chat.ChatUsers.FirstOrDefault(u => u.Id != Model.User.Id).Fio</h6>
                                                 @if (chat.Messages.Count != 0)
                                                 {
                                                     <small class="small font-weight-bold">
-                                                        @chat.Messages.OrderByDescending(d => d.DateTime).Last()?.DateTime.ToShortDateString();
+                                                        @chat.Messages.OrderByDescending(d => d.DateTime).First()?.DateTime.ToShortDateString()
+                                                        @chat.Messages.OrderByDescending(d => d.DateTime).First()?.DateTime.ToShortTimeString()
                                                     </small>
                                                 }
                                                 else
@@ -62,7 +63,7 @@
                                             </div>
                                             @if (chat.Messages.Count != 0)
                                             {
-                                                <p class="font-italic mb-0 text-small">@chat.Messages.OrderByDescending(d => d.DateTime).Last().Text</p>
+                                                <p class="font-italic mb-0 text-small text-truncate">@chat.Messages.OrderByDescending(d => d.DateTime).First().Text</p>
                                             }
                                         </div>
                                     </div>
@@ -80,7 +81,7 @@
                                 <a class="list-group-item list-group-item-action rounded-0" asp-action="CreateDialog" asp-route-employeeId="@employee.Id">
                                     <div class="media">
                                         <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                        <div class="media-body ml-4">
+                                        <div class="media-body chat-list-body ml-4">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">@employee.Fio</h6>
                                             </div>
@@ -94,7 +95,7 @@
             </div>
         </div>
         <!-- Chat Box-->
-        <div class="col-7 px-0">
+        <div class="col-8 px-0">
             @if (Model.ChatActive != null && Model.ChatActive.Messages.Count != null)
             {
                 <div id="chatroom@(Model.ChatActive.Id)" class="px-4 py-5 chat-box bg-light chatroombox">
@@ -111,24 +112,26 @@
                     {
                         if (message.User == Model.User)
                         {
-                            <div class="media w-50 ml-auto mb-3">
+                            <div class="media w-75 ml-auto mb-3">
                                 <div class="media-body">
                                     <div class="bg-primary rounded py-2 px-3 mb-2">
-                                        <p class="text-small mb-0 text-white">Test which is a new approach to have all solutions</p>
+                                        <p class="text-small mb-0 text-white">@message.Text</p>
+                                        <i id="messageId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                                     </div>
-                                    <p class="small text-muted">12:00 PM | Aug 13</p>
+                                    <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
                                 </div>
                             </div>
                         }
                         else
                         {
-                            <div class="media w-50 mb-3">
+                            <div class="media w-75 mb-3">
                                 <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
                                 <div class="media-body ml-3">
-                                    <div class="bg-light rounded py-2 px-3 mb-2">
-                                        <p class="text-small mb-0 text-muted">Test which is a new approach all solutions</p>
+                                    <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                        <p class="text-small mb-0 text-muted">@message.Text</p>
+                                        <i id="messageId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                                     </div>
-                                    <p class="small text-muted">12:00 PM | Aug 13</p>
+                                    <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
                                 </div>
                             </div>
                         }
@@ -146,12 +149,14 @@
             }
             @if (Model.ChatActive != null && Model.ChatActive.Messages.Count != null)
             {
-                <div id="inputForm" class="input-group">
-                    <input id="messageinput" type="text" placeholder="Введите сообщение..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-                    <div class="input-group-append">
-                        <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+                <form>
+                    <div id="inputForm" class="input-group">
+                        <input id="messageinput" type="text" placeholder="Введите сообщение..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                        <div class="input-group-append">
+                            <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+                        </div>
                     </div>
-                </div>
+                </form>
             }
 
         </div>
@@ -160,7 +165,7 @@
 
 <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
 <script>
-    
+
 
     const hubConnection = new signalR.HubConnectionBuilder()
         .withUrl("/chat-center")
@@ -168,25 +173,36 @@
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
-    hubConnection.on("Send", function (roomName, UserSend, userName, message, date) {
+    hubConnection.on("Read", function (messageId) {
+        const checkMessage = `bi-check-all`;
+        const uncheckMessage = `bi-check`;
+        let message = document.getElementById("messageId" + messageId);
+        if (message !== null) {
+            message.classList.remove(uncheckMessage);
+            message.classList.add(checkMessage);
+        }
+    });
+    hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date) {
         const messageOut = `<div class="media w-50 ml-auto mb-3">
-                                            <div class="media-body">
-                                                <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                    <p class="text-small mb-0 text-white">${message}</p>
-                                                </div>
-                                                <p class="small text-muted">${date}</p>
-                                            </div>
-                                        </div>`;
+                                                    <div class="media-body">
+                                                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                                                                <p class="text-small mb-0 text-white">${message}</p>
+                                                    <i id="messageId${messageId}" class="bi bi-check"></i>
+                                                        </div>
+                                                        <p class="small text-muted">${date}</p>
+                                                    </div>
+                                                </div>`;
 
         const messageIn = `<div class="media w-50 mb-3">
-                                            <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                            <div class="media-body ml-3">
-                                                    <div class="rounded py-2 px-3 mb-2 shadow">
-                                                    <p class="text-small mb-0 text-muted">${message}</p>
-                                                </div>
-                                                <p class="small text-muted">${date}</p>
-                                            </div>
-                                        </div>`;
+                                                    <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                                    <div class="media-body ml-3">
+                                                            <div class="rounded py-2 px-3 mb-2 shadow">
+                                                                <p class="text-small mb-0 text-muted">${message}</p>
+                                                        <i id="messageId${messageId}" class="bi bi-check"></i>
+                                                        </div>
+                                                        <p class="small text-muted">${date}</p>
+                                                    </div>
+                                                </div>`;
 
 
         var elem = document.getElementById("chatempty");
