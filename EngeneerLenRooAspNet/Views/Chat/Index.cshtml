@@ -29,115 +29,16 @@
                     <p class="h5 mb-0 py-1">Чаты</p>
                 </div>
 
-                <div class="messages-box">
-                    <div class="list-group rounded-0">
-                        @if (Model.Chats.Count == 0)
-                        {
-                            <div class="bg-gray px-4 py-2 bg-light">
-                                <p class="h6 mb-0 py-1">Список чатов пуст.</p>
-                            </div>
-                        }
-                        @foreach (var chat in Model.Chats)
-                        {
-                            if (chat.TypeChat is TypeChat.Direct)
-                            {
-                                <a class="list-group-item list-group-item-action @(Model.ChatActive?.Id == chat.Id ? "active" : "") rounded-0" asp-action="Index" asp-route-id="@chat.Id">
-                                    <div class="media">
-                                        <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                        <div class="media-body chat-list-body ml-4">
-                                            <div class="align-items-center justify-content-between mb-1">
-                                                <h6 class="mb-0">@chat.ChatUsers.FirstOrDefault(u => u.Id != Model.User.Id).Fio</h6>
-                                                @if (chat.Messages.Count != 0)
-                                                {
-                                                    <small class="small font-weight-bold">
-                                                        @chat.Messages.OrderByDescending(d => d.DateTime).First()?.DateTime.ToShortDateString()
-                                                        @chat.Messages.OrderByDescending(d => d.DateTime).First()?.DateTime.ToShortTimeString()
-                                                    </small>
-                                                }
-                                                else
-                                                {
-                                                    <small class="small font-weight-bold">
-                                                        Чат пуст.
-                                                    </small>
-                                                }
-                                            </div>
-                                            @if (chat.Messages.Count != 0)
-                                            {
-                                                <p class="font-italic mb-0 text-small text-truncate">@chat.Messages.OrderByDescending(d => d.DateTime).First().Text</p>
-                                            }
-                                        </div>
-                                    </div>
-                                </a>
-                            }
-                        }
-                        <div class="bg-gray px-4 py-2 bg-light">
-                            <p class="h5 mb-0 py-1">Пользователи</p>
-                        </div>
-
-                        @foreach (var employee in Model.Employees)
-                        {
-                            if (!Model.Chats.Any(u => u.ChatUsers.Any(emp => emp.Fio == employee.Fio)) && !employee.Fio.Contains("admin"))
-                            {
-                                <a class="list-group-item list-group-item-action rounded-0" asp-action="CreateDialog" asp-route-employeeId="@employee.Id">
-                                    <div class="media">
-                                        <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                        <div class="media-body chat-list-body ml-4">
-                                            <div class="d-flex align-items-center justify-content-between mb-1">
-                                                <h6 class="mb-0">@employee.Fio</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            }
-                        }
-                    </div>
+                <div id="messagesbox" class="messages-box">
+                    <partial name="_messagesBoxPartial" model="Model" />
                 </div>
             </div>
         </div>
         <!-- Chat Box-->
-        <div class="col-8 px-0">
+        <div id="chatroombox" class="col-8 px-0">
             @if (Model.ChatActive != null && Model.ChatActive.Messages.Count != null)
             {
-                <div id="chatroom@(Model.ChatActive.Id)" class="px-4 py-5 chat-box bg-light chatroombox">
-
-                    @if (Model.ChatActive.Messages.Count == 0)
-                    {
-                        <div id="chatempty" class="card text-center">
-                            <div class="card-body">
-                                Диалог пуст. Напишите первое сообщение.
-                            </div>
-                        </div>
-                    }
-                    @foreach (var message in Model.ChatActive?.Messages)
-                    {
-                        if (message.User == Model.User)
-                        {
-                            <div class="media w-75 ml-auto mb-3">
-                                <div class="media-body">
-                                    <div class="bg-primary rounded py-2 px-3 mb-2">
-                                        <p class="text-small mb-0 text-white">@message.Text</p>
-                                        <i id="messageId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
-                                    </div>
-                                    <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="media w-75 mb-3">
-                                <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                <div class="media-body ml-3">
-                                    <div class="bg-light rounded py-2 px-3 mb-2 shadow">
-                                        <p class="text-small mb-0 text-muted">@message.Text</p>
-                                        <i id="messageId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
-                                    </div>
-                                    <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
-                                </div>
-                            </div>
-                        }
-                    }
-
-                </div>
+                <partial name="_chatBoxPartial" model="Model" />
             }
             else
             {
@@ -147,18 +48,6 @@
                     </div>
                 </div>
             }
-            @if (Model.ChatActive != null && Model.ChatActive.Messages.Count != null)
-            {
-                <form>
-                    <div id="inputForm" class="input-group">
-                        <input id="messageinput" type="text" placeholder="Введите сообщение..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-                        <div class="input-group-append">
-                            <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                </form>
-            }
-
         </div>
     </div>
 </div>
@@ -184,25 +73,25 @@
     });
     hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date) {
         const messageOut = `<div class="media w-50 ml-auto mb-3">
-                                                    <div class="media-body">
-                                                        <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                                <p class="text-small mb-0 text-white">${message}</p>
-                                                    <i id="messageId${messageId}" class="bi bi-check"></i>
-                                                        </div>
-                                                        <p class="small text-muted">${date}</p>
-                                                    </div>
-                                                </div>`;
+                                                            <div class="media-body">
+                                                                <div class="bg-primary rounded py-2 px-3 mb-2">
+                                                                        <p class="text-small mb-0 text-white">${message}</p>
+                                                            <i id="messageId${messageId}" class="bi bi-check"></i>
+                                                                </div>
+                                                                <p class="small text-muted">${date}</p>
+                                                            </div>
+                                                        </div>`;
 
         const messageIn = `<div class="media w-50 mb-3">
-                                                    <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                                    <div class="media-body ml-3">
-                                                            <div class="rounded py-2 px-3 mb-2 shadow">
-                                                                <p class="text-small mb-0 text-muted">${message}</p>
-                                                        <i id="messageId${messageId}" class="bi bi-check"></i>
-                                                        </div>
-                                                        <p class="small text-muted">${date}</p>
-                                                    </div>
-                                                </div>`;
+                                                            <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                                            <div class="media-body ml-3">
+                                                                    <div class="rounded py-2 px-3 mb-2 shadow">
+                                                                        <p class="text-small mb-0 text-muted">${message}</p>
+                                                                <i id="messageId${messageId}" class="bi bi-check"></i>
+                                                                </div>
+                                                                <p class="small text-muted">${date}</p>
+                                                            </div>
+                                                        </div>`;
 
 
         var elem = document.getElementById("chatempty");
@@ -210,6 +99,19 @@
             elem.parentNode.removeChild(elem);
         }
 
+        let chatRoom = document.getElementsByClassName('chatroomboxActive')[0];
+        if (chatRoom != undefined || chatRoom != null) {
+            const chatActiveId = chatRoom.id.replace('chatroom', '')
+            if (chatActiveId != null && chatActiveId == roomName) {
+                messagesBoxPartialUpdateDirect(roomName);
+            }
+            else {
+                messagesBoxPartialUpdateDirect(chatActiveId);
+            }
+        }
+        else {
+            messagesBoxPartialUpdate();
+        }
 
         if (`@Model.User.Id` === UserSend) {
             document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOut);

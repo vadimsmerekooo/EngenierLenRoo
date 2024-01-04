@@ -54,8 +54,9 @@ namespace EngeneerLenRooAspNet.Controllers
         {
             Chat chat = await _context.Chats.Include(m => m.Messages).ThenInclude(u => u.User).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == id);
             Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
+            if (chat == null || user == null) return null;
             var userDirectId = chat.ChatUsers.FirstOrDefault(c => c.Id != user.Id).Id;
-            if(chat == null || user is null || userDirectId == null)
+            if(userDirectId == null)
                 return RedirectToAction(nameof(Index));
             Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
             if (userDirect is null)
@@ -112,6 +113,84 @@ namespace EngeneerLenRooAspNet.Controllers
             await _context.SaveChangesAsync();
             int chatId = _context.Chats.FirstOrDefaultAsync(c => c.ChatUsers.Contains(userDirect) && c.ChatUsers.Contains(user)).Result.Id;
             return RedirectToAction(nameof(Index), new { id = chatId});
+        }
+        [Route("chat/MessageBoxPartialUpdateDirect/{idchat}")]
+        [HttpGet]
+        public async Task<PartialViewResult> MessageBoxPartialUpdateDirect(string idChat)
+        {
+            Chat chat = await _context.Chats.Include(m => m.Messages).ThenInclude(u => u.User).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
+            Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
+            if(chat == null)
+            {
+                return MessageBoxPartialUpdate().Result;
+            }
+            var userDirectId = chat.ChatUsers.FirstOrDefault(c => c.Id != user.Id).Id;
+            if (user is null || userDirectId == null)
+                return null;
+            Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
+            if (userDirect is null)
+                return null;
+
+            ChatViewModel model = new ChatViewModel()
+            {
+                User = user,
+                Employees = await _context.Employees.Where(u => u.Fio != this.User.Identity.Name).ToListAsync(),
+                ChatActive = chat,
+                UserDirect = userDirect,
+                Chats = _context.Chats
+                .Where(c => c.ChatUsers
+                    .Contains(user))
+                .Include(u => u.ChatUsers)
+                .Include(m => m.Messages)
+                .OrderByDescending(m => m.Messages
+                    .Max(d => d.DateTime))
+                .ToList()
+            };
+            return PartialView("_messagesBoxPartial", model);
+        }
+        [Route("chat/MessageBoxPartialUpdate")]
+        [HttpGet]
+        public async Task<PartialViewResult> MessageBoxPartialUpdate()
+        {
+            Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
+            if (user is null)
+                return null;
+
+
+            ChatViewModel model = new ChatViewModel()
+            {
+                User = user,
+                Employees = await _context.Employees.Where(u => u.Fio != this.User.Identity.Name).ToListAsync(),
+                Chats = _context.Chats
+                .Where(c => c.ChatUsers
+                    .Contains(user))
+                .Include(c => c.ChatUsers)
+                .Include(m => m.Messages)
+                .OrderByDescending(m => m.Messages.Max(d => d.DateTime))
+                .ToList()
+            };
+            return PartialView("_messagesBoxPartial", model);
+        }
+        [Route("chat/ChatLoad/{idChat}")]
+        [HttpGet]
+        public async Task<IActionResult> ChatLoad(string idChat)
+        {
+            Chat chat = await _context.Chats.Include(m => m.Messages).ThenInclude(u => u.User).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
+            Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
+            var userDirectId = chat.ChatUsers.FirstOrDefault(c => c.Id != user.Id).Id;
+            if (chat == null || user is null || userDirectId == null)
+                return null;
+            Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
+            if (userDirect is null)
+                return null;
+
+            ChatViewModel model = new ChatViewModel()
+            {
+                User = user,
+                ChatActive = chat,
+                UserDirect = userDirect
+            };
+            return PartialView("_chatBoxPartial", model);
         }
     }
 }
