@@ -1,15 +1,8 @@
-﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:21097",
-      "sslPort": 44330
-    }
-  },
+{
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "workingDirectory": "F:\\GitHub\\EngenierLenRoo\\EngeneerLenRooAspNet\\bin",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -17,12 +10,19 @@
     },
     "EngeneerLenRooAspNet": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": false,
-      "applicationUrl": "https://localhost:6101;http://localhost:6100",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://localhost:6101;http://localhost:6100"
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:21097",
+      "sslPort": 44330
     }
   }
 }

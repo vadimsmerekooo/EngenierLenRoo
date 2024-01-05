@@ -197,44 +197,65 @@ namespace EngeneerLenRooAspNet.Controllers
         [HttpGet]
         public async Task<IActionResult> ChatLoad(string idChat)
         {
-            Chat chat = await _context.Chats.Include(m => m.Messages).ThenInclude(u => u.User).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
-            Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
-            var userDirectId = chat.ChatUsers.FirstOrDefault(c => c.Id != user.Id).Id;
-            if (chat == null || user is null || userDirectId == null)
-                return null;
-            Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
-            if (userDirect is null)
-                return null;
-
-
-            var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user.Id);
-
-            List<Message> messagesRead = new List<Message>();
-            foreach (var messageItem in chat.Messages)
+            try
             {
-                if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
+                DayOfWeek date = DateTime.Now.DayOfWeek;
+                Chat chat = await _context.Chats
+                    .AsNoTracking()
+                    .Include(m => m.Messages.Where(d => d.DateTime.DayOfWeek == date))
+                        .ThenInclude(u => u.User)
+                    .Include(u => u.ChatUsers)
+                    .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
+                Employee user = await _context.Employees
+                    .FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
+
+                var userDirectId = chat.ChatUsers
+                    .FirstOrDefault(c => c.Id != user.Id).Id;
+
+                if (chat == null || user is null || userDirectId == null)
+                    return null;
+
+                Employee userDirect = await _context.Employees
+                    .FirstOrDefaultAsync(emp => emp.Id == userDirectId);
+
+                if (userDirect is null)
+                    return null;
+
+
+                var userSend = await _context.Employees
+                    .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+                List<Message> messagesRead = new List<Message>();
+                foreach (var messageItem in chat.Messages)
                 {
-                    messageItem.Status = StatusMessage.Read;
-                    messagesRead.Add(messageItem);
+                    if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
+                    {
+                        messageItem.Status = StatusMessage.Read;
+                        messagesRead.Add(messageItem);
+                    }
                 }
+                foreach (var messageRead in messagesRead)
+                {
+                    await _hubContext.Clients.All.SendAsync("Read", messageRead.Id)
+                        .ConfigureAwait(true);
+                }
+                _context.Chats.UpdateRange(chat);
+                await _context.SaveChangesAsync();
+
+
+
+                ChatViewModel model = new ChatViewModel()
+                {
+                    User = user,
+                    ChatActive = chat,
+                    UserDirect = userDirect
+                };
+                return PartialView("_chatBoxPartial", model);
             }
-            foreach (var messageRead in messagesRead)
+            catch(Exception ex)
             {
-                await _hubContext.Clients.All.SendAsync("Read", messageRead.Id)
-                    .ConfigureAwait(true);
+                return NotFound();
             }
-            _context.Chats.UpdateRange(chat);
-            await _context.SaveChangesAsync();
-
-
-
-            ChatViewModel model = new ChatViewModel()
-            {
-                User = user,
-                ChatActive = chat,
-                UserDirect = userDirect
-            };
-            return PartialView("_chatBoxPartial", model);
         }
     }
 }

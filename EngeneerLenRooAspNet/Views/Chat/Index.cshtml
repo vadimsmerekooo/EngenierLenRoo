@@ -29,7 +29,7 @@
                     <p class="h5 mb-0 py-1">Чаты</p>
                 </div>
 
-                <div id="messagesbox" class="messages-box">
+                <div id="messagesbox" class="messages-box" style="overflow-x: hidden;">
                     <partial name="_messagesBoxPartial" model="Model" />
                 </div>
             </div>
@@ -42,8 +42,8 @@
             }
             else
             {
-                <div class="card text-center">
-                    <div class="card-body">
+                <div class="col d-flex justify-content-center align-items-center h-100">
+                    <div>
                         Выберите чат для начала диалога.
                     </div>
                 </div>
@@ -86,25 +86,25 @@
 
     hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date) {
         const messageOut = `<div class="media w-50 ml-auto mb-3">
-                                                                <div class="media-body">
-                                                                    <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                                            <p class="text-small mb-0 text-white">${message}</p>
-                                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                                    </div>
-                                                                    <p class="small text-muted">${date}</p>
-                                                                </div>
-                                                            </div>`;
+                                                                                <div class="media-body">
+                                                                                    <div class="bg-primary rounded py-2 px-3 mb-2">
+                                                                                            <p class="text-small mb-0 text-white">${message}</p>
+                                                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                                    </div>
+                                                                                    <p class="small text-muted">${date}</p>
+                                                                                </div>
+                                                                            </div>`;
 
         const messageIn = `<div class="media w-50 mb-3">
-                                                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                                                <div class="media-body ml-3">
-                                                                        <div class="rounded py-2 px-3 mb-2 shadow">
-                                                                            <p class="text-small mb-0 text-muted">${message}</p>
-                                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                                    </div>
-                                                                    <p class="small text-muted">${date}</p>
-                                                                </div>
-                                                            </div>`;
+                                                                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                                                                <div class="media-body ml-3">
+                                                                                        <div class="rounded py-2 px-3 mb-2 shadow">
+                                                                                            <p class="text-small mb-0 text-muted">${message}</p>
+                                                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                                    </div>
+                                                                                    <p class="small text-muted">${date}</p>
+                                                                                </div>
+                                                                            </div>`;
 
 
         var elem = document.getElementById("chatempty");
