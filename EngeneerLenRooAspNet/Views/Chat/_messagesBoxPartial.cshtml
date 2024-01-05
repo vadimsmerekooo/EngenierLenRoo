@@ -1,5 +1,6 @@
 ﻿@using System.Globalization;
 @model ChatViewModel
+<p id="userId" class="d-none">@Model.User.Id</p>
 <div class="list-group rounded-0">
     @if (Model.Chats.Count == 0)
     {
@@ -25,7 +26,7 @@
                                 <h6 class="mb-0 float-left">@chat.ChatUsers.FirstOrDefault(u => u.Id != Model.User.Id).GetShortFio()</h6>
                                 @if (message != null && message.Status == StatusMessage.NotRead && message.User != Model.User)
                                 {
-                                    <i id="chatNewMessageId@(chat.Id)" class="bi bi-envelope-plus-fill text-info float-end"></i>
+                                    <i id="chatNewMessageId@(chat.Id)" class="bi bi-envelope-plus-fill @(Model?.ChatActive?.Id == chat.Id ? "text-light" : "text-info")  float-end"></i>
                                 }
                                 else
                                 {
@@ -40,11 +41,11 @@
                                 <div class="row">
                                     @if (message.User == Model.User)
                                     {
-                                        <p class="col-8 font-italic mb-0 text-small text-truncate float-start">Вы: @(message.Text)</p>
+                                        <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">Вы: @(message.Text)</p>
                                     }
                                     else
                                     {
-                                        <p class="col-8 font-italic mb-0 text-small text-truncate float-start">@(message.Text)</p>
+                                        <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">@(message.Text)</p>
                                     }
                                     <p class="col-4 mb-0 text-small float-end">
                                         @(message.DateTime.ToString("ddd, H:mm", new CultureInfo("ru-RU")))

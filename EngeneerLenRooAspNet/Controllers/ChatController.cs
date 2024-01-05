@@ -199,10 +199,8 @@ namespace EngeneerLenRooAspNet.Controllers
         {
             try
             {
-                DayOfWeek date = DateTime.Now.DayOfWeek;
                 Chat chat = await _context.Chats
-                    .AsNoTracking()
-                    .Include(m => m.Messages.Where(d => d.DateTime.DayOfWeek == date))
+                    .Include(m => m.Messages.Where(d => d.DateTime.Day >= (DateTime.Now.AddDays(-1)).Day))
                         .ThenInclude(u => u.User)
                     .Include(u => u.ChatUsers)
                     .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));

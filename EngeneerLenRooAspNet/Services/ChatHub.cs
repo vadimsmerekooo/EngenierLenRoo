@@ -71,5 +71,10 @@ namespace EngeneerLenRooAspNet.Services
             _context.Chats.UpdateRange(chat);
             await _context.SaveChangesAsync();
         }
+        public async Task Print(string room, string user)
+        {
+            await Clients.All.SendAsync("Print", room, user)
+                .ConfigureAwait(true);
+        }
     }
 }
