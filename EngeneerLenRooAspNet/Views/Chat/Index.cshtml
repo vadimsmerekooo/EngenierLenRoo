@@ -62,36 +62,49 @@
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
-    hubConnection.on("Read", function (messageId) {
+    hubConnection.on("Read", function (messageId, idChat) {
         const checkMessage = `bi-check-all`;
         const uncheckMessage = `bi-check`;
         let message = document.getElementById("messageId" + messageId);
+        let messageBox = document.getElementById("messageBoxId" + messageId);
         if (message !== null) {
+            console.log('mess id' + messageId);
             message.classList.remove(uncheckMessage);
             message.classList.add(checkMessage);
         }
+        if (messageBox !== null) {
+            console.log('mess box id' + messageId);
+            messageBox.classList.remove(uncheckMessage);
+            messageBox.classList.add(checkMessage);
+        }
+        var elem = document.getElementById("chatNewMessageId" + idChat);
+        if (elem !== null) {
+            elem.parentNode.removeChild(elem);
+        }
     });
+
+
     hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date) {
         const messageOut = `<div class="media w-50 ml-auto mb-3">
-                                                            <div class="media-body">
-                                                                <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                                        <p class="text-small mb-0 text-white">${message}</p>
-                                                            <i id="messageId${messageId}" class="bi bi-check"></i>
+                                                                <div class="media-body">
+                                                                    <div class="bg-primary rounded py-2 px-3 mb-2">
+                                                                            <p class="text-small mb-0 text-white">${message}</p>
+                                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                    </div>
+                                                                    <p class="small text-muted">${date}</p>
                                                                 </div>
-                                                                <p class="small text-muted">${date}</p>
-                                                            </div>
-                                                        </div>`;
+                                                            </div>`;
 
         const messageIn = `<div class="media w-50 mb-3">
-                                                            <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                                            <div class="media-body ml-3">
-                                                                    <div class="rounded py-2 px-3 mb-2 shadow">
-                                                                        <p class="text-small mb-0 text-muted">${message}</p>
-                                                                <i id="messageId${messageId}" class="bi bi-check"></i>
+                                                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                                                <div class="media-body ml-3">
+                                                                        <div class="rounded py-2 px-3 mb-2 shadow">
+                                                                            <p class="text-small mb-0 text-muted">${message}</p>
+                                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                    </div>
+                                                                    <p class="small text-muted">${date}</p>
                                                                 </div>
-                                                                <p class="small text-muted">${date}</p>
-                                                            </div>
-                                                        </div>`;
+                                                            </div>`;
 
 
         var elem = document.getElementById("chatempty");
@@ -130,6 +143,8 @@
         document.getElementById("messageinput").value = '';
         document.getElementById("messageinput").focus();
     }
-
+    function Read(user, room) {
+        hubConnection.invoke("Read", user, room);
+    }
     hubConnection.start();
 </script>

@@ -34,18 +34,25 @@ namespace EngeneerLenRooAspNet.Controllers
             if (user is null)
                 return NotFound();
 
+            var chats = await _context.Chats
+                .Include(c => c.ChatUsers)
+                .Where(c => c.ChatUsers
+                    .Any(u => u.Id == user.Id))
+                .ToListAsync();
+            foreach (var chatItem in chats)
+            {
+                Message lastMessage = await _context.Messages.Include(c => c.Chat).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                if (lastMessage != null)
+                    chatItem.Messages.Add(lastMessage);
+                else
+                    chatItem.Messages = new List<Message>();
+            }
 
             ChatViewModel model = new ChatViewModel()
             {
                 User = user,
                 Employees = await _context.Employees.Where(u => u.Fio != this.User.Identity.Name).ToListAsync(),
-                Chats = _context.Chats
-                .Where(c => c.ChatUsers
-                    .Contains(user))
-                .Include(c => c.ChatUsers)
-                .Include(m => m.Messages)
-                .OrderByDescending(m => m.Messages.Max(d => d.DateTime))
-                .ToList()
+                Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
             };
             return View(model);
         }
@@ -56,11 +63,23 @@ namespace EngeneerLenRooAspNet.Controllers
             Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
             if (chat == null || user == null) return null;
             var userDirectId = chat.ChatUsers.FirstOrDefault(c => c.Id != user.Id).Id;
-            if(userDirectId == null)
+            if (userDirectId == null)
                 return RedirectToAction(nameof(Index));
             Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
             if (userDirect is null)
                 return RedirectToAction(nameof(Index));
+
+            var chats = await _context.Chats
+                .Include(c => c.ChatUsers)
+                .Where(c => c.ChatUsers
+                    .Any(u => u.Id == user.Id))
+                .ToListAsync();
+            foreach (var chatItem in chats)
+            {
+                Message lastMessage = await _context.Messages.Include(c => c.Chat).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                if (lastMessage != null)
+                    chatItem.Messages.Add(lastMessage);
+            }
 
             ChatViewModel model = new ChatViewModel()
             {
@@ -68,19 +87,12 @@ namespace EngeneerLenRooAspNet.Controllers
                 Employees = await _context.Employees.Where(u => u.Fio != this.User.Identity.Name).ToListAsync(),
                 ChatActive = chat,
                 UserDirect = userDirect,
-                Chats = _context.Chats
-                .Where(c => c.ChatUsers
-                    .Contains(user))
-                .Include(u => u.ChatUsers)
-                .Include(m => m.Messages)
-                .OrderByDescending(m => m.Messages
-                    .Max(d => d.DateTime))
-                .ToList()
+                Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
             };
             List<Message> messagesRead = new List<Message>();
             foreach (var messageItem in chat.Messages)
             {
-                if (messageItem.User != user)
+                if (messageItem.User != user && messageItem.Status != StatusMessage.Read)
                 {
                     messageItem.Status = StatusMessage.Read;
                     messagesRead.Add(messageItem);
@@ -107,12 +119,12 @@ namespace EngeneerLenRooAspNet.Controllers
             Chat chat = new Chat()
             {
                 TypeChat = TypeChat.Direct,
-                ChatUsers = new List<Employee>() { user,  userDirect },
+                ChatUsers = new List<Employee>() { user, userDirect },
             };
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
             int chatId = _context.Chats.FirstOrDefaultAsync(c => c.ChatUsers.Contains(userDirect) && c.ChatUsers.Contains(user)).Result.Id;
-            return RedirectToAction(nameof(Index), new { id = chatId});
+            return RedirectToAction(nameof(Index), new { id = chatId });
         }
         [Route("chat/MessageBoxPartialUpdateDirect/{idchat}")]
         [HttpGet]
@@ -120,7 +132,7 @@ namespace EngeneerLenRooAspNet.Controllers
         {
             Chat chat = await _context.Chats.Include(m => m.Messages).ThenInclude(u => u.User).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
             Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
-            if(chat == null)
+            if (chat == null)
             {
                 return MessageBoxPartialUpdate().Result;
             }
@@ -131,20 +143,26 @@ namespace EngeneerLenRooAspNet.Controllers
             if (userDirect is null)
                 return null;
 
+
+            var chats = await _context.Chats
+                .Include(c => c.ChatUsers)
+                .Where(c => c.ChatUsers
+                    .Any(u => u.Id == user.Id))
+                .ToListAsync();
+            foreach (var chatItem in chats)
+            {
+                Message lastMessage = await _context.Messages.OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                if (lastMessage != null)
+                    chatItem.Messages.Add(lastMessage);
+            }
+
             ChatViewModel model = new ChatViewModel()
             {
                 User = user,
                 Employees = await _context.Employees.Where(u => u.Fio != this.User.Identity.Name).ToListAsync(),
                 ChatActive = chat,
                 UserDirect = userDirect,
-                Chats = _context.Chats
-                .Where(c => c.ChatUsers
-                    .Contains(user))
-                .Include(u => u.ChatUsers)
-                .Include(m => m.Messages)
-                .OrderByDescending(m => m.Messages
-                    .Max(d => d.DateTime))
-                .ToList()
+                Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
             };
             return PartialView("_messagesBoxPartial", model);
         }
@@ -155,19 +173,23 @@ namespace EngeneerLenRooAspNet.Controllers
             Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
             if (user is null)
                 return null;
-
+            var chats = await _context.Chats
+                .Include(c => c.ChatUsers)
+                .Where(c => c.ChatUsers
+                    .Any(u => u.Id == user.Id))
+                .ToListAsync();
+            foreach (var chatItem in chats)
+            {
+                Message lastMessage = await _context.Messages.Include(c => c.Chat).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                if (lastMessage != null)
+                    chatItem.Messages.Add(lastMessage);
+            }
 
             ChatViewModel model = new ChatViewModel()
             {
                 User = user,
                 Employees = await _context.Employees.Where(u => u.Fio != this.User.Identity.Name).ToListAsync(),
-                Chats = _context.Chats
-                .Where(c => c.ChatUsers
-                    .Contains(user))
-                .Include(c => c.ChatUsers)
-                .Include(m => m.Messages)
-                .OrderByDescending(m => m.Messages.Max(d => d.DateTime))
-                .ToList()
+                Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
             };
             return PartialView("_messagesBoxPartial", model);
         }
@@ -183,6 +205,28 @@ namespace EngeneerLenRooAspNet.Controllers
             Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
             if (userDirect is null)
                 return null;
+
+
+            var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            List<Message> messagesRead = new List<Message>();
+            foreach (var messageItem in chat.Messages)
+            {
+                if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
+                {
+                    messageItem.Status = StatusMessage.Read;
+                    messagesRead.Add(messageItem);
+                }
+            }
+            foreach (var messageRead in messagesRead)
+            {
+                await _hubContext.Clients.All.SendAsync("Read", messageRead.Id)
+                    .ConfigureAwait(true);
+            }
+            _context.Chats.UpdateRange(chat);
+            await _context.SaveChangesAsync();
+
+
 
             ChatViewModel model = new ChatViewModel()
             {

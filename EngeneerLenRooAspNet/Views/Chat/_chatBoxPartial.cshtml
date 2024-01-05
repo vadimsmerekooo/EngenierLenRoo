@@ -18,7 +18,7 @@
                 <div class="media-body">
                     <div class="bg-primary rounded py-2 px-3 mb-2">
                         <p class="text-small mb-0 text-white">@message.Text</p>
-                        <i id="messageId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
+                        <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                     </div>
                     <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="media-body ml-3">
                     <div class="bg-light rounded py-2 px-3 mb-2 shadow">
                         <p class="text-small mb-0 text-muted">@message.Text</p>
-                        <i id="messageId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
+                        <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                     </div>
                     <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
                 </div>
@@ -40,15 +40,14 @@
     }
 
 </div>
-<form>
-    <div id="inputForm" class="input-group">
-        <input id="messageinput" type="text" placeholder="Введите сообщение..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-        <div class="input-group-append">
-            <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
-        </div>
+
+<div id="inputForm" class="input-group">
+    <input id="messageinput" type="text" placeholder="Введите сообщение..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light" onkeydown="sendMessageInput();" onclick="Read('@Model.User.Id', `@Model.ChatActive.Id`);">
+    <div class="input-group-append">
+        <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
     </div>
-</form>
+</div>
 <script>
     scrollToLowerChat();
-    messagesBoxPartialUpdateDirect(@Model.ChatActive.Id);
+    Read('@Model.User.Id', `@Model.ChatActive.Id`);
 </script>

@@ -65,17 +65,33 @@
         function scrollToLowerChat() {
             $('.chatroombox').scrollTop(@int.MaxValue);
         }
-        function messagesBoxPartialUpdateDirect(idChatDirect) {            
-            $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdateDirect","Chat")/'+idChatDirect);
+        function messagesBoxPartialUpdateDirect(idChatDirect) {
+            $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdateDirect","Chat")/' + idChatDirect);
         }
         function messagesBoxPartialUpdate() {
             $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdate","Chat")');
         }
-        function chatLoad(idChat){
-            $('#chatroombox').load('@Url.ActionLink("ChatLoad", "Chat")/'+idChat);
+        function chatLoad(idChat) {
+            $('#chatroombox').load('@Url.ActionLink("ChatLoad", "Chat")/' + idChat);
+            var chatsList = document.getElementsByClassName('chatListItem');
+            for (var i = 0; i < chatsList.length; i++) {
+                chatsList[i].classList.remove('active');
+            }
+            document.getElementById('chatListItem' + idChat).classList.add('active');
+            var elem = document.getElementById("chatNewMessageId" + idChat);
+            if (elem !== null) {
+                elem.parentNode.removeChild(elem);
+            }
+        }
+        function sendMessageInput() {
+            document.getElementById("messageinput").onkeydown = function (e) {
+                if (e.keyCode == 13) {
+                    document.getElementById("sendButton").click();
+                }
+            }
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
-    
+
 </body>
 </html>
