@@ -72,7 +72,7 @@
     {
         if (!Model.Chats.Any(u => u.ChatUsers.Any(emp => emp.Fio == employee.Fio)) && !employee.Fio.Contains("admin"))
         {
-            <a class="list-group-item list-group-item-action rounded-0" asp-action="CreateDialog" asp-route-employeeId="@employee.Id">
+            <a class="list-group-item list-group-item-action rounded-0" href="" onclick="chatCreate(@employee.Id);">
                 <div class="media">
                     <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
                     <div class="media-body chat-list-body ml-4">

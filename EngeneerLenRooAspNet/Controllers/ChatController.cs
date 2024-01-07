@@ -108,13 +108,14 @@ namespace EngeneerLenRooAspNet.Controllers
             return View(model);
         }
         [Route("chat/dialog/create")]
+        [HttpGet]
         public async Task<IActionResult> CreateDialog(string employeeId)
         {
             var userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == employeeId);
             var user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
             if (userDirect == null && user == null)
             {
-                return RedirectToAction(nameof(Index));
+                return PartialView("_errorLoadPartial", "Ошибка при создании диалога.");
             }
             Chat chat = new Chat()
             {
@@ -124,7 +125,7 @@ namespace EngeneerLenRooAspNet.Controllers
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
             int chatId = _context.Chats.FirstOrDefaultAsync(c => c.ChatUsers.Contains(userDirect) && c.ChatUsers.Contains(user)).Result.Id;
-            return RedirectToAction(nameof(Index), new { id = chatId });
+            return RedirectToAction(nameof(ChatLoad), new { id = chatId.ToString() });
         }
         [Route("chat/MessageBoxPartialUpdateDirect/{idchat}")]
         [HttpGet]
@@ -211,13 +212,13 @@ namespace EngeneerLenRooAspNet.Controllers
                     .FirstOrDefault(c => c.Id != user.Id).Id;
 
                 if (chat == null || user is null || userDirectId == null)
-                    return null;
+                    return PartialView("_errorLoadPartial", "Ошибка при загрузке диалога.");
 
                 Employee userDirect = await _context.Employees
                     .FirstOrDefaultAsync(emp => emp.Id == userDirectId);
 
                 if (userDirect is null)
-                    return null;
+                    return PartialView("_errorLoadPartial", "Ошибка при загрузке диалога.");
 
 
                 var userSend = await _context.Employees
@@ -252,7 +253,7 @@ namespace EngeneerLenRooAspNet.Controllers
             }
             catch(Exception ex)
             {
-                return NotFound();
+                return PartialView("_errorLoadPartial", "Ошибка при загрузке диалога.");
             }
         }
     }
