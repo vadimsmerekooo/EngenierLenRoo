@@ -40,14 +40,14 @@
                 <div class="bg-light rounded py-2 px-3 mb-2 shadow">
                     @if (Model.ChatActive.TypeChat is TypeChat.Group)
                     {
-                        <p class="">@message.User.GetShortFio()</p>
+                        <p class="text-small text-muted">@message.User.GetShortFio()</p>
                     }
                     <p class="mb-0">@message.Text</p>
                     <div class="d-flex align-items-center">
                         <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                         @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
                         {
-                            <p class="text-small text-muted">Администратор</p>
+                            <div class="text-muted text-small">Администратор</div>
                         }
                     </div>
 

@@ -18,8 +18,8 @@ namespace EngeneerLenRooAspNet.Controllers
     [Authorize]
     public class ChatController : Controller
     {
-        private UserManager<IdentityUser> _userManager;
-        private MainContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly MainContext _context;
         readonly IHubContext<ChatHub> _hubContext;
         public ChatController(UserManager<IdentityUser> userManager, MainContext context, IHubContext<ChatHub> hubContext)
         {
@@ -49,16 +49,18 @@ namespace EngeneerLenRooAspNet.Controllers
                     chatItem.Messages = new List<Message>();
             }
 
-            ChatViewModel model = new ChatViewModel()
-            {
-                User = user,
-                Employees = await _context.Employees
+            List<Employee> employees = await _context.Employees
                 .Include(c => c.Chats)
                     .ThenInclude(c => c.ChatUsers)
-                .Where(u => u.Fio != this.User.Identity.Name
+                .Where(u => u.Id != user.Id
                 && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
                 && !u.Fio.Contains("admin"))
-                .ToListAsync(),
+                .ToListAsync();
+
+            ChatViewModel model = new()
+            {
+                User = user,
+                Employees = employees,
                 Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
             };
             return View(model);
@@ -132,10 +134,11 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 return PartialView("_errorLoadPartial", "Ошибка при создании диалога.");
             }
-            Chat chat = new Chat()
+            Chat chat = new()
             {
                 TypeChat = TypeChat.Direct,
                 ChatUsers = new List<Employee>() { user, userDirect },
+                Name = " "
             };
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
@@ -147,7 +150,7 @@ namespace EngeneerLenRooAspNet.Controllers
         public async Task<IActionResult> CreateGroup(string name, List<string> employees)
         {
             Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
-            List<Employee> employeesList = new List<Employee>
+            List<Employee> employeesList = new()
             {
                 user
             };
@@ -158,7 +161,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 employeesList.Add(employee);
             }
 
-            Chat chat = new Chat()
+            Chat chat = new()
             {
                 ChatUsers = employeesList,
                 EmployeeAdministrator = user,
@@ -202,18 +205,26 @@ namespace EngeneerLenRooAspNet.Controllers
                 if (lastMessage != null)
                     chatItem.Messages.Add(lastMessage);
             }
-
-            ChatViewModel model = new ChatViewModel()
-            {
-                User = user,
-                Employees = await _context.Employees
+            List<Employee> employees = await _context.Employees
                 .Include(c => c.Chats)
                     .ThenInclude(c => c.ChatUsers)
                 .Where(u => u.Id != user.Id
                 && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
-                && !u.Fio.Contains("admin")
-                && !search.IsNullOrEmpty() ? u.Fio.Contains(search) : false)
-                .ToListAsync(),
+                && !u.Fio.Contains("admin"))
+                .ToListAsync();
+            if (search != null && search != string.Empty)
+            {
+                employees = employees.Where(e => e.Fio.Contains(search)).ToList();
+                chats = chats.Where(c => c.ChatUsers
+                .FirstOrDefault(emp => emp.Id != user.Id).Fio.Contains(search, StringComparison.OrdinalIgnoreCase) 
+                || c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) 
+                && c != chat)
+                    .ToList();
+            }
+            ChatViewModel model = new()
+            {
+                User = user,
+                Employees = employees,
                 ChatActive = chat,
                 UserDirect = userDirect,
                 Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
@@ -241,17 +252,22 @@ namespace EngeneerLenRooAspNet.Controllers
                     chatItem.Messages.Add(lastMessage);
             }
 
-            ChatViewModel model = new ChatViewModel()
-            {
-                User = user,
-                Employees = await _context.Employees
+            List<Employee> employees = await _context.Employees
                 .Include(c => c.Chats)
                     .ThenInclude(c => c.ChatUsers)
                 .Where(u => u.Id != user.Id
                 && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
-                && !u.Fio.Contains("admin")
-                && !search.IsNullOrEmpty() ? u.Fio.Contains(search) : false)
-                .ToListAsync(),
+                && !u.Fio.Contains("admin"))
+                .ToListAsync();
+            if (search != null && search != string.Empty)
+            {
+                employees = employees.Where(e => e.Fio.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+                chats = chats.Where(c => c.ChatUsers.FirstOrDefault(emp => emp.Id != user.Id).Fio.Contains(search, StringComparison.OrdinalIgnoreCase) || c.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            ChatViewModel model = new()
+            {
+                User = user,
+                Employees = employees,
                 Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
             };
             return PartialView("_messagesBoxPartial", model);
@@ -290,7 +306,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 var userSend = await _context.Employees
                     .FirstOrDefaultAsync(u => u.Id == user.Id);
 
-                List<Message> messagesRead = new List<Message>();
+                List<Message> messagesRead = new();
                 foreach (var messageItem in chat.Messages)
                 {
                     if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
@@ -309,7 +325,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
 
-                ChatViewModel model = new ChatViewModel()
+                ChatViewModel model = new()
                 {
                     User = user,
                     ChatActive = chat,
@@ -319,7 +335,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 };
                 return PartialView("_chatBoxPartial", model);
             }
-            catch (Exception ex)
+            catch
             {
                 return PartialView("_errorLoadPartial", "Ошибка при загрузке диалога.");
             }
@@ -360,7 +376,7 @@ namespace EngeneerLenRooAspNet.Controllers
 
 
 
-                ChatViewModel model = new ChatViewModel()
+                ChatViewModel model = new()
                 {
                     User = user,
                     ChatActive = chat,
@@ -370,7 +386,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 };
                 return PartialView("_loadMessage", model);
             }
-            catch (Exception ex)
+            catch
             {
                 return PartialView("_errorLoadPartial", "Ошибка при загрузке диалога.");
             }

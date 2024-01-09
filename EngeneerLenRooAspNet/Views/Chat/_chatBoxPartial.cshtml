@@ -2,28 +2,28 @@
 @model ChatViewModel
 
 <div class="input-group shadow-sm p-1">
-    <div class="col d-flex align-items-center">
+    <div class="col">
+    </div>
+    <div class="col text-center">
+
         @if (Model.ChatActive.TypeChat == TypeChat.Direct)
         {
-            <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-            <div>
+            <div class="pl-3">
                 @Model.UserDirect.GetShortFio()
-                Каб:
-                @Model.UserDirect.Cabinet.Name
             </div>
 
         }
         else
         {
-            <img src="~/img/resource/direct-icon.png" alt="user" width="50" class="rounded-circle">
-            <div class="pl-3 align-items-center">
+            <div class="pl-3 d-block">
                 @Model.ChatActive.Name
-                <p class="text-muted">Участников: @Model.ChatActive.ChatUsers.Count()</p>
+                <a href="#" data-toggle="modal" data-target="#usersChatModalCenter" class="text-small text-muted">@Model.ChatActive.ChatUsers.Count() участника</a>
             </div>
         }
     </div>
-    <div class="col float-right">
-        <i class="bi bi-search text-primary btn btn-outline-primary"></i>
+    <div class="col text-end">
+        <i class="bi bi-three-dots"></i>
+        <img src="~/img/resource/@(Model.ChatActive.TypeChat is TypeChat.Direct ? "user": "direct")-icon.png" alt="user" width="30" class="rounded-circle">
     </div>
 </div>
 <div id="chatroom@(Model.ChatActive.Id)" class="px-4 py-5 chat-box bg-light chatroombox chatroomboxActive">
@@ -43,9 +43,14 @@
 <div id="inputForm" class="input-group shadow-lg">
     <input id="messageinput" type="text" placeholder="Введите сообщение..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light" onkeydown="sendMessageInput(`@Model.ChatActive.Id`,'@Model.User.Id');" onclick="Read('@Model.User.Id', `@Model.ChatActive.Id`);">
     <div class="input-group-append">
+        <input class="d-none" type="file" id="fileUploadInput" name="fileUploadInput" accept="image/*,.pdf,.txt,.doc,.docx,.zip,.rar,.exe" />
+        <button id="fileUploadButton" type="button" class="btn btn-link bg-light" onclick="document.getElementById('fileUploadInput').click();"><i class="bi bi-paperclip"></i></button>
+    </div>
+    <div class="input-group-append">
         <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link bg-light"> <i class="bi bi-send"></i></button>
     </div>
 </div>
+<partial name="_chatUsersPartial" model="Model"/>
 <script>
     scrollToLowerChat();
     Read('@Model.User.Id', `@Model.ChatActive.Id`);

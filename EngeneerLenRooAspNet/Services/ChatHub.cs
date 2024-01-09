@@ -11,7 +11,7 @@ namespace EngeneerLenRooAspNet.Services
 {
     public class ChatHub : Hub
     {
-        private MainContext _context;
+        private readonly MainContext _context;
         public ChatHub(MainContext context)
         {
             _context = context;
@@ -36,15 +36,15 @@ namespace EngeneerLenRooAspNet.Services
                 };
                 await _context.Messages.AddAsync(messageModel);
                 await _context.SaveChangesAsync();
-                await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString())
+                await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString(), chat.TypeChat.ToString(), chat.EmployeeAdministrator.Id)
                     .ConfigureAwait(true);
             }
             else
             {
-                await Clients.All.SendAsync("Send", room, user, userName, "Error send Message", DateTime.Now.ToShortTimeString())
+                await Clients.All.SendAsync("Send", room, user, userName, "Error send Message", DateTime.Now.ToShortTimeString(), chat.TypeChat, chat.EmployeeAdministrator.Id)
                     .ConfigureAwait(true);
             }
-            Read(user, room);
+            await Read(user, room);
         }
         public async Task Read(string user, string room)
         {
@@ -54,7 +54,7 @@ namespace EngeneerLenRooAspNet.Services
                .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(room));
             var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user);
 
-            List<Message> messagesRead = new List<Message>();
+            List<Message> messagesRead = new();
             foreach (var messageItem in chat.Messages)
             {
                 if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)

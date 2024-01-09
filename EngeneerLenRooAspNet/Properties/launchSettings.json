@@ -2,7 +2,6 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "workingDirectory": "F:\\GitHub\\EngenierLenRoo\\EngeneerLenRooAspNet\\bin",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -21,7 +20,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:21097",
+      "applicationUrl": "https://localhost:44330/",
       "sslPort": 44330
     }
   }

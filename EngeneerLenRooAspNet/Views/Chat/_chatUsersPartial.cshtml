@@ -1,0 +1,50 @@
+﻿@model ChatViewModel
+
+<div class="modal fade" id="usersChatModalCenter" tabindex="-1" role="dialog" aria-labelledby="usersChatModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usersChatModalLongTitle">Участники чата @Model.ChatActive.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="was-validated" asp-controller="Chat" asp-action="CreateGroup" method="post">
+                <div class="modal-body">
+                    <p>Количество: @Model.ChatActive.ChatUsers.Count()</p>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var emp in Model.ChatActive.ChatUsers)
+                        {
+                            <li class="list-group-item">
+                                @emp.Fio
+                                @if (Model.ChatActive.EmployeeAdministrator == emp || Model.ChatActive.EmployeeCreate == emp)
+                                {
+                                    <p class="float-end text-small text-muted p-0 m-0">администратор</p>
+                                }
+                                @if ((Model.ChatActive.EmployeeAdministrator == Model.User || Model.ChatActive.EmployeeCreate == Model.User) && emp.Id != Model.User.Id)
+                                {
+                                    <a class="link-danger" href="#">
+                                        <i class="float-end bi bi-x" data-toggle="tooltip" data-placement="right" title="Выгнать из чата"></i>
+                                    </a>
+                                }
+                                @if ((Model.ChatActive.EmployeeAdministrator != Model.User && Model.ChatActive.EmployeeCreate != Model.User) && emp.Id == Model.User.Id)
+                                {
+                                    <a class="link-danger" href="#">
+                                        <i class="float-end bi bi-x" data-toggle="tooltip" data-placement="right" title="Выйти из чата"></i>
+                                    </a>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                    @if (Model.ChatActive.EmployeeAdministrator == Model.User || Model.ChatActive.EmployeeCreate == Model.User)
+                    {
+                        <button type="submit" class="btn btn-danger">Удалить чат</button>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
