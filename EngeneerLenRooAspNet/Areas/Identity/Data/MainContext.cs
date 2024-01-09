@@ -31,6 +31,11 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Data
                 .HasMany(u => u.ChatUsers)
                 .WithMany(c => c.Chats)
                 .UsingEntity(j => j.ToTable("ChatUsers"));
+            modelBuilder.Entity<Chat>()
+                .HasOne(u => u.EmployeeAdministrator);
+            modelBuilder.Entity<Chat>()
+                .HasOne(u => u.EmployeeCreate);
+
             base.OnModelCreating(modelBuilder);
         }
     }

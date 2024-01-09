@@ -56,7 +56,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 .Include(c => c.Chats)
                     .ThenInclude(c => c.ChatUsers)
                 .Where(u => u.Fio != this.User.Identity.Name
-                && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id)) == 0
+                && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
                 && !u.Fio.Contains("admin"))
                 .ToListAsync(),
                 Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
@@ -143,6 +143,35 @@ namespace EngeneerLenRooAspNet.Controllers
             return RedirectToAction(nameof(ChatLoad), new { id = chatId.ToString() });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateGroup(string name, List<string> employees)
+        {
+            Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
+            List<Employee> employeesList = new List<Employee>
+            {
+                user
+            };
+
+            foreach (var emp in employees)
+            {
+                Employee employee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == emp);
+                employeesList.Add(employee);
+            }
+
+            Chat chat = new Chat()
+            {
+                ChatUsers = employeesList,
+                EmployeeAdministrator = user,
+                EmployeeCreate = user,
+                Name = name,
+                TypeChat = TypeChat.Group
+            };
+            _context.Chats.Add(chat);
+            await _context.SaveChangesAsync();
+            int chatId = _context.Chats.FirstOrDefaultAsync(c => c.Name == name && c.EmployeeCreate == user).Result.Id;
+            return RedirectToAction(nameof(Index));
+        }
+
         [Route("chat/MessageBoxPartialUpdateDirect/{idchat}")]
         [Route("chat/MessageBoxPartialUpdateDirect/{idchat}/{search}")]
         [HttpGet]
@@ -181,7 +210,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 .Include(c => c.Chats)
                     .ThenInclude(c => c.ChatUsers)
                 .Where(u => u.Id != user.Id
-                && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id)) == 0
+                && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
                 && !u.Fio.Contains("admin")
                 && !search.IsNullOrEmpty() ? u.Fio.Contains(search) : false)
                 .ToListAsync(),
@@ -219,7 +248,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 .Include(c => c.Chats)
                     .ThenInclude(c => c.ChatUsers)
                 .Where(u => u.Id != user.Id
-                && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id)) == 0
+                && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
                 && !u.Fio.Contains("admin")
                 && !search.IsNullOrEmpty() ? u.Fio.Contains(search) : false)
                 .ToListAsync(),

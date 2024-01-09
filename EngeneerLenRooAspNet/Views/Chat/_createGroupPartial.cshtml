@@ -1,0 +1,33 @@
+﻿@model List<Employee>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Создание группового чата</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="was-validated" asp-controller="Chat" asp-action="CreateGroup" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Название</label>
+                        <input class="form-control is-invalid" name="name" maxlength="20" placeholder="Введите название чата" required>
+                    </div>
+                    @foreach (var emp in Model)
+                    {
+                        <div class="custom-control custom-switch">
+                            <input id="@emp.Id" type="checkbox" class="custom-control-input" name="employees" value="@emp.Id">
+                            <label class="custom-control-label" for="@emp.Id">@emp.Fio</label>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Создать чат</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

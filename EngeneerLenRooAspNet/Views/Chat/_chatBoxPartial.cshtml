@@ -2,9 +2,25 @@
 @model ChatViewModel
 
 <div class="input-group shadow-sm p-1">
-    <div class="col">
-        <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-        @Model.UserDirect.GetShortFio() Каб: @Model.UserDirect.Cabinet.Name
+    <div class="col d-flex align-items-center">
+        @if (Model.ChatActive.TypeChat == TypeChat.Direct)
+        {
+            <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+            <div>
+                @Model.UserDirect.GetShortFio()
+                Каб:
+                @Model.UserDirect.Cabinet.Name
+            </div>
+
+        }
+        else
+        {
+            <img src="~/img/resource/direct-icon.png" alt="user" width="50" class="rounded-circle">
+            <div class="pl-3 align-items-center">
+                @Model.ChatActive.Name
+                <p class="text-muted">Участников: @Model.ChatActive.ChatUsers.Count()</p>
+            </div>
+        }
     </div>
     <div class="col float-right">
         <i class="bi bi-search text-primary btn btn-outline-primary"></i>
@@ -20,7 +36,7 @@
             </div>
         </div>
     }
-    <partial name="_loadMessage" model="Model"/>
+    <partial name="_loadMessage" model="Model" />
 
 </div>
 

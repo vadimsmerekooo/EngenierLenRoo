@@ -9,7 +9,7 @@
     </ol>
 </nav>
 <nav class="navbar navbar-search navbar-light bg-secondary justify-content-between">
-    <a class="btn btn-success" asp-area="" asp-controller="Chat" asp-action="CreateGroup"><i class="bi bi-plus-square"></i> Создать групповой чат</a>
+    <a href="#" onclick="chatGroupCreate();" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-success"><i class="bi bi-plus-square"></i> Создать групповой чат</a>
 </nav>
 
 @*
@@ -63,7 +63,7 @@
         </div>
     </div>
 </div>
-
+<partial name="_createGroupPartial" model="Model.Employees"/>
 <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
 <script>
 
