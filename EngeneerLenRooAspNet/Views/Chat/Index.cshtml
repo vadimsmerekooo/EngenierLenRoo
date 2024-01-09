@@ -25,8 +25,20 @@
         <div class="col-4 px-0">
             <div class="bg-white">
 
-                <div class="bg-gray px-4 py-2 bg-light">
-                    <p class="h5 mb-0 py-1">Чаты</p>
+                <div class="bg-gray px-4 py-2 bg-light d-flex">
+                    <div class="col-4 p-0">
+                        <p class="h6 mb-0 py-1">Чаты</p>
+                    </div>
+                    <div class="col-8 p-0">
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input id="searchEmployeeInput" onkeypress="search();" type="text" class="form-control" placeholder="Поиск...">
+                                <button type="button" class="btn bg-transparent" style="margin-left: -40px; z-index: 100;" onclick="cleareSearch();">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <div id="messagesbox" class="messages-box" style="overflow-x: hidden;">
@@ -101,25 +113,25 @@
 
     hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date) {
         const messageOut = `<div class="media w-50 ml-auto mb-3">
-                                                                                    <div class="media-body">
-                                                                                        <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                                                                <p class="text-small mb-0 text-white">${message}</p>
-                                                                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                                        <div class="media-body">
+                                                                                            <div class="bg-primary rounded py-2 px-3 mb-2">
+                                                                                                    <p class="text-small mb-0 text-white">${message}</p>
+                                                                                            <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                                            </div>
+                                                                                            <p class="small text-muted">${date}</p>
                                                                                         </div>
-                                                                                        <p class="small text-muted">${date}</p>
-                                                                                    </div>
-                                                                                </div>`;
+                                                                                    </div>`;
 
         const messageIn = `<div class="media w-50 mb-3">
-                                                                                    <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                                                                    <div class="media-body ml-3">
-                                                                                            <div class="rounded py-2 px-3 mb-2 shadow">
-                                                                                                <p class="text-small mb-0 text-muted">${message}</p>
-                                                                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                                        <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                                                                        <div class="media-body ml-3">
+                                                                                                <div class="rounded py-2 px-3 mb-2 shadow">
+                                                                                                    <p class="text-small mb-0 text-muted">${message}</p>
+                                                                                            <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                                            </div>
+                                                                                            <p class="small text-muted">${date}</p>
                                                                                         </div>
-                                                                                        <p class="small text-muted">${date}</p>
-                                                                                    </div>
-                                                                                </div>`;
+                                                                                    </div>`;
 
 
         var elem = document.getElementById("chatempty");

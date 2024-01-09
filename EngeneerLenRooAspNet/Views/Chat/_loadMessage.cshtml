@@ -1,0 +1,49 @@
+﻿@using System.Globalization;
+@model ChatViewModel
+@{
+    int datePreview = 0;
+    int dateActive = 1;
+}
+@if (!Model.IsAllMessageLoad)
+{
+    <a id="loadMessageCount@(Model.CountMessageLoad)" href="#" class="text-muted text-center" onclick="loadChatMessage('@Model.ChatActive.Id','@Model.CountMessageLoad')">
+        Загрузить еще...
+    </a>
+    <div id="loadMessageCountChat@(Model.CountMessageLoad)" style="
+  scroll-margin-bottom: 150px;">
+    </div>
+}
+@foreach (var message in Model.ChatActive?.Messages.OrderBy(d => d.DateTime))
+{
+    dateActive = message.DateTime.DayOfYear;
+    if (dateActive > datePreview)
+    {
+        <hr class="hr-text" data-content="@(message.DateTime.ToString("D", new CultureInfo("ru-RU")))">
+    }
+    if (message.User == Model.User)
+    {
+        <div class="media ml-auto mb-3" style="width: 65%;">
+            <div class="media-body">
+                <div class="bg-primary rounded py-2 px-3 mb-2">
+                    <p class="text-small mb-0 text-white">@message.Text</p>
+                    <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
+                </div>
+                <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="media w-75 mb-3">
+            <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+            <div class="media-body ml-3">
+                <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                    <p class="text-small mb-0 text-muted">@message.Text</p>
+                    <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
+                </div>
+                <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
+            </div>
+        </div>
+    }
+    datePreview = message.DateTime.DayOfYear;
+}

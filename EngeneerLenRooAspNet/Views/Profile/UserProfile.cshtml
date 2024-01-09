@@ -1,11 +1,11 @@
 ﻿@using EngeneerLenRooAspNet.Services;
 @model ProfileViewModel
 @{
-    ViewData["Title"] = "Профиль";
+    ViewData["Title"] = "Профиль пользователя";
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Профиль</li>
+        <li class="breadcrumb-item active" aria-current="page">Профиль @Model.User.UserName</li>
     </ol>
 </nav>
 <div class="card border-warning">
@@ -14,6 +14,22 @@
             <div class="col">
                 <h5>@Model.Employee.Fio</h5>
                 <p>Каб. @Model.Employee.Cabinet.Name; Отдел: @Model.Employee.Department; Должность: @Model.Employee.Post;</p>
+            </div>
+            <div class="col text-light text-right">
+                <a class="btn btn-success" asp-controller="Technique" asp-action="Index" asp-route-cabId="@Model.Employee.Cabinet.Id" asp-route-empId="@Model.Employee.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить технику">
+                    <i class="bi bi-plus"></i> <i class="bi bi-laptop"></i>
+                </a>
+                <a class="btn btn-primary" asp-controller="Employee" asp-action="Edit" asp-route-id="@Model.Employee.Id" data-toggle="tooltip" data-placement="bottom" title="Изменить сотрудника">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a class="btn btn-info" asp-controller="Employee" asp-action="ChangeCabinet" asp-route-id="@Model.Employee.Id" data-toggle="tooltip" data-placement="bottom" title="Переместить сотрудника в другой кабинет">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+                <form id="employee_@(Model.Employee.Id)_delete_form" style="display: inline-block;" method="post" asp-controller="Employee" asp-action="Delete" asp-route-id="@Model.Employee.Id" asp-route-cabinetId="@Model.Employee.CabinetId">
+                    <a href="javascript:{}" onclick="document.getElementById('employee_@(Model.Employee.Id)_delete_form').submit();" class="btn btn-danger">
+                        <i class="bi bi-person-x-fill"></i>
+                    </a>
+                </form>
             </div>
         </div>
         <hr />

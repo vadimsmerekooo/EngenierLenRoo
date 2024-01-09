@@ -29,10 +29,14 @@
                                 <tr>
                                     <th>ФИО</th>
                                     <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th></th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -42,6 +46,12 @@
                                 {
                                     <tr>
                                         <th>@user.UserName</th>
+                                        <th>
+                                            <a class="btn btn-sm btn-success" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@user.Id">Профиль</a>
+                                        </th>
+                                        <th>
+                                            <a class="btn btn-sm btn-success" asp-controller="Employee" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
+                                        </th>
                                         <th>
                                             <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
                                         </th>

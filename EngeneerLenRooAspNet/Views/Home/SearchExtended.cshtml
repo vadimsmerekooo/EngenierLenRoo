@@ -44,7 +44,7 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach (var item in Model.Employees)
+                                @foreach (var item in Model.Employees.Where(c => c.Cabinet != null))
                                 {
                                     <tr>
                                         <th>@item.Fio</th>

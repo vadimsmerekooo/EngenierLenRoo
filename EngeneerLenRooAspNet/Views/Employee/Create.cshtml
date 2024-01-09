@@ -1,3 +1,4 @@
+@using static EngeneerLenRooAspNet.Models.Employee;
 @model Employee
 
 @{
@@ -23,6 +24,20 @@
         <label asp-for="Fio"></label>
         <input asp-for="Fio" class="form-control"/>
         <span asp-validation-for="Fio" class="text-danger"></span>
+    </div>
+    <div class="form-row form-group">
+        <div class="col">
+            <label asp-for="Post"></label>
+            <select class="custom-select" asp-for="Post" asp-items="Html.GetEnumSelectList<TypePost>()">
+            </select>
+            <span asp-validation-for="Post" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="Department"></label>
+            <select class="custom-select" asp-for="Department" asp-items="Html.GetEnumSelectList<TypeDepartment>()">
+            </select>
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-success">Добавить</button>

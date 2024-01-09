@@ -9,6 +9,7 @@ namespace EngeneerLenRooAspNet.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public string Name { get; set; }
         public TypeChat TypeChat { get; set; }
         public virtual List<Employee> ChatUsers { get; set; } = new List<Employee>();
         public List<Message> Messages { get; set; } = new List<Message>();

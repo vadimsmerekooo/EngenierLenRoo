@@ -66,6 +66,10 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
             [Display(Name = "Подтверждение пароля")]
             [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
             public string ConfirmPassword { get; set; }
+            [Required(ErrorMessage = "Поле {0} должно быть заполнено.")]
+            [DataType(DataType.Password)]
+            [Display(Name = "Секретный код для регистрации")]
+            public string SecureCode { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -78,7 +82,8 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+            
+            if (ModelState.IsValid && Input.SecureCode.Equals("system_300"))
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = true};
                 var result = await _userManager.CreateAsync(user, Input.Password);

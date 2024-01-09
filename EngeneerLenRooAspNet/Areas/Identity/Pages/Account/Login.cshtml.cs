@@ -81,7 +81,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                  
                 if (result.Succeeded)
                 {

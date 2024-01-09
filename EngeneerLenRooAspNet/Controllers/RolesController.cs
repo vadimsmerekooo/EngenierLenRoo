@@ -1,7 +1,9 @@
-﻿using EngeneerLenRooAspNet.Models;
+﻿using EngeneerLenRooAspNet.Areas.Identity.Data;
+using EngeneerLenRooAspNet.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +15,12 @@ namespace EngeneerLenRooAspNet.Controllers
     {
         RoleManager<IdentityRole> _roleManager;
         UserManager<IdentityUser> _userManager;
-        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        MainContext _context;
+        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, MainContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _context = context;
         }
         [Route("/roles/list")]
         public IActionResult Index() => View(_roleManager.Roles.ToList());
@@ -84,7 +88,8 @@ namespace EngeneerLenRooAspNet.Controllers
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
             IdentityUser user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
+            Employee employee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == user.Id);
+            if (user != null && employee != null)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var allRoles = _roleManager.Roles.ToList();
@@ -92,6 +97,12 @@ namespace EngeneerLenRooAspNet.Controllers
                 var removedRoles = userRoles.Except(roles);
                 await _userManager.AddToRolesAsync(user, addedRoles);
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
+                if (roles.Contains("admin"))
+                {
+                    employee.Post = Employee.TypePost.Администратор;
+                    _context.Employees.Update(employee);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction("UserList");
             }
 

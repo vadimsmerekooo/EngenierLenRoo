@@ -15,10 +15,34 @@ namespace EngeneerLenRooAspNet.Models
         public List<Technique> Techniques { get; set; } = new List<Technique>();
         [Display(Name = "Дополнительно")]
         public string Description { get; set; }
+        [Required]
+        [Display(Name = "Класс")]
+        public TypePost? Post { get; set; } = TypePost.Не_определен;
+        [Required]
+        [Display(Name = "Отдел")]
+        public TypeDepartment? Department { get; set; } = TypeDepartment.Не_определен;
         public string CabinetId { get; set; }
         public Cabinet Cabinet { get; set; }
         public List<Cartridge> Cartridges { get; set; } = new List<Cartridge>();
-        public virtual List<Chat> Chats { get; set; } = new List<Chat>(); 
+        public virtual List<Chat> Chats { get; set; } = new List<Chat>();
+
+
+        public bool IsCanIWriteUser(Employee userDirect)
+        {
+            switch (Post)
+            {
+                case TypePost.Администратор: return true;
+                case TypePost.Не_определен: return false;
+                case TypePost.Начальник: return true;
+                case TypePost.Сотрудник:
+                    {
+                        if(userDirect.Department != Department && userDirect.Post == TypePost.Начальник) return false;
+                        return true;
+                    }
+                default: return false;
+            }
+        }
+
 
         public string GetShortFio()
         {
@@ -26,7 +50,7 @@ namespace EngeneerLenRooAspNet.Models
             string Name;
             string LastName;
             string SecondName;
-            if(splitFio.Length == 3)
+            if (splitFio.Length == 3)
             {
                 LastName = splitFio[0];
                 Name = splitFio[1].First() + ".";
@@ -39,6 +63,23 @@ namespace EngeneerLenRooAspNet.Models
                 return $"{LastName}";
             }
             return $"Иванов И.И.";
+        }
+        public enum TypePost
+        {
+            Не_определен,
+            Администратор,
+            Начальник,
+            Сотрудник
+        }
+        public enum TypeDepartment
+        {
+            Не_определен,
+            Управляющий_персонал,
+            Отдел_материалов,
+            Бухгалтерия,
+            Экономисты,
+            Финансовый_отдел,
+            Родительская_плата
         }
     }
 }

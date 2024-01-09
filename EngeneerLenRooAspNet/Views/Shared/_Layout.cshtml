@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="~/lib/jquery/dist/jquery-3.5.1.js"></script>
-    <script src="~/lib/jquery/dist/jquery.unobtrusive-ajax.js"></script>
 </head>
 <body>
     <header>
@@ -67,20 +65,101 @@
         function messagesBoxPartialUpdateDirect(idChatDirect) {
             $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdateDirect","Chat")/' + idChatDirect);
         }
+        function messagesBoxPartialSearchDirect(idChatDirect, search) {
+            $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdateDirect","Chat")/' + idChatDirect + '/' + search);
+        }
         function messagesBoxPartialUpdate() {
             $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdate","Chat")');
         }
+        function messagesBoxPartialSearch(search) {
+            $('#messagesbox').load('@Url.ActionLink("MessageBoxPartialUpdate","Chat")/' + search.trim());
+        }
+        function search() {
+            const idChatDirect = document.getElementById('chatActiveMessageBoxId').innerHTML;
+            const search = document.getElementById('searchEmployeeInput').value;
+            if (search.trim() == "") {
+                if (idChatDirect == null || idChatDirect.trim() == "") {
+                    messagesBoxPartialUpdate();
+                }
+                else {
+                    messagesBoxPartialUpdateDirect(idChatDirect);
+                }
+            }
+            else {
+                if (idChatDirect == null || idChatDirect.trim() == "") {
+                    messagesBoxPartialSearch(search);
+                }
+                else {
+                    messagesBoxPartialSearchDirect(idChatDirect, search);
+                }
+            }
+        }
+        function cleareSearch() {
+            document.getElementById('searchEmployeeInput').value = '';
+            search();
+        }
         function chatLoad(idChat) {
-            $('#chatroombox').load('@Url.ActionLink("ChatLoad", "Chat")/' + idChat);
-            var chatsList = document.getElementsByClassName('chatListItem');
-            for (var i = 0; i < chatsList.length; i++) {
-                chatsList[i].classList.remove('active');
-            }
-            document.getElementById('chatListItem' + idChat).classList.add('active');
-            var elem = document.getElementById("chatNewMessageId" + idChat);
+            var elem = document.getElementById("chatroombox");
             if (elem !== null) {
-                elem.parentNode.removeChild(elem);
+                elem.innerHTML = `
+                            <div class="col d-flex justify-content-center align-items-center h-100">
+                                <div id="loadSpinner" class="spinner-border text-success" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>`;
             }
+            setTimeout(
+                () => {
+                    $('#chatroombox').load('@Url.ActionLink("ChatLoad", "Chat")/' + idChat, function (response, status, xhr) {
+                        if (status == "success") {
+                            var chatsList = document.getElementsByClassName('chatListItem');
+                            for (var i = 0; i < chatsList.length; i++) {
+                                chatsList[i].classList.remove('active');
+                            }
+                            document.getElementById('chatListItem' + idChat).classList.add('active');
+                            const chatActiveId = document.getElementById('chatActiveMessageBoxId');
+                            chatActiveId.innerHTML = idChat;
+                            var elem = document.getElementById("chatNewMessageId" + idChat);
+                            if (elem !== null) {
+                                elem.parentNode.removeChild(elem);
+                            }
+                            var spinner = document.getElementById("loadSpinner");
+                            spinner.parentNode.removeChild(spinner);
+                        }
+                        else {
+                            elem.innerHTML = `<i class="bi bi-close">Ошибка загрузки чата</i>`;
+                        }
+                    });
+                },
+                0.5 * 1000
+            );
+        }
+        function chatCreate(userDirectId) {
+            var elem = document.getElementById("chatroombox");
+            if (elem !== null) {
+                elem.innerHTML = `
+                                    <div class="col d-flex justify-content-center align-items-center h-100">
+                                        <div id="loadSpinner" class="spinner-border text-success" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>`;
+            }
+            setTimeout(
+                () => {
+                    $('#chatroombox').load('@Url.ActionLink("CreateDialog", "Chat")/' + userDirectId, function (response, status, xhr) {
+                        if (status == "success") {
+                            var spinner = document.getElementById("loadSpinner");
+                            spinner.parentNode.removeChild(spinner);
+                        }
+                        else {
+                            elem.innerHTML = `<i class="bi bi-close">Ошибка загрузки чата.</i>`;
+                        }
+                    });
+                },
+                0.5 * 1000
+            );
+
+
         }
         function sendMessageInput(idChat, user) {
             document.getElementById("messageinput").onkeydown = function (e) {
@@ -89,6 +168,28 @@
                 }
                 Print(idChat, user);
             }
+        }
+        function loadChatMessage(chatId, countLoadMessage) {
+            var elem = document.getElementById('loadMessageCount' + countLoadMessage);
+            elem.innerHTML = `<div id="loadSpinner" class="spinner-border text-success text-center" role="status">
+                                                            <span class="sr-only">Loading...</span>
+                                                        </div>`;
+
+            setTimeout(
+                () => {
+                    $('#loadMessageCountChat' + countLoadMessage).load('@Url.ActionLink("LoadMessage", "Chat")/' + chatId + '/' + countLoadMessage, function (response, status, xhr) {
+                        if (status == "success") {
+                            var messagesDiv = document.getElementById('loadMessageCountChat' + countLoadMessage);
+                            messagesDiv.scrollIntoView({ block: "end", behavior: "smooth" });
+                            elem.parentNode.removeChild(elem);
+                        }
+                        else {
+                            elem.innerHTML = `<i class="bi bi-close">Ошибка загрузки сообщений.</i>`;
+                        }
+                    });
+                },
+                0.5 * 1000
+            );
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
