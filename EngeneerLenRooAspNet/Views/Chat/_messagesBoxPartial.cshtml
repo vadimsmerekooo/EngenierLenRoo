@@ -40,14 +40,7 @@
                             @if (message != null)
                             {
                                 <div class="row">
-                                    @if (message.User == Model.User)
-                                    {
-                                        <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">Вы: @(message.Text)</p>
-                                    }
-                                    else
-                                    {
-                                        <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">@(message.Text)</p>
-                                    }
+                                    <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">@message.GetTypeMessageMessageBox(Model.User)</p>
                                     <p class="col-4 mb-0 text-small float-end">
                                         @(message.DateTime.ToString("ddd, H:mm", new CultureInfo("ru-RU")))
                                     </p>
@@ -93,14 +86,7 @@
                             @if (message != null)
                             {
                                 <div class="row">
-                                    @if (message.User == Model.User)
-                                    {
-                                        <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">Вы: @(message.Text)</p>
-                                    }
-                                    else
-                                    {
-                                        <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">@message.User.GetShortFio(): @(message.Text)</p>
-                                    }
+                                    <p id="messagePrint@(chat.Id)" class="col-8 font-italic mb-0 text-small text-truncate float-start">@message.GetTypeMessageMessageBox(Model.User)</p>
                                     <p class="col-4 mb-0 text-small float-end">
                                         @(message.DateTime.ToString("ddd, H:mm", new CultureInfo("ru-RU")))
                                     </p>

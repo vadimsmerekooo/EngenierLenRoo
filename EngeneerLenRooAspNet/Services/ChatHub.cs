@@ -1,7 +1,9 @@
 ﻿using EngeneerLenRooAspNet.Areas.Identity.Data;
 using EngeneerLenRooAspNet.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +19,12 @@ namespace EngeneerLenRooAspNet.Services
             _context = context;
         }
 
-        public async Task Send(string user, string userName,string message, string room)
+        public async Task Send(string user, string userName,string message, string room, string fileId)
         {
             var chat = await _context.Chats
                 .Include(u => u.ChatUsers)
                 .Include(m => m.Messages)
+                .ThenInclude(f => f.File)
                 .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(room));
             var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user);
             if(chat != null && userSend != null && chat.ChatUsers.Contains(userSend))
@@ -34,14 +37,30 @@ namespace EngeneerLenRooAspNet.Services
                     Text = message,
                     Status = StatusMessage.NotRead
                 };
+                if (!fileId.IsNullOrEmpty())
+                {
+                    File file = await _context.File.FirstOrDefaultAsync(f => f.Id == fileId);
+                    if (file != null)
+                    {
+                        messageModel.File = file;
+                    }
+                }
                 await _context.Messages.AddAsync(messageModel);
                 await _context.SaveChangesAsync();
-                await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString(), chat.TypeChat.ToString(), chat.EmployeeAdministrator.Id)
-                    .ConfigureAwait(true);
+                if (messageModel.File == null)
+                {
+                    await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group", chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "", "" ,"")
+                        .ConfigureAwait(true);
+                }
+                else
+                {
+                    await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group", chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "", messageModel.File.Path, messageModel.File.OriginalName)
+                        .ConfigureAwait(true);
+                }
             }
             else
             {
-                await Clients.All.SendAsync("Send", room, user, userName, "Error send Message", DateTime.Now.ToShortTimeString(), chat.TypeChat, chat.EmployeeAdministrator.Id)
+                await Clients.All.SendAsync("Send", room, user, userName, "Error send Message", DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group", chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "")
                     .ConfigureAwait(true);
             }
             await Read(user, room);

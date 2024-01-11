@@ -3,6 +3,8 @@ using EngeneerLenRooAspNet.Models;
 using EngeneerLenRooAspNet.Services;
 using EngeneerLenRooAspNet.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -10,7 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EngeneerLenRooAspNet.Controllers
@@ -21,11 +25,13 @@ namespace EngeneerLenRooAspNet.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly MainContext _context;
         readonly IHubContext<ChatHub> _hubContext;
-        public ChatController(UserManager<IdentityUser> userManager, MainContext context, IHubContext<ChatHub> hubContext)
+        IWebHostEnvironment _appEnvironment;
+        public ChatController(UserManager<IdentityUser> userManager, MainContext context, IHubContext<ChatHub> hubContext, IWebHostEnvironment appEnvironment)
         {
             _userManager = userManager;
             _context = context;
             _hubContext = hubContext;
+            _appEnvironment = appEnvironment;
         }
         [Route("")]
         [Route("chat")]
@@ -42,7 +48,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 .ToListAsync();
             foreach (var chatItem in chats)
             {
-                Message lastMessage = await _context.Messages.Include(c => c.Chat).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                Message lastMessage = await _context.Messages.Include(c => c.Chat).Include(f => f.File).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
                 if (lastMessage != null)
                     chatItem.Messages.Add(lastMessage);
                 else
@@ -65,64 +71,6 @@ namespace EngeneerLenRooAspNet.Controllers
             };
             return View(model);
         }
-
-        //[Route("chat/{id}")]
-        //public async Task<IActionResult> Index(int id)
-        //{
-        //    Chat chat = await _context.Chats.Include(m => m.Messages).ThenInclude(u => u.User).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == id);
-        //    Employee user = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == _userManager.GetUserId(User));
-        //    if (chat == null || user == null) return null;
-        //    var userDirectId = chat.ChatUsers.FirstOrDefault(c => c.Id != user.Id).Id;
-        //    if (userDirectId == null)
-        //        return RedirectToAction(nameof(Index));
-        //    Employee userDirect = await _context.Employees.FirstOrDefaultAsync(emp => emp.Id == userDirectId);
-        //    if (userDirect is null)
-        //        return RedirectToAction(nameof(Index));
-
-        //    var chats = await _context.Chats
-        //        .Include(c => c.ChatUsers)
-        //        .Where(c => c.ChatUsers
-        //            .Any(u => u.Id == user.Id))
-        //        .ToListAsync();
-        //    foreach (var chatItem in chats)
-        //    {
-        //        Message lastMessage = await _context.Messages.Include(c => c.Chat).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
-        //        if (lastMessage != null)
-        //            chatItem.Messages.Add(lastMessage);
-        //    }
-
-        //    ChatViewModel model = new ChatViewModel()
-        //    {
-        //        User = user,
-        //        Employees = await _context.Employees
-        //        .Include(c => c.Chats)
-        //            .ThenInclude(c => c.ChatUsers)
-        //        .Where(u => u.Fio != this.User.Identity.Name
-        //        && !u.Chats.Any(c => c.ChatUsers.Any(emp => emp.Id == u.Id))
-        //        && !u.Fio.Contains("admin"))
-        //        .ToListAsync(),
-        //        ChatActive = chat,
-        //        UserDirect = userDirect,
-        //        Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
-        //    };
-        //    List<Message> messagesRead = new List<Message>();
-        //    foreach (var messageItem in chat.Messages)
-        //    {
-        //        if (messageItem.User != user && messageItem.Status != StatusMessage.Read)
-        //        {
-        //            messageItem.Status = StatusMessage.Read;
-        //            messagesRead.Add(messageItem);
-        //        }
-        //    }
-        //    foreach (var messageRead in messagesRead)
-        //    {
-        //        await this._hubContext.Clients.All.SendAsync("Read", messageRead.Id)
-        //            .ConfigureAwait(true);
-        //    }
-
-
-        //    return View(model);
-        //}
 
         [Route("chat/CreateDialog/{employeeId}")]
         [HttpGet]
@@ -201,7 +149,10 @@ namespace EngeneerLenRooAspNet.Controllers
                 .ToListAsync();
             foreach (var chatItem in chats)
             {
-                Message lastMessage = await _context.Messages.OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                Message lastMessage = await _context.Messages
+                    .Include(f => f.File)
+                    .OrderByDescending(d => d.DateTime)
+                    .FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
                 if (lastMessage != null)
                     chatItem.Messages.Add(lastMessage);
             }
@@ -216,8 +167,8 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 employees = employees.Where(e => e.Fio.Contains(search)).ToList();
                 chats = chats.Where(c => c.ChatUsers
-                .FirstOrDefault(emp => emp.Id != user.Id).Fio.Contains(search, StringComparison.OrdinalIgnoreCase) 
-                || c.Name.Contains(search, StringComparison.OrdinalIgnoreCase) 
+                .FirstOrDefault(emp => emp.Id != user.Id).Fio.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || c.Name.Contains(search, StringComparison.OrdinalIgnoreCase)
                 && c != chat)
                     .ToList();
             }
@@ -247,7 +198,11 @@ namespace EngeneerLenRooAspNet.Controllers
                 .ToListAsync();
             foreach (var chatItem in chats)
             {
-                Message lastMessage = await _context.Messages.Include(c => c.Chat).OrderByDescending(d => d.DateTime).FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
+                Message lastMessage = await _context.Messages
+                    .Include(c => c.Chat)
+                    .Include(f => f.File)
+                    .OrderByDescending(d => d.DateTime)
+                    .FirstOrDefaultAsync(m => m.Chat.Id == chatItem.Id);
                 if (lastMessage != null)
                     chatItem.Messages.Add(lastMessage);
             }
@@ -282,7 +237,8 @@ namespace EngeneerLenRooAspNet.Controllers
                 Chat chat = await _context.Chats
                     .Include(m => m.Messages.OrderByDescending(d => d.DateTime).Take(50))
                         .ThenInclude(u => u.User)
-                            .ThenInclude(c => c.Cabinet)
+                    .Include(m => m.Messages.OrderByDescending(d => d.DateTime).Take(50))
+                        .ThenInclude(u => u.File)
                     .Include(u => u.ChatUsers)
                     .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
                 Employee user = await _context.Employees
@@ -323,8 +279,6 @@ namespace EngeneerLenRooAspNet.Controllers
                 _context.Chats.UpdateRange(chat);
                 await _context.SaveChangesAsync();
 
-
-
                 ChatViewModel model = new()
                 {
                     User = user,
@@ -350,7 +304,9 @@ namespace EngeneerLenRooAspNet.Controllers
                 int countLoadMessageInt = Convert.ToInt32(countLoadMessage);
                 Chat chat = await _context.Chats
                     .Include(m => m.Messages.OrderByDescending(d => d.DateTime).Skip(countLoadMessageInt).Take(50))
-                        .ThenInclude(u => u.User)
+                        .ThenInclude(f => f.File)
+                        .Include(m => m.Messages.OrderByDescending(d => d.DateTime).Skip(countLoadMessageInt).Take(50))
+                        .ThenInclude(f => f.User)
                     .Include(u => u.ChatUsers)
                     .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(chatId));
                 Employee user = await _context.Employees
@@ -390,6 +346,44 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 return PartialView("_errorLoadPartial", "Ошибка при загрузке диалога.");
             }
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> UploadFile()
+        {
+            try
+            {
+                IFormFile uploadedFile = Request.Form.Files[0];
+
+                string idFileGuid = Guid.NewGuid().ToString();
+
+                string path = $"/Files/{idFileGuid}_{uploadedFile.FileName}";
+                TypeFile typeFile = uploadedFile.ContentType.Contains("image") ? TypeFile.image : TypeFile.text;
+                Models.File file = new Models.File
+                {
+                    Id = idFileGuid,
+                    Path = path,
+                    OriginalName = uploadedFile.FileName,
+                    Size = uploadedFile.Length,
+                    TypeFile = typeFile
+                };
+
+                await _context.File.AddAsync(file);
+                await _context.SaveChangesAsync();
+
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                return Json(new { Status = "Success", File = idFileGuid.ToString() });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = "Error", File = "" });
+            }
+
         }
     }
 }

@@ -175,6 +175,28 @@ namespace EngeneerLenRooAspNet.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("EngeneerLenRooAspNet.Models.File", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OriginalName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Size")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TypeFile")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("File");
+                });
+
             modelBuilder.Entity("EngeneerLenRooAspNet.Models.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -188,6 +210,9 @@ namespace EngeneerLenRooAspNet.Migrations
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PathFile")
                         .HasColumnType("nvarchar(max)");
@@ -204,6 +229,8 @@ namespace EngeneerLenRooAspNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("FileId");
 
                     b.HasIndex("UserId");
 
@@ -509,11 +536,17 @@ namespace EngeneerLenRooAspNet.Migrations
                         .WithMany("Messages")
                         .HasForeignKey("ChatId");
 
+                    b.HasOne("EngeneerLenRooAspNet.Models.File", "File")
+                        .WithMany()
+                        .HasForeignKey("FileId");
+
                     b.HasOne("EngeneerLenRooAspNet.Models.Employee", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Chat");
+
+                    b.Navigation("File");
 
                     b.Navigation("User");
                 });

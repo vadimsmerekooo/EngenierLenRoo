@@ -20,41 +20,136 @@
     {
         <hr class="hr-text" data-content="@(message.DateTime.ToString("D", new CultureInfo("ru-RU")))">
     }
+
     if (message.User == Model.User)
     {
-        <div class="media ml-auto mb-3" style="width: 65%;">
-            <div class="media-body">
-                <div class="bg-primary rounded py-2 px-3 mb-2">
-                    <p class="text-small mb-0 text-white">@message.Text</p>
-                    <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
+        if(message.File is null)
+        {
+            <div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
+                <div class="media-body">
+                    <div class="bg-primary rounded py-2 px-3 mb-2">
+                        <p class="text-small mb-0 text-white">@message.Text</p>
+                        <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
+                    </div>
+                    <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
                 </div>
-                <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
             </div>
-        </div>
+        }
+        else
+        {
+            if(message.File.TypeFile is TypeFile.text)
+            {
+                <div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
+                    <div class="media-body">
+                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                            <div class="row d-flex text-white">
+                                <i class="bi bi-download pl-3"></i>
+                                <p>@message.File.OriginalName</p>
+                            </div>
+                            <p class="text-small mb-0 text-white">@message.Text</p>
+                            <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
+                        </div>
+                        <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
+                    <div class="media-body">
+                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                            <img src="@message.File.Path" class="img-thumbnail" style="max-width: 200px;">
+                            <p class="text-small mb-0 text-white">@message.Text</p>
+                            <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
+                        </div>
+                        <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
+                    </div>
+                </div>
+            }
+        }
     }
     else
     {
-        <div class="media w-75 mb-3">
-            <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-3">
-                <div class="bg-light rounded py-2 px-3 mb-2 shadow">
-                    @if (Model.ChatActive.TypeChat is TypeChat.Group)
-                    {
-                        <p class="text-small text-muted">@message.User.GetShortFio()</p>
-                    }
-                    <p class="mb-0">@message.Text</p>
-                    <div class="d-flex align-items-center">
-                        <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
-                        @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
+        if (message.File is null)
+        {
+            <div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                <div class="media-body ml-3">
+                    <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                        @if (Model.ChatActive.TypeChat is TypeChat.Group)
                         {
-                            <div class="text-muted text-small">Администратор</div>
+                            <p class="text-small text-muted">@message.User.GetShortFio()</p>
                         }
-                    </div>
+                        <p class="mb-0">@message.Text</p>
+                        <div class="d-flex align-items-center">
+                            <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
+                            @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
+                            {
+                                <div class="text-muted text-small">Администратор</div>
+                            }
+                        </div>
 
+                    </div>
+                    <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
                 </div>
-                <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
             </div>
-        </div>
+        }
+        else
+        {
+            if (message.File.TypeFile is TypeFile.text)
+            {
+                <div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                    <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                    <div class="media-body ml-3">
+                        <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                            <div class="row d-flex">
+                                <i class="bi bi-download pl-3"></i>
+                                <p>@message.File.OriginalName</p>
+                            </div>
+                            @if (Model.ChatActive.TypeChat is TypeChat.Group)
+                            {
+                                <p class="text-small text-muted">@message.User.GetShortFio()</p>
+                            }
+                            <p class="mb-0">@message.Text</p>
+                            <div class="d-flex align-items-center">
+                                <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
+                                @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
+                                {
+                                    <div class="text-muted text-small">Администратор</div>
+                                }
+                            </div>
+
+                        </div>
+                        <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                    <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                    <div class="media-body ml-3">
+                        <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                            <img src="@message.File.Path" class="img-thumbnail" style="max-width: 200px;">
+                            @if (Model.ChatActive.TypeChat is TypeChat.Group)
+                            {
+                                <p class="text-small text-muted">@message.User.GetShortFio()</p>
+                            }
+                            <p class="mb-0">@message.Text</p>
+                            <div class="d-flex align-items-center">
+                                <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
+                                @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
+                                {
+                                    <div class="text-muted text-small">Администратор</div>
+                                }
+                            </div>
+
+                        </div>
+                        <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
+                    </div>
+                </div>
+            }
+        }
     }
     datePreview = message.DateTime.DayOfYear;
 }

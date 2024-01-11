@@ -18,6 +18,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Data
         public DbSet<Cartridge> Cartridges { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<File> File { get; set; }
 
 
 
@@ -35,6 +36,8 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Data
                 .HasOne(u => u.EmployeeAdministrator);
             modelBuilder.Entity<Chat>()
                 .HasOne(u => u.EmployeeCreate);
+            modelBuilder.Entity<Message>()
+                .HasOne(u => u.File);
 
             base.OnModelCreating(modelBuilder);
         }
