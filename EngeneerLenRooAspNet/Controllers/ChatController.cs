@@ -237,8 +237,6 @@ namespace EngeneerLenRooAspNet.Controllers
                 Chat chat = await _context.Chats
                     .Include(m => m.Messages.OrderByDescending(d => d.DateTime).Take(50))
                         .ThenInclude(u => u.User)
-                    .Include(m => m.Messages.OrderByDescending(d => d.DateTime).Take(50))
-                        .ThenInclude(u => u.File)
                     .Include(u => u.ChatUsers)
                     .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(idChat));
                 Employee user = await _context.Employees
@@ -265,6 +263,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 List<Message> messagesRead = new();
                 foreach (var messageItem in chat.Messages)
                 {
+                    messageItem.File = await _context.File.FirstOrDefaultAsync(f => f.Id == messageItem.FileId);
                     if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
                     {
                         messageItem.Status = StatusMessage.Read;
@@ -379,7 +378,7 @@ namespace EngeneerLenRooAspNet.Controllers
                 return Json(new { Status = "Success", File = idFileGuid.ToString() });
 
             }
-            catch (Exception ex)
+            catch
             {
                 return Json(new { Status = "Error", File = "" });
             }

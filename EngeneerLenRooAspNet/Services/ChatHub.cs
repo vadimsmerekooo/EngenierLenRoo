@@ -19,7 +19,7 @@ namespace EngeneerLenRooAspNet.Services
             _context = context;
         }
 
-        public async Task Send(string user, string userName,string message, string room, string fileId)
+        public async Task Send(string user, string userName, string message, string room, string fileId)
         {
             var chat = await _context.Chats
                 .Include(u => u.ChatUsers)
@@ -27,7 +27,7 @@ namespace EngeneerLenRooAspNet.Services
                 .ThenInclude(f => f.File)
                 .FirstOrDefaultAsync(c => c.Id == Convert.ToInt32(room));
             var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user);
-            if(chat != null && userSend != null && chat.ChatUsers.Contains(userSend))
+            if (chat != null && userSend != null && chat.ChatUsers.Contains(userSend))
             {
                 var messageModel = new Message()
                 {
@@ -49,12 +49,17 @@ namespace EngeneerLenRooAspNet.Services
                 await _context.SaveChangesAsync();
                 if (messageModel.File == null)
                 {
-                    await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group", chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "", "" ,"")
+                    await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(),
+                        DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group",
+                        chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "", Newtonsoft.Json.JsonConvert.SerializeObject(new { IsNull = "null" }))
                         .ConfigureAwait(true);
                 }
                 else
                 {
-                    await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(), DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group", chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "", messageModel.File.Path, messageModel.File.OriginalName)
+                    await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(),
+                        DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group",
+                        chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "",
+                        Newtonsoft.Json.JsonConvert.SerializeObject( new { IsNull = "exsist", Path = messageModel.File.Path, Name = messageModel.File.OriginalName, Type = messageModel.File.TypeFile.ToString(), Size = messageModel.File.GetSizeToString()}))
                         .ConfigureAwait(true);
                 }
             }

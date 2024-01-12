@@ -111,96 +111,34 @@
         }
     });
 
-    hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date, typeChat, idAdminChat, filePath, fileName) {
-        const messageOut = `<div class="media w-50 ml-auto mb-3">
-                                                                                                    <div class="media-body">
-                                                                                                        <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                                                                                <p class="text-small mb-0 text-white">${message}</p>
-                                                                                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                                                                        </div>
-                                                                                                        <p class="small text-muted">${date}</p>
-                                                                                                    </div>
-                                                                                                </div>`;
-        const messageIn = `<div class="media w-50 mb-3">
-                                                                                                    <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                                                                                    <div class="media-body ml-3">
-                                                                                                            <div class="rounded py-2 px-3 mb-2 shadow">
-                                                                                                                <p class="text-small mb-0 text-muted">${message}</p>
-                                                                                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                                                                        </div>
-                                                                                                        <p class="small text-muted">${date}</p>
-                                                                                                    </div>
-                                                                                                    </div>`;
-        const messageInDirectAdmin = `<div class="media w-75 mb-3">
-                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                            <div class="media-body ml-3">
-                                    <div class="bg-light rounded py-2 px-3 mb-2 shadow">
-                                                <p class="text-small text-muted">${userName}</p>
-                                        <p class="mb-0">${message}</p>
-                                    <div class="d-flex align-items-center">
-                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                    <div class="text-muted text-small float-end">Администратор</div>
-                                    </div>
-
-                                </div>
-                                    <p class="small text-muted">${date}</p>
+    hubConnection.on("Send", function (roomName, UserSend, userName, messageId, message, date, typeChat, idAdminChat, fileInfo) {
+        const file = JSON.parse(fileInfo);
+        const messageOut = `<div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
+                        <div class="media-body">
+                            <div class="bg-primary rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-white">${message}</p>
+                                        <i id="messageBoxId${messageId}" class="bi bi-check) text-light"></i>
                             </div>
-                        </div>`;
-        const messageInDirect = `<div class="media w-75 mb-3">
-                                    <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                <div class="media-body ml-3">
-                                        <div class="bg-light rounded py-2 px-3 mb-2 shadow">
-                                                        <p class="text-small text-muted">${userName}</p>
-                                            <p class="mb-0">${message}</p>
-                                        <div class="d-flex align-items-center">
-                                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                        </div>
-
-                                    </div>
-                                        <p class="small text-muted">${date}</p>
+                                <p class="small text-muted">${date}</p>
+                        </div>
+                    </div>`;
+        const messageIn = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                        <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                <p class="mb-0">${message}</p>
+                                <div class="d-flex align-items-center">
+                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
                                 </div>
-                            </div>`;
-
-        const messageOutFile = `<div class="media w-50 ml-auto mb-3">
-                                                                                                        <div class="media-body">
-                                                                                                            <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                                                                                    <div class="row">
-                                                                                                                                    <i class="bi bi-download"></i>
-                                                                                                                                    <p>${fileName}</p>
-                                                                                                                    </div>
-                                                                                                                    <p class="text-small mb-0 text-white">${message}</p>
-                                                                                                            <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                                                                            </div>
-                                                                                                            <p class="small text-muted">${date}</p>
-                                                                                                        </div>
-                                                                                                    </div>`;
-        const messageInFile = `<div class="media w-50 mb-3">
-                                                                                                        <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
-                                                                                                        <div class="media-body ml-3">
-                                                                                                                <div class="rounded py-2 px-3 mb-2 shadow">
-                                                                                                                    <div class="row">
-                                                                                                                        <a href="${filePath}" download="file">
-                                                                                                                            <i class="bi bi-download"></i>
-                                                                                                                            <p>${fileName}</p>
-                                                                                                                        </a>
-                                                                                                                    </div>
-                                                                                                                    <p class="text-small mb-0 text-muted">${message}</p>
-                                                                                                            <i id="messageBoxId${messageId}" class="bi bi-check"></i>
-                                                                                                            </div>
-                                                                                                            <p class="small text-muted">${date}</p>
-                                                                                                        </div>
-                                                                                                        </div>`;
-        const messageInFileDirectAdmin = `<div class="media w-75 mb-3">
+                            </div>
+                            <p class="small text-muted">${date}</p>
+                        </div>
+                    </div>`;
+        const messageInDirectAdmin = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
                                     <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
                                 <div class="media-body ml-3">
                                         <div class="bg-light rounded py-2 px-3 mb-2 shadow">
                                                     <p class="text-small text-muted">${userName}</p>
-                                                        <div class="row">
-                                                                <a href="${filePath}" download="file">
-                                                                    <i class="bi bi-download"></i>
-                                                                    <p>${fileName}</p>
-                                                            </a>
-                                                        </div>
                                             <p class="mb-0">${message}</p>
                                         <div class="d-flex align-items-center">
                                                         <i id="messageBoxId${messageId}" class="bi bi-check"></i>
@@ -211,17 +149,11 @@
                                         <p class="small text-muted">${date}</p>
                                 </div>
                             </div>`;
-        const messageInFileDirect = `<div class="media w-75 mb-3">
+        const messageInDirect = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
                                         <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
                                     <div class="media-body ml-3">
                                             <div class="bg-light rounded py-2 px-3 mb-2 shadow">
-                                                        <p class="text-small text-muted">${userName}</p>
-                                                            <div class="row">
-                                                                    <a href="${filePath}" download="file">
-                                                                        <i class="bi bi-download"></i>
-                                                                        <p>${fileName}</p>
-                                                                </a>
-                                                            </div>
+                                                            <p class="text-small text-muted">${userName}</p>
                                                 <p class="mb-0">${message}</p>
                                             <div class="d-flex align-items-center">
                                                             <i id="messageBoxId${messageId}" class="bi bi-check"></i>
@@ -232,12 +164,168 @@
                                     </div>
                                 </div>`;
 
-        const messageOutImage = ``;
-        const messageInImage = ``;
-        const messageInImageDirectAdmin = ``;
-        const messageInImageDirect = ``;
+        const messageOutFile = `<div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
+                            <div class="media-body">
+                                <div class="bg-primary rounded py-2 px-3 mb-2">
 
-        const fileType = "txt"
+                                <div class="d-flex alert alert-info bg-opacity-50">
+                                    <a href="${file.Path}" class="text-dark" download="file">
+                                        <div class="row">
+                                            <p>
+                                                <i class="bi bi-download pr-3"></i>${file.Name}
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            Скачать -> ${file.Size}
+                                        </div>
+                                    </a>
+                                </div>
+                                    <p class="text-small mb-0 text-white">${message}</p>
+                                            <i id="messageBoxId${messageId}" class="bi bi-check text-light"></i>
+                                </div>
+                                <p class="small text-muted">${date}</p>
+                            </div>
+                        </div>`;
+        const messageInFile = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-3">
+                                <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+
+
+                                    <div class="d-flex alert alert-info bg-opacity-50">
+                                        <a href="${file.Path}" class="text-dark" download="file">
+                                            <div class="row">
+                                                <p>
+                                                    <i class="bi bi-download pr-3"></i>${file.Name}
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                Скачать -> ${file.Size}
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <p class="mb-0">${message}</p>
+                                    <div class="d-flex align-items-center">
+                                                    <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted">${date}</p>
+                            </div>
+                        </div>`;
+        const messageInFileDirectAdmin = `<div class="media ml-auto mb-3 float-left" style="max-width: 65%;">
+                                        <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                    <div class="media-body ml-3">
+                                            <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                                        <p class="text-small text-muted">${userName}</p>
+
+
+                                    <div class="d-flex alert alert-info bg-opacity-50">
+                                        <a href="${file.Path}" class="text-dark" download="file">
+                                            <div class="row">
+                                                <p>
+                                                    <i class="bi bi-download pr-3"></i>${file.Name}
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                Скачать -> ${file.Size}
+                                            </div>
+                                        </a>
+                                    </div>
+                                                <p class="mb-0">${message}</p>
+                                            <div class="d-flex align-items-center">
+                                                            <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                            <div class="text-muted text-small float-end">Администратор</div>
+                                            </div>
+
+                                        </div>
+                                            <p class="small text-muted">${date}</p>
+                                    </div>
+                                </div>`;
+        const messageInFileDirect = `<div class="media ml-auto mb-3 float-left" style="max-width: 65%;">
+                                            <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                        <div class="media-body ml-3">
+                                                <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                                            <p class="text-small text-muted">${userName}</p>
+
+
+                                    <div class="d-flex alert alert-info bg-opacity-50">
+                                        <a href="${file.Path}" class="text-dark" download="file">
+                                            <div class="row">
+                                                <p>
+                                                    <i class="bi bi-download pr-3"></i>${file.Name}
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                Скачать -> ${file.Size}
+                                            </div>
+                                        </a>
+                                    </div>
+                                                    <p class="mb-0">${message}</p>
+                                                <div class="d-flex align-items-center">
+                                                                <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                </div>
+
+                                            </div>
+                                                <p class="small text-muted">${date}</p>
+                                        </div>
+                                    </div>`;
+
+        const messageOutImage = `<div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
+                            <div class="media-body">
+                                <div class="bg-primary rounded py-2 px-3 mb-2">
+                                        <img src="${file.Path}" class="img-thumbnail" style="max-width: 200px;"  loading="lazy">
+                                    <p class="text-small mb-0 text-white">${message}</p>
+                                        <i id="messageBoxId${messageId}" class="bi bi-check text-light"></i>
+                                </div>
+                                <p class="small text-muted">${date}</p>
+                            </div>
+                        </div>`;
+        const messageInImage = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-3">
+                                <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                        <img src="${file.Path}" class="img-thumbnail" style="max-width: 200px;" loading="lazy">
+                                    <p class="mb-0">${message}</p>
+                                    <div class="d-flex align-items-center">
+                                            <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-muted">${date}</p>
+                            </div>
+                        </div>`;
+        const messageInImageDirectAdmin = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                                                <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                            <div class="media-body ml-3">
+                                                            <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                                                        <p class="text-small text-muted">${userName}</p>
+                                                <img src="${file.Path}" class="img-thumbnail" style="max-width: 200px;" loading="lazy">
+                                                        <p class="mb-0">${message}</p>
+                                                    <div class="d-flex align-items-center">
+                                                                        <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                                <div class="text-muted text-small float-end">Администратор</div>
+                                                    </div>
+
+                                                </div>
+                                                    <p class="small text-muted">${date}</p>
+                                            </div>
+                                        </div>`;
+        const messageInImageDirect = `<div class="media mr-auto mb-3 float-left" style="max-width: 65%;">
+                                            <img src="../img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
+                                        <div class="media-body ml-3">
+                                                        <div class="bg-light rounded py-2 px-3 mb-2 shadow">
+                                                                    <p class="text-small text-muted">${userName}</p>
+                                            <img src="${file.Path}" class="img-thumbnail" style="max-width: 200px;" loading="lazy">
+                                                    <p class="mb-0">${message}</p>
+                                                <div class="d-flex align-items-center">
+                                                                <i id="messageBoxId${messageId}" class="bi bi-check"></i>
+                                                </div>
+
+                                            </div>
+                                                <p class="small text-muted">${date}</p>
+                                        </div>
+                                    </div>`;
+
+
 
         var elem = document.getElementById("chatempty");
         if (elem !== null) {
@@ -260,10 +348,10 @@
 
         if (typeChat === `Direct`) {
             if (`@Model.User.Id` === UserSend) {
-                if (filePath !== "") {
-                    if (fileType == "image") {
-                        console.log('Image direct Out');
-
+                if (file.IsNull == "exsist") {
+                    if (file.Type == "image") {
+                        document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOutImage);
+                        scrollToLowerChat();
                     }
                     else {
                         document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOutFile);
@@ -275,10 +363,9 @@
                 }
             }
             else {
-                if (filePath !== "") {
-
-                    if (fileType == "image") {
-                        console.log('Image direct In');
+                if (file.IsNull == "exsist") {
+                    if (file.Type == "image") {
+                        document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInImage);
                     }
                     else {
                         document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInFile);
@@ -290,10 +377,10 @@
         }
         if (typeChat === `Group`) {
             if (`@Model.User.Id` === UserSend) {
-                if (filePath !== "") {
-                    if (fileType == "image") {
-                        console.log('Image direct Out');
-
+                if (file.IsNull == "exsist") {
+                    if (file.Type == "image") {
+                        document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOutImage);
+                        scrollToLowerChat();
                     }
                     else {
                         document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOutFile);
@@ -305,49 +392,35 @@
                 }
             }
             else {
-                if (filePath !== "") {
-                    if (fileType == "image") {
-                        console.log('Image direct Out');
-
-                    }
-                    else {
-                        document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOutFile);
-                        scrollToLowerChat();
-                    }
-                } else {
-                    document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageOut);
-                    scrollToLowerChat();
-                }
-
-                if (idAdminChat === UserSend) {
-                    if (filePath !== "") {
-                        if (fileType == "image") {
-                            console.log('Image group Out');
-
+                if (file.IsNull == "exsist") {
+                    if (file.Type == "image") {
+                        if (idAdminChat != "") {
+                            document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInImageDirectAdmin);
                         }
                         else {
-                            document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInFileDirectAdmin);
+                            document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInImageDirect);
                         }
-                    } else {
-                        document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInDirectAdmin);
                     }
-                } else {
-                    if (filePath !== "") {
-                        if (fileType == "image") {
-                            console.log('Image direct Out');
-
+                    else {
+                        if (idAdminChat != "") {
+                            document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInFileDirectAdmin);
                         }
                         else {
                             document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInFileDirect);
                         }
-                    } else {
+                    }
+                } else {
+                    if (idAdminChat != "") {
+                        document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInDirectAdmin);
+                    }
+                    else {
                         document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInDirect);
                     }
                 }
             }
         }
-
     });
+
 
     async function Send(room, user, userFio) {
         const message = document.getElementById("messageinput").value;
@@ -366,6 +439,9 @@
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     const resultIdFile = JSON.parse(xhr.responseText).file;
                     hubConnection.invoke("Send", user, userFio, message.trim(), room, resultIdFile);
+                }
+                else {
+                    return;
                 }
             }
             xhr.open("POST", url);

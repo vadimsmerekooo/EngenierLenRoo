@@ -5,13 +5,11 @@
     <div class="col">
     </div>
     <div class="col text-center">
-
         @if (Model.ChatActive.TypeChat == TypeChat.Direct)
         {
             <div class="pl-3">
                 @Model.UserDirect.GetShortFio()
             </div>
-
         }
         else
         {
@@ -52,8 +50,6 @@
         </div>
     </div>
     <div class="input-group-append">
-        @*<button id="sendButton" type="button" onclick="uploadFile();" class="btn btn-link bg-light"> <i class="bi bi-send"></i></button>*@
-
         <button id="sendButton" type="button" onclick="Send(`@Model.ChatActive.Id`, `@Model.User.Id`, `@Model.User.Fio`,);" class="btn btn-link bg-light"> <i class="bi bi-send"></i></button>
     </div>
 </div>
@@ -83,6 +79,18 @@
             Файл <small id="fileUploadName" class="text-small font-italic"></small> не приреплен. Максимальный размер файла 15мб!
         </div>
     </div>
+    <div id="errorUploadImage" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+        <div class="toast-header">
+            <i class="bi bi-x-square check-square text-warning"></i>
+            <strong class="mr-auto pl-1">Ошибка загрузки изображения</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Изображение <small id="fileUploadName" class="text-small font-italic"></small> не приреплено. Максимальный размер файла 1мб!
+        </div>
+    </div>
     <div id="successDeleteUploadFile" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
         <div class="toast-header">
             <i class="bi bi-check-square text-success"></i>
@@ -95,6 +103,18 @@
             Файл <small id="fileUploadName" class="text-small font-italic"></small> успешно откреплен.
         </div>
     </div>
+    <div id="errorOpenInput" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+        <div class="toast-header">
+            <i class="bi bi-x-square check-square text-danger"></i>
+            <strong class="mr-auto pl-1">Ошибка загрузки изображения</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Ошибка прикрепления файла. Перезагрузите чат.
+        </div>
+    </div>
 </div>
 <script>
     scrollToLowerChat();
@@ -103,29 +123,43 @@
     const uploadField = document.getElementById("fileUploadInput");
     let fileName = "";
 
-    uploadField.onchange = function () {
-        fileName = uploadField.files[0].name;
-        if (this.files[0].size > 15638640) {
-            document.getElementById('fileUploadName').innerHTML = fileName;
-            this.value = "";
-            $("#errorUploadFile").toast("show");
+    if(uploadField){
+        uploadField.onchange = function () {
+            fileName = uploadField.files[0].name;
+            const parts = fileName.split('.')[1];
+
+            if (parts == "img" || parts == "png" || parts == "jpeg" || parts == "jpg") {
+                if (this.files[0].size > 1042576) {
+                    document.getElementById('fileUploadName').innerHTML = fileName;
+                    this.value = "";
+                    $("#errorUploadImage").toast("show");
+                }
+            }
+            if (this.files[0].size > 15638640) {
+                document.getElementById('fileUploadName').innerHTML = fileName;
+                this.value = "";
+                $("#errorUploadFile").toast("show");
+            }
+            else {
+                const elem = document.getElementById('fileUpload');
+                elem.innerHTML = `<button id="clearInputUploadFile" type="button" class="ml-2 mb-1 close" aria-label="Close" onclick="clearInputUploadFile('false');">
+                                                <i class="bi bi-file-earmark-check-fill  text-success"></i>
+                                                <span aria-hidden="true">×</span>
+                                                </button>`;
+                document.getElementById('fileUploadName').innerHTML = fileName;
+                $('#successUploadFile').toast('show');
+            }
         }
-        else {
-            const elem = document.getElementById('fileUpload');
-            elem.innerHTML = `<button id="clearInputUploadFile" type="button" class="ml-2 mb-1 close" aria-label="Close" onclick="clearInputUploadFile('false');">
-                                <i class="bi bi-file-earmark-check-fill  text-success"></i>
-                                <span aria-hidden="true">×</span>
-                                </button>`;
-            document.getElementById('fileUploadName').innerHTML = fileName;
-            $('#successUploadFile').toast('show');
-        }
+    }else{
+        $("#errorOpenInput").toast("show");
     }
+
     function clearInputUploadFile(isSend) {
         const elem = document.getElementById('fileUpload');
         elem.innerHTML = `<button id="fileUploadButton" type="button" class="btn btn-link bg-light" onclick="document.getElementById('fileUploadInput').click();">
-                                <i id="paperClipUploadFile" class="bi bi-paperclip">
-                                </i>
-                                </button>`;
+                                    <i id="paperClipUploadFile" class="bi bi-paperclip">
+                                    </i>
+                                    </button>`;
         document.getElementById('fileUploadName').innerHTML = fileName;
         uploadField.value = "";
         if (isSend != "true") {

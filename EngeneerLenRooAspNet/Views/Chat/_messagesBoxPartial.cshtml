@@ -18,7 +18,7 @@
             {
                 message = chat.Messages?.OrderByDescending(d => d.DateTime)?.First();
             }
-            <a id="chatListItem@(chat.Id)" href="#" onclick="chatLoad(@chat.Id);" class="chatListItem list-group-item list-group-item-action @(Model.ChatActive?.Id == chat.Id ? "active" : "") rounded-0">
+            <a id="chatListItem@(chat.Id)" href="#" onclick="chatLoad(@chat.Id, `@(Url.ActionLink("ChatLoad", "Chat"))/`);" class="chatListItem list-group-item list-group-item-action @(Model.ChatActive?.Id == chat.Id ? "active" : "") rounded-0">
                 <div class="media">
                     <img src="~/img/resource/user-icon.png" alt="user" width="50" class="rounded-circle">
                     <div class="media-body chat-list-body ml-4">

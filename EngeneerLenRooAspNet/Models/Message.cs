@@ -12,6 +12,8 @@ namespace EngeneerLenRooAspNet.Models
         public string Text { get; set; }
         public string PathFile { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Now;
+        [ForeignKey(nameof(File))]
+        public string FileId { get; set; }
         public File File { get; set; }
         public Employee User { get; set; }
         public Chat Chat { get; set; }
@@ -25,7 +27,10 @@ namespace EngeneerLenRooAspNet.Models
             }
             else
             {
-                result += $"{User.GetShortFio()}: ";
+                if(Chat.TypeChat is TypeChat.Group)
+                {
+                    result += $"{User.GetShortFio()}: ";
+                }
             }
             if(File != null && Text == "")
             {
