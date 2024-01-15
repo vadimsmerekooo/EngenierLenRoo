@@ -79,21 +79,24 @@ namespace EngeneerLenRooAspNet.Services
             var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user);
 
             List<Message> messagesRead = new();
-            foreach (var messageItem in chat.Messages)
+            if(chat.Messages != null)
             {
-                if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
+                foreach (var messageItem in chat.Messages)
                 {
-                    messageItem.Status = StatusMessage.Read;
-                    messagesRead.Add(messageItem);
+                    if (messageItem.User != userSend && messageItem.Status != StatusMessage.Read)
+                    {
+                        messageItem.Status = StatusMessage.Read;
+                        messagesRead.Add(messageItem);
+                    }
                 }
+                foreach (var messageRead in messagesRead)
+                {
+                    await Clients.All.SendAsync("Read", messageRead.Id, room)
+                        .ConfigureAwait(true);
+                }
+                _context.Chats.UpdateRange(chat);
+                await _context.SaveChangesAsync();
             }
-            foreach (var messageRead in messagesRead)
-            {
-                await Clients.All.SendAsync("Read", messageRead.Id, room)
-                    .ConfigureAwait(true);
-            }
-            _context.Chats.UpdateRange(chat);
-            await _context.SaveChangesAsync();
         }
         public async Task Print(string room, string user)
         {

@@ -214,6 +214,8 @@ namespace EngeneerLenRooAspNet.Controllers
                 && u.Chats.Count(c => c.ChatUsers.Any(emp => emp.Id == user.Id) && c.TypeChat != TypeChat.Group) == 0
                 && !u.Fio.Contains("admin"))
                 .ToListAsync();
+            List<Employee> EmployeesGroup = await _context.Employees
+                .Where(emp => user.IsCanIWriteUser(emp)).ToListAsync();
             if (search != null && search != string.Empty)
             {
                 employees = employees.Where(e => e.Fio.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -223,7 +225,8 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 User = user,
                 Employees = employees,
-                Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList()
+                Chats = chats.OrderByDescending(m => m.Messages.LastOrDefault()?.DateTime).ToList(),
+                EmployeesGroup = EmployeesGroup
             };
             return PartialView("_messagesBoxPartial", model);
         }
@@ -347,6 +350,39 @@ namespace EngeneerLenRooAspNet.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GroupDelete(int id)
+        {
+            Chat chat = await _context.Chats.Include(u => u.EmployeeAdministrator).Include(m => m.Messages).Include(u => u.ChatUsers).FirstOrDefaultAsync(c => c.Id == id);
+            if (chat is null) return RedirectToAction(nameof(Index));
+            if (chat.EmployeeAdministrator.Id == _userManager.GetUserId(User))
+            {
+                _context.Chats.Remove(chat);
+                await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("GroupDelete", chat.Id)
+                        .ConfigureAwait(true);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUserGroup(int id, string userId)
+        {
+            Chat chat = await _context.Chats.Include(u => u.ChatUsers).Include(m => m.Messages).Include(u => u.EmployeeAdministrator).FirstOrDefaultAsync(c => c.Id == id);
+            if (chat is null || chat.ChatUsers is null || !chat.ChatUsers.Any(u => u.Id == userId)) return RedirectToAction(nameof(Index));
+            Employee user = chat.ChatUsers.FirstOrDefault(u => u.Id == userId);
+            chat.ChatUsers.Remove(user);
+            _context.Chats.Update(chat);
+            await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("DeleteUserGroup", chat.Id, user.Id)
+                    .ConfigureAwait(true);
+            return RedirectToAction(nameof(Index));
+        }
+
 
         [HttpPost]
         public async Task<JsonResult> UploadFile()
@@ -384,5 +420,13 @@ namespace EngeneerLenRooAspNet.Controllers
             }
 
         }
+
+
+
+
+        //public ChatViewModel GetChatViewModel()
+        //{
+
+        //}
     }
 }

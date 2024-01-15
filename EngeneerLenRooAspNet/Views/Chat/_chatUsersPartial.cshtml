@@ -23,13 +23,13 @@
                                 }
                                 @if ((Model.ChatActive.EmployeeAdministrator == Model.User || Model.ChatActive.EmployeeCreate == Model.User) && emp.Id != Model.User.Id)
                                 {
-                                    <a class="link-danger" href="#">
+                                    <a class="link-danger" asp-action="DeleteUserGroup" asp-route-id="@Model.ChatActive.Id" asp-route-userId="@emp.Id">
                                         <i class="float-end bi bi-x" data-toggle="tooltip" data-placement="right" title="Выгнать из чата"></i>
                                     </a>
                                 }
                                 @if ((Model.ChatActive.EmployeeAdministrator != Model.User && Model.ChatActive.EmployeeCreate != Model.User) && emp.Id == Model.User.Id)
                                 {
-                                    <a class="link-danger" href="#">
+                                    <a class="link-danger" asp-action="DeleteUserGroup" asp-route-id="@Model.ChatActive.Id" asp-route-userId="@Model.User.Id">
                                         <i class="float-end bi bi-x" data-toggle="tooltip" data-placement="right" title="Выйти из чата"></i>
                                     </a>
                                 }
@@ -41,7 +41,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
                     @if (Model.ChatActive.EmployeeAdministrator == Model.User || Model.ChatActive.EmployeeCreate == Model.User)
                     {
-                        <button type="submit" class="btn btn-danger">Удалить чат</button>
+                        <button type="submit" class="btn btn-danger" asp-action="GroupDelete" asp-route-id="@Model.ChatActive.Id">Удалить чат</button>
                     }
                 </div>
             </form>
