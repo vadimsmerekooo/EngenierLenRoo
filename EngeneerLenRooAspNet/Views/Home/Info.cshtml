@@ -75,6 +75,9 @@
                             <h5>@employee.Fio</h5>
                         </div>
                         <div class="col text-light text-right">
+                            <a class="btn btn-success" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@employee.Id" data-toggle="tooltip" data-placement="bottom" title="Просмотреть профиль">
+                                <i class="bi bi-person"></i>
+                            </a>
                             <a class="btn btn-success" asp-controller="Technique" asp-action="Index" asp-route-cabId="@Model.Id" asp-route-empId="@employee.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить технику">
                                 <i class="bi bi-plus"></i> <i class="bi bi-laptop"></i>
                             </a>
@@ -110,6 +113,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#cartridges-@employee.Id.Substring(0, 4)">
+                                    Картриджи (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Cartridge))
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#mouse-@employee.Id.Substring(0, 4)">
                                     Мышки (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Mouse))
                                 </a>
@@ -139,11 +147,6 @@
                                     Другое (@employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Other))
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#cartridge-@employee.Id.Substring(0, 4)">
-                                    История картриджей
-                                </a>
-                            </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="pc-@employee.Id.Substring(0, 4)">
@@ -154,6 +157,9 @@
                             </div>
                             <div class="tab-pane fade" id="printer-@employee.Id.Substring(0, 4)">
                                 <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Printer, Model.Id, employee.Id))" />
+                            </div>
+                            <div class="tab-pane fade" id="cartridges-@employee.Id.Substring(0, 4)">
+                                <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Cartridge, Model.Id, employee.Id))" />
                             </div>
                             <div class="tab-pane fade" id="mouse-@employee.Id.Substring(0, 4)">
                                 <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Mouse, Model.Id, employee.Id))" />
@@ -172,29 +178,6 @@
                             </div>
                             <div class="tab-pane fade" id="other-@employee.Id.Substring(0, 4)">
                                 <partial name="_employeeInfoPartialView" model="@(new EmployeeTechniquesViewModel(employee.Techniques, TypeTechnique.Other, Model.Id, employee.Id))" />
-                            </div>
-                            <div class="tab-pane fade" id="cartridge-@employee.Id.Substring(0, 4)">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Название</th>
-                                            <th scope="col">Дата сдачи</th>
-                                            <th scope="col">Дата выдачи</th>
-                                            <th scope="col">Приехал с заправки</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var cartridge in employee.Cartridges)
-                                        {
-                                            <tr class="@(cartridge.IsIssued ? "table-success" : "")">
-                                                <th>@cartridge.Name</th>
-                                                <th>@cartridge.DateGet</th>
-                                                <th>@cartridge.DateSet</th>
-                                                <th>@(cartridge.Case.DateGet != null ? "Да" : "Нет")</th>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

@@ -11,6 +11,8 @@ namespace EngeneerLenRooAspNet.Services
         Filter,
         Modem,
         Other,
+        Kit,
+        Cartridge,
         All
     }
 }

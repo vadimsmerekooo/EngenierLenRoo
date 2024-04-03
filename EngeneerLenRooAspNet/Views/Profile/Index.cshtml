@@ -35,6 +35,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#cartridge-@Model.Employee.Id.Substring(0, 4)">
+                        Картриджы (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Cartridge))
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#mouse-@Model.Employee.Id.Substring(0, 4)">
                         Мышки (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Mouse))
                     </a>
@@ -80,6 +85,9 @@
                 <div class="tab-pane fade" id="printer-@Model.Employee.Id.Substring(0, 4)">
                     <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Printer, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
                 </div>
+                <div class="tab-pane fade" id="cartridge-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Cartridge, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
                 <div class="tab-pane fade" id="mouse-@Model.Employee.Id.Substring(0, 4)">
                     <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Mouse, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
                 </div>
@@ -104,16 +112,18 @@
                             <tr>
                                 <th scope="col">Название</th>
                                 <th scope="col">Дата сдачи</th>
+                                <th scope="col">Выдана замена сразу</th>
                                 <th scope="col">Дата выдачи</th>
                                 <th scope="col">Приехал с заправки</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var cartridge in Model.Employee.Cartridges.OrderByDescending(d => d.DateGet))
+                            @foreach (var cartridge in Model.Employee.Cartridges.OrderByDescending(d => d.DateGet).Take(15))
                             {
                                 <tr class="@(cartridge.IsIssued ? "table-success" : "")">
-                                    <th>@cartridge.Name</th>
+                                    <th>@cartridge.Technique.Name</th>
                                     <th>@cartridge.DateGet</th>
+                                    <th>@(cartridge.IsIssuedRight ? "Да" : "Нет")</th>
                                     <th>@cartridge.DateSet</th>
                                     <th>@(cartridge.Case.DateGet != null ? "Да" : "Нет")</th>
                                 </tr>

@@ -85,7 +85,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                  
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation($"User {Input.Email} logged in.");
                     if (User.IsInRole("admin"))
                     {
                         return RedirectToAction("Index", "Home");
@@ -104,12 +104,16 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("Ваш профиль заблокирован.");
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
                     var users = await _context.Users.ToListAsync();
+                    if(users.Count(u => u.Email.Split(' ').First() == Input.Email) > 1)
+                    {
+                        ModelState.AddModelError(string.Empty, "Ошибка авторизации. Введен неверный логин или пароль.");
+                        return Page();
+                    }
                     foreach (var userItem in users)
                     {
                         if(userItem.Email.Split(' ').First() == Input.Email)
@@ -118,7 +122,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Pages.Account
 
                             if (result.Succeeded)
                             {
-                                _logger.LogInformation("User logged in.");
+                                _logger.LogInformation($"User {Input.Email} logged in.");
                                 if (User.IsInRole("admin"))
                                 {
                                     return RedirectToAction("Index", "Home");

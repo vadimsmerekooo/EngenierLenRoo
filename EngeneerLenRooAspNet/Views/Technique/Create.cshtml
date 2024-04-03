@@ -63,6 +63,11 @@
         <span asp-validation-for="Technique.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Count"></label>
+        <input asp-for="Count" class="form-control">
+        <span asp-validation-for="Count" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Technique.InventoryNumber"></label>
         <input asp-for="Technique.InventoryNumber" class="form-control">
         <span asp-validation-for="Technique.InventoryNumber" class="text-danger"></span>
@@ -81,14 +86,34 @@
             </div>
         </div>
     }
+    @if(Model.Technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+    {
+        <div class="form-group">
+            <label asp-for="CartridgeName"></label>
+            <input asp-for="CartridgeName" class="form-control">
+            <span asp-validation-for="CartridgeName" class="text-danger"></span>
+        </div>
+    }
     <div class="form-group">
         <label asp-for="Technique.Description"></label>
         <textarea asp-for="Technique.Description" class="form-control"></textarea>
         <span asp-validation-for="Technique.Description" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label asp-for="IsReturn">
+                <input asp-for="IsReturn" />
+                @Html.DisplayNameFor(m => m.IsReturn)
+            </label>
+        </div>
+    </div>
     <button type="submit" class="btn btn-success">Добавить</button>
     <a class="btn btn-primary" asp-action="Index" asp-route-empId="@Model.Employee.Id">Отмена</a>
 </form>
+<div class="row">
+    <hr />
+    <small class="text-danger"><sup>*</sup>Если указан <b>инвентраный номер</b> или омечен пункт <b>Добавить комплектом</b>, количесвто при добавлении будет 1!!!</small>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

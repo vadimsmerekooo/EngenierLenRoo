@@ -33,6 +33,7 @@ namespace EngeneerLenRooAspNet.Controllers
                     .Include(s => s.Employees)
                     .ThenInclude(t => t.Techniques)
                     .OrderBy(c => c.Name)
+                    .AsSplitQuery()
                     .ToListAsync());
         //{
         //    if (await _context.Users.FirstOrDefaultAsync(c => c.Email == User.Identity.Name) != null)
@@ -58,6 +59,7 @@ namespace EngeneerLenRooAspNet.Controllers
             List<Cabinet> result = await _context.Cabinets
                 .Include(s => s.Employees)
                 .ThenInclude(t => t.Techniques)
+                    .AsSplitQuery()
                 .ToListAsync();
 
 
@@ -103,11 +105,9 @@ namespace EngeneerLenRooAspNet.Controllers
             }
 
             Cabinet cabinet = await _context.Cabinets
-                .Include(s => s.Employees)
-                .ThenInclude(c => c.Cartridges)
-                .ThenInclude(c => c.Case)
                 .Include(th => th.Employees)
                 .ThenInclude(s => s.Techniques)
+                    .AsSplitQuery()
                 .FirstOrDefaultAsync(cabinetId => cabinetId.Id == id);
             return View(cabinet);
         }
@@ -124,6 +124,7 @@ namespace EngeneerLenRooAspNet.Controllers
             Cabinet cabinet = await _context.Cabinets
                 .Include(emp => emp.Employees)
                 .ThenInclude(th => th.Techniques)
+                    .AsSplitQuery()
                 .FirstOrDefaultAsync(cab => cab.Id == id);
 
             if (string.IsNullOrWhiteSpace(search))
@@ -165,7 +166,7 @@ namespace EngeneerLenRooAspNet.Controllers
         {
             SearchExtendedViewModel model = new SearchExtendedViewModel()
             {
-                Techniques = await _context.Techniques.Include(emp => emp.Employee).ThenInclude(cab => cab.Cabinet).ToListAsync()
+                Techniques = await _context.Techniques.Include(emp => emp.Employee).ThenInclude(cab => cab.Cabinet).AsSplitQuery().ToListAsync()
             };
             return View(model);
         }
@@ -215,8 +216,12 @@ namespace EngeneerLenRooAspNet.Controllers
             Cabinet cabinet = await _context.Cabinets
                 .Include(e => e.Employees)
                 .ThenInclude(t => t.Techniques)
-                .ThenInclude(e => e.Employee)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(cabinetId => cabinetId.Id == id);
+            if(cabinet.Employees.Sum(t => t.Techniques.Count()) != 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
             foreach (Employee employee in cabinet.Employees)
             {
@@ -308,7 +313,8 @@ namespace EngeneerLenRooAspNet.Controllers
                 {
                     if (viewModel.Checks.Any(th => th.Name == technique.Name && technique.InventoryNumber == th.InventoryNumber))
                     {
-                        viewModel.Checks.FirstOrDefault(th => th.Name == technique.Name).CountAll++;
+                        viewModel.Checks.FirstOrDefault(th => th.Name == technique.Name && technique.InventoryNumber == th.InventoryNumber).CountAll++;
+                        viewModel.Checks.FirstOrDefault(th => th.Name == technique.Name && technique.InventoryNumber == th.InventoryNumber).TypeTechnique = TypeTechnique.Kit;
                     }
                     else
                     {

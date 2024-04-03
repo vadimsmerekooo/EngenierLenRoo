@@ -1,0 +1,4 @@
+﻿@model string
+<div class="alert alert-@(Model.StartsWith("Ошибка") ? "danger" : "success")" role="alert">
+    @Model <a asp-action="Index">Вернуться назад к заполнению формы</a>
+</div>

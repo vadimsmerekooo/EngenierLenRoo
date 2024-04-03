@@ -63,7 +63,7 @@
         </div>
     </div>
 </div>
-<partial name="_createGroupPartial" model="Model.Employees.Where(e => Model.User.IsCanIWriteUser(e) && e.Id != Model.User.Id).ToList()" />
+<partial name="_createGroupPartial" model="Model.EmployeesGroup.Where(e => Model.User.IsCanIWriteUser(e) && e.Id != Model.User.Id).ToList()" />
 
 <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
 <script>
@@ -427,7 +427,7 @@
             else {
                 if (file.IsNull == "exsist") {
                     if (file.Type == "image") {
-                        if (idAdminChat != "") {
+                        if (idAdminChat == UserSend) {
                             document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInImageDirectAdmin);
                         }
                         else {
@@ -435,7 +435,7 @@
                         }
                     }
                     else {
-                        if (idAdminChat != "") {
+                        if (idAdminChat == UserSend) {
                             document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInFileDirectAdmin);
                         }
                         else {
@@ -443,7 +443,7 @@
                         }
                     }
                 } else {
-                    if (idAdminChat != "") {
+                    if (idAdminChat == UserSend) {
                         document.getElementById("chatroom" + roomName).insertAdjacentHTML('beforeend', messageInDirectAdmin);
                     }
                     else {

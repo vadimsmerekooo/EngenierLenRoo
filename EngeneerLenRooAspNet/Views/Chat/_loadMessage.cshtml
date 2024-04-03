@@ -23,12 +23,12 @@
 
     if (message.User == Model.User)
     {
-        if(message.File is null)
+        if (message.File is null)
         {
             <div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
                 <div class="media-body">
-                    <div class="bg-primary rounded py-2 px-3 mb-2">
-                        <p class="text-small mb-0 text-white">@message.Text</p>
+                    <div class="bg-primary rounded py-2 px-3 mb-2 text-white link-light">
+                        <p class="text-small mb-0 text-white">@(Html.Raw(message.Text))</p>
                         <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
                     </div>
                     <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
@@ -37,24 +37,19 @@
         }
         else
         {
-            if(message.File.TypeFile is TypeFile.text)
+            if (message.File.TypeFile is TypeFile.text)
             {
                 <div class="media ml-auto mb-3 float-right" style="max-width: 65%;">
                     <div class="media-body">
                         <div class="bg-primary rounded py-2 px-3 mb-2">
-                            <div class="d-flex alert alert-info bg-opacity-50">
+                            <div class="d-flex alert alert-info bg-opacity-50 text-truncate">
                                 <a href="@message.File.Path" class="text-dark" download="file">
-                                    <div class="row">
-                                        <p>
-                                            <i class="bi bi-download pr-3"></i>@message.File.OriginalName
-                                        </p>
-                                    </div>
-                                    <div class="row">
-                                        Скачать -> @message.File.GetSizeToString()
-                                    </div>
+                                    <i class="bi bi-download pr-3"></i>@message.File.OriginalName
+                                    <br>
+                                    Скачать -> @message.File.GetSizeToString()
                                 </a>
                             </div>
-                            <p class="text-small mb-0 text-white">@message.Text</p>
+                            <p class="text-small mb-0 text-white">@(Html.Raw(message.Text))</p>
                             <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
                         </div>
                         <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
@@ -67,7 +62,7 @@
                     <div class="media-body">
                         <div class="bg-primary rounded py-2 px-3 mb-2">
                             <img src="@message.File.Path" class="img-thumbnail" style="max-width: 200px;">
-                            <p class="text-small mb-0 text-white">@message.Text</p>
+                            <p class="text-small mb-0 text-white">@(Html.Raw(message.Text))</p>
                             <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all") text-light"></i>
                         </div>
                         <p class="small text-muted">@message.DateTime.ToShortTimeString()</p>
@@ -88,7 +83,7 @@
                         {
                             <p class="text-small text-muted">@message.User.GetShortFio()</p>
                         }
-                        <p class="mb-0">@message.Text</p>
+                        <p class="mb-0">@(Html.Raw(message.Text))</p>
                         <div class="d-flex align-items-center">
                             <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                             @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
@@ -114,19 +109,14 @@
                             {
                                 <p class="text-small text-muted">@message.User.GetShortFio()</p>
                             }
-                            <div class="d-flex alert alert-info bg-opacity-50">
+                            <div class="d-flex alert alert-info bg-opacity-50 text-truncate">
                                 <a href="@message.File.Path" class="text-dark" download="file">
-                                    <div class="row">
-                                        <p>
-                                            <i class="bi bi-download pr-3"></i>@message.File.OriginalName
-                                        </p>
-                                    </div>
-                                    <div class="row">
-                                        Скачать -> @message.File.GetSizeToString()
-                                    </div>
+                                    <i class="bi bi-download pr-3"></i>@message.File.OriginalName
+                                    <br>
+                                    Скачать -> @message.File.GetSizeToString()
                                 </a>
                             </div>
-                            <p class="mb-0">@message.Text</p>
+                            <p class="mb-0">@(Html.Raw(message.Text))</p>
                             <div class="d-flex align-items-center">
                                 <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                                 @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)
@@ -151,7 +141,7 @@
                                 <p class="text-small text-muted">@message.User.GetShortFio()</p>
                             }
                             <img src="@message.File.Path" class="img-thumbnail" style="max-width: 200px;">
-                            <p class="mb-0">@message.Text</p>
+                            <p class="mb-0">@(Html.Raw(message.Text))</p>
                             <div class="d-flex align-items-center">
                                 <i id="messageBoxId@(message.Id)" class="bi bi-@(message.Status is StatusMessage.NotRead ? "check" : "check-all")"></i>
                                 @if (Model.ChatActive.TypeChat is TypeChat.Group && Model.ChatActive.EmployeeAdministrator == message.User)

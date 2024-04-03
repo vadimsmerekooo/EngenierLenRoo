@@ -1,0 +1,88 @@
+﻿@model List<RegistrationRequest>
+@{
+    ViewData["Title"] = "Список заявок на регистрацию";
+}
+
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Заявки
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Email</th>
+                                    <th>ФИО</th>
+                                    <th>Кабинет</th>
+                                    <th>Класс</th>
+                                    <th>Отдел</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th>@item.DateTime</th>
+                                        <th>@item.Email</th>
+                                        <th>@item.Fio</th>
+                                        <th>@item.NumberCabinet</th>
+                                        <th>@item.Post</th>
+                                        <th>@item.Department</th>
+                                        <th>
+                                            @{
+                                                switch (item.Status)
+                                                {
+                                                    case TypeRequest.Processing:
+                                                        <i class="bi bi-arrow-repeat text-primary"></i>
+                                                        break;
+                                                    case TypeRequest.Ok:
+                                                        <i class="bi bi-plus-circle text-success"></i>
+                                                        break;
+                                                    case TypeRequest.Denied:
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                        break;
+                                                }
+                                            }
+                                        </th>
+                                        <th>
+                                            @{
+                                                switch (item.Status)
+                                                {
+                                                    case TypeRequest.Processing:
+                                                        <a class="text-success" asp-action="RequestOk" asp-route-id="@item.Id">Одобрить</a>
+                                                        <a class="text-danger" asp-action="RequestDenied" asp-route-id="@item.Id">Отказать</a>
+                                                        break;
+                                                }
+                                            }
+                                        </th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

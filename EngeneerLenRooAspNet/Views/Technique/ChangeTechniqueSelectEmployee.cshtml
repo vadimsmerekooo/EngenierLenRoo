@@ -40,7 +40,7 @@
             </div>
             Сотрудник:
             <select asp-for="SelectEmployeeId" class="custom-select">
-                @foreach (Employee employee in Model.SelectCabinet.Employees)
+                @foreach (Employee employee in Model.SelectCabinet.Employees.Where(e => e.Id != Model.SelectEmployeeId))
                 {
                     <option value="@employee.Id">@employee.Fio</option>
                 }

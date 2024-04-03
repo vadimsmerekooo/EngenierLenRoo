@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col">
                 <h5>@Model.Employee.Fio</h5>
-                <p>Каб. @Model.Employee.Cabinet.Name; Отдел: @Model.Employee.Department; Должность: @Model.Employee.Post;</p>
+                <p><a asp-controller="Home" asp-action="Info" asp-route-id="@Model.Employee.Cabinet.Id">Каб. @Model.Employee.Cabinet.Name;</a> Отдел: @Model.Employee.Department; Должность: @Model.Employee.Post;</p>
             </div>
             <div class="col text-light text-right">
                 <a class="btn btn-success" asp-controller="Technique" asp-action="Index" asp-route-cabId="@Model.Employee.Cabinet.Id" asp-route-empId="@Model.Employee.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить технику">
@@ -51,6 +51,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#cartridges-@Model.Employee.Id.Substring(0, 4)">
+                        Картриджи (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Cartridge))
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#mouse-@Model.Employee.Id.Substring(0, 4)">
                         Мышки (@Model.Employee.Techniques.Count(th => th.TypeTechnique == TypeTechnique.Mouse))
                     </a>
@@ -85,6 +90,11 @@
                         История картриджей
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#code-@Model.Employee.Id.Substring(0, 4)">
+                        HashCode
+                    </a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="pc-@Model.Employee.Id.Substring(0, 4)">
@@ -95,6 +105,9 @@
                 </div>
                 <div class="tab-pane fade" id="printer-@Model.Employee.Id.Substring(0, 4)">
                     <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Printer, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
+                </div>
+                <div class="tab-pane fade" id="cartridges-@Model.Employee.Id.Substring(0, 4)">
+                    <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Cartridge, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
                 </div>
                 <div class="tab-pane fade" id="mouse-@Model.Employee.Id.Substring(0, 4)">
                     <partial name="~/Views/Home/_employeeInfoPartialView.cshtml" model="@(new EmployeeTechniquesViewModel(Model.Employee.Techniques, TypeTechnique.Mouse, Model.Employee.Cabinet.Id, Model.Employee.Id))" />
@@ -128,7 +141,7 @@
                             @foreach (var cartridge in Model.Employee.Cartridges.OrderByDescending(d => d.DateGet))
                             {
                                 <tr class="@(cartridge.IsIssued ? "table-success" : "")">
-                                    <th>@cartridge.Name</th>
+                                    <th>@cartridge.Technique.Name</th>
                                     <th>@cartridge.DateGet</th>
                                     <th>@cartridge.DateSet</th>
                                     <th>@(cartridge.Case.DateGet != null ? "Да" : "Нет")</th>
@@ -136,6 +149,9 @@
                             }
                         </tbody>
                     </table>
+                </div>
+                <div class="tab-pane fade" id="code-@Model.Employee.Id.Substring(0, 4)">
+                    Пароль: @Model.Employee.HashCode
                 </div>
             </div>
         </div>

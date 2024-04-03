@@ -1,0 +1,480 @@
+2024-01-15 12:32:39.3614 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:32:39.3858 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:32:39.4004 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:32:39.4004 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:32:39.4227 Info Configuration initialized.
+2024-01-15 12:43:39.2889 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:43:39.3120 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:43:39.3325 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:43:39.3491 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:43:39.3612 Info Configuration initialized.
+2024-01-15 12:45:27.9890 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:45:28.0107 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:45:28.0277 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:45:28.0425 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:45:28.0607 Info Configuration initialized.
+2024-01-15 12:47:17.9082 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:47:17.9352 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:47:17.9503 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:47:17.9625 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:47:17.9625 Info Configuration initialized.
+2024-01-15 12:48:10.7127 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:48:10.7282 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:48:10.7425 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:48:10.7425 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:48:10.7641 Info Configuration initialized.
+2024-01-15 12:58:32.3304 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:58:32.3525 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:58:32.3686 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:58:32.3686 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:58:32.3949 Info Configuration initialized.
+2024-01-15 12:59:26.2434 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 12:59:26.2657 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 12:59:26.2811 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 12:59:26.2912 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 12:59:26.3052 Info Configuration initialized.
+2024-01-15 13:33:29.9347 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:33:29.9614 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:33:29.9798 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:33:30.0038 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:33:30.0230 Info Configuration initialized.
+2024-01-15 13:50:56.5292 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:50:56.5603 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:50:56.5808 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:50:56.5960 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:50:56.6149 Info Configuration initialized.
+2024-01-15 13:53:29.1737 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:53:29.1867 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:53:29.2015 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:53:29.2121 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:53:29.2121 Info Configuration initialized.
+2024-01-15 13:55:20.8025 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:55:20.8285 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:55:20.8474 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:55:20.8595 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:55:20.8753 Info Configuration initialized.
+2024-01-15 13:57:06.4895 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:57:06.5167 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:57:06.5371 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:57:06.5502 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:57:06.5682 Info Configuration initialized.
+2024-01-15 13:58:39.1188 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:58:39.1430 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:58:39.1615 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:58:39.1755 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:58:39.1921 Info Configuration initialized.
+2024-01-15 13:59:47.2963 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 13:59:47.3290 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 13:59:47.3619 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 13:59:47.3771 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 13:59:47.3949 Info Configuration initialized.
+2024-01-15 14:06:25.9215 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 14:06:25.9710 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 14:06:26.0349 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 14:06:26.0542 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 14:06:26.0769 Info Configuration initialized.
+2024-01-15 14:08:08.2818 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 14:08:08.3143 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 14:08:08.3323 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 14:08:08.3464 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 14:08:08.3682 Info Configuration initialized.
+2024-01-15 15:24:11.0626 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:24:11.0899 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:24:11.1074 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:24:11.1200 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:24:11.1200 Info Configuration initialized.
+2024-01-15 15:26:43.2111 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:26:43.2327 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:26:43.2478 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:26:43.2478 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:26:43.2689 Info Configuration initialized.
+2024-01-15 15:27:09.7158 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:27:09.7366 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:27:09.7551 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:27:09.7644 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:27:09.7767 Info Configuration initialized.
+2024-01-15 15:30:47.9880 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:30:48.0133 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:30:48.0292 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:30:48.0404 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:30:48.0583 Info Configuration initialized.
+2024-01-15 15:32:58.5238 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:32:58.5470 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:32:58.5611 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:32:58.5717 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:32:58.5717 Info Configuration initialized.
+2024-01-15 15:34:02.0411 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:34:02.0621 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:34:02.0792 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:34:02.0923 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:34:02.1076 Info Configuration initialized.
+2024-01-15 15:34:40.5715 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:34:40.6145 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:34:40.6584 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:34:40.6783 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:34:40.7055 Info Configuration initialized.
+2024-01-15 15:44:06.1083 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:44:06.1288 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:44:06.1435 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:44:06.1532 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:44:06.1656 Info Configuration initialized.
+2024-01-15 15:47:46.0608 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:47:46.1159 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:47:46.1499 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:47:46.1867 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:47:46.2296 Info Configuration initialized.
+2024-01-15 15:48:39.3359 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 15:48:39.3676 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 15:48:39.3848 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 15:48:39.3848 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 15:48:39.4153 Info Configuration initialized.
+2024-01-15 16:03:50.0703 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:03:50.0975 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:03:50.1172 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:03:50.1370 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:03:50.1675 Info Configuration initialized.
+2024-01-15 16:06:00.1472 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:06:00.1588 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:06:00.1735 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:06:00.1841 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:06:00.1841 Info Configuration initialized.
+2024-01-15 16:09:19.5922 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:09:19.6197 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:09:19.6393 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:09:19.6591 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:09:19.6791 Info Configuration initialized.
+2024-01-15 16:13:03.0854 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:13:03.1045 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:13:03.1206 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:13:03.1206 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:13:03.1428 Info Configuration initialized.
+2024-01-15 16:15:19.8531 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:15:19.8752 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:15:19.8898 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:15:19.9089 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:15:19.9335 Info Configuration initialized.
+2024-01-15 16:43:05.5332 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:43:05.5557 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:43:05.5557 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:43:05.5825 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:43:05.6006 Info Configuration initialized.
+2024-01-15 16:43:54.8563 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:43:54.8819 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:43:54.8980 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:43:54.9096 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:43:54.9223 Info Configuration initialized.
+2024-01-15 16:45:42.6757 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:45:42.7020 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:45:42.7194 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:45:42.7377 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:45:42.7614 Info Configuration initialized.
+2024-01-15 16:47:53.2018 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:47:53.2244 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:47:53.2408 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:47:53.2509 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:47:53.2641 Info Configuration initialized.
+2024-01-15 16:57:41.3064 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:57:41.3261 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:57:41.3425 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:57:41.3565 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:57:41.3699 Info Configuration initialized.
+2024-01-15 16:58:38.9539 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:58:38.9772 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:58:38.9926 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:58:38.9926 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:58:39.0228 Info Configuration initialized.
+2024-01-15 16:59:03.0893 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 16:59:03.1120 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 16:59:03.1283 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 16:59:03.1374 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 16:59:03.1492 Info Configuration initialized.
+2024-01-15 17:03:42.6988 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-15 17:03:42.7317 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-15 17:03:42.7519 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-15 17:03:42.7694 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-15 17:03:42.7858 Info Configuration initialized.
+2024-01-17 14:06:23.2188 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-01-17 14:06:23.2981 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-01-17 14:06:23.3348 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-01-17 14:06:23.3490 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-01-17 14:06:23.3620 Info Configuration initialized.
+2024-02-05 12:54:35.4944 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-05 12:54:35.5237 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-05 12:54:35.5359 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-05 12:54:35.5467 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-05 12:54:35.5467 Info Configuration initialized.
+2024-02-12 16:04:18.4262 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-12 16:04:18.4466 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-12 16:04:18.4564 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-12 16:04:18.4820 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-12 16:04:18.5131 Info Configuration initialized.
+2024-02-12 16:05:53.8111 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-12 16:05:53.8254 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-12 16:05:53.8417 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-12 16:05:53.8566 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-12 16:05:53.8851 Info Configuration initialized.
+2024-02-12 16:09:51.4026 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-12 16:09:51.5394 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-12 16:09:51.6154 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-12 16:09:51.6366 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-12 16:09:51.6871 Info Configuration initialized.
+2024-02-19 09:29:21.7730 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 09:29:21.8453 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 09:29:21.8794 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 09:29:21.9057 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 09:29:21.9213 Info Configuration initialized.
+2024-02-19 09:35:24.3202 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 09:35:24.3530 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 09:35:24.3530 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 09:35:24.3906 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 09:35:24.4058 Info Configuration initialized.
+2024-02-19 09:46:53.1628 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 09:46:53.1875 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 09:46:53.2091 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 09:46:53.2091 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 09:46:53.2401 Info Configuration initialized.
+2024-02-19 09:51:26.9110 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 09:51:26.9299 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 09:51:26.9533 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 09:51:26.9533 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 09:51:26.9934 Info Configuration initialized.
+2024-02-19 12:29:11.5032 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 12:29:11.5389 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 12:29:11.5629 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 12:29:11.5857 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 12:29:11.6144 Info Configuration initialized.
+2024-02-19 12:29:27.6002 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 12:29:27.6147 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 12:29:27.6296 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 12:29:27.6425 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 12:29:27.6539 Info Configuration initialized.
+2024-02-19 12:48:23.0953 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 12:48:23.1857 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 12:48:23.2200 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 12:48:23.2200 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 12:48:23.2566 Info Configuration initialized.
+2024-02-19 12:50:05.5761 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 12:50:05.5965 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 12:50:05.6097 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 12:50:05.6320 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 12:50:05.6616 Info Configuration initialized.
+2024-02-19 12:54:49.2166 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 12:54:49.2428 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 12:54:49.2668 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 12:54:49.2795 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 12:54:49.3197 Info Configuration initialized.
+2024-02-19 14:03:29.0864 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:03:29.1179 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:03:29.1309 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:03:29.1427 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:03:29.1427 Info Configuration initialized.
+2024-02-19 14:03:56.7879 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:03:56.7879 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:03:56.8054 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:03:56.8215 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:03:56.8330 Info Configuration initialized.
+2024-02-19 14:12:39.0527 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:12:39.0745 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:12:39.0745 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:12:39.1159 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:12:39.1576 Info Configuration initialized.
+2024-02-19 14:13:33.3147 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:13:33.3259 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:13:33.3375 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:13:33.3375 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:13:33.3579 Info Configuration initialized.
+2024-02-19 14:15:03.8205 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:15:03.8327 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:15:03.8425 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:15:03.8550 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:15:03.8660 Info Configuration initialized.
+2024-02-19 14:15:41.1050 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:15:41.1050 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:15:41.1225 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:15:41.1458 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:15:41.1649 Info Configuration initialized.
+2024-02-19 14:16:12.5592 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:16:12.5686 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:16:12.5873 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:16:12.6050 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:16:12.6351 Info Configuration initialized.
+2024-02-19 14:23:07.9004 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:23:07.9264 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:23:07.9456 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:23:07.9456 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:23:07.9996 Info Configuration initialized.
+2024-02-19 14:42:46.7399 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:42:46.7734 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:42:46.7913 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:42:46.8119 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:42:46.8276 Info Configuration initialized.
+2024-02-19 14:44:54.9560 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:44:55.0793 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:44:55.1711 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:44:55.2051 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:44:55.2282 Info Configuration initialized.
+2024-02-19 14:45:38.8745 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:45:38.8881 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:45:38.9000 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:45:38.9206 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:45:38.9377 Info Configuration initialized.
+2024-02-19 14:45:55.8830 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:45:55.9019 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:45:55.9019 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:45:55.9328 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:45:55.9482 Info Configuration initialized.
+2024-02-19 14:56:08.3882 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:56:08.4022 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:56:08.4218 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:56:08.4337 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:56:08.4462 Info Configuration initialized.
+2024-02-19 14:56:35.8268 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:56:35.8373 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:56:35.8491 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:56:35.8491 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:56:35.8707 Info Configuration initialized.
+2024-02-19 14:58:04.0005 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 14:58:04.0113 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 14:58:04.0231 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 14:58:04.0231 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 14:58:04.0545 Info Configuration initialized.
+2024-02-19 15:04:37.0474 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 15:04:37.0716 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 15:04:37.0859 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 15:04:37.0859 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 15:04:37.1211 Info Configuration initialized.
+2024-02-19 15:50:01.6426 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 15:50:01.6532 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 15:50:01.6707 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 15:50:01.6857 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 15:50:01.6976 Info Configuration initialized.
+2024-02-19 15:50:43.4764 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 15:50:43.4764 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 15:50:43.4956 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 15:50:43.5053 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 15:50:43.5294 Info Configuration initialized.
+2024-02-19 15:51:06.2681 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 15:51:06.2803 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 15:51:06.2917 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 15:51:06.3107 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 15:51:06.3309 Info Configuration initialized.
+2024-02-19 15:59:30.2074 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 15:59:30.2424 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 15:59:30.2586 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 15:59:30.2810 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 15:59:30.2981 Info Configuration initialized.
+2024-02-19 16:02:35.1124 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 16:02:35.1395 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 16:02:35.1731 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 16:02:35.1874 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 16:02:35.2163 Info Configuration initialized.
+2024-02-19 16:07:03.5410 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 16:07:03.5640 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 16:07:03.5812 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 16:07:03.5922 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 16:07:03.6124 Info Configuration initialized.
+2024-02-19 16:09:26.2033 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 16:09:26.2235 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 16:09:26.2443 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 16:09:26.2554 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 16:09:26.2761 Info Configuration initialized.
+2024-02-19 16:16:46.6625 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 16:16:46.6961 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 16:16:46.7111 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 16:16:46.7111 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 16:16:46.7443 Info Configuration initialized.
+2024-02-19 16:51:51.2637 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-19 16:51:51.3019 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-19 16:51:51.3391 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-19 16:51:51.3532 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-19 16:51:51.3729 Info Configuration initialized.
+2024-02-20 14:35:24.8071 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-20 14:35:24.8345 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-20 14:35:24.8483 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-20 14:35:24.8483 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-20 14:35:24.8882 Info Configuration initialized.
+2024-02-20 14:35:40.2129 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-20 14:35:40.2254 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-20 14:35:40.2353 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-20 14:35:40.2353 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-20 14:35:40.2642 Info Configuration initialized.
+2024-02-20 14:44:14.6820 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-20 14:44:14.7013 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-20 14:44:14.7134 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-20 14:44:14.7236 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-20 14:44:14.7486 Info Configuration initialized.
+2024-02-20 16:57:48.7914 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-20 16:57:48.8316 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-20 16:57:48.8427 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-20 16:57:48.8427 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-20 16:57:48.8768 Info Configuration initialized.
+2024-02-20 17:00:32.7341 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-20 17:00:32.7460 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-20 17:00:32.7647 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-20 17:00:32.7835 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-20 17:00:32.8087 Info Configuration initialized.
+2024-02-21 10:37:35.6068 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 10:37:35.6314 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 10:37:35.6433 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 10:37:35.6666 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 10:37:35.6924 Info Configuration initialized.
+2024-02-21 10:39:19.8049 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 10:39:19.8116 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 10:39:19.8116 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 10:39:19.8263 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 10:39:19.8263 Info Configuration initialized.
+2024-02-21 10:39:41.5426 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 10:39:41.5426 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 10:39:41.5426 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 10:39:41.5636 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 10:39:41.5740 Info Configuration initialized.
+2024-02-21 10:59:13.6414 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 10:59:13.8734 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 10:59:14.3106 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 10:59:14.3419 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 10:59:14.3756 Info Configuration initialized.
+2024-02-21 11:01:01.0986 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 11:01:01.1586 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 11:01:01.1741 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 11:01:01.1838 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 11:01:01.1838 Info Configuration initialized.
+2024-02-21 11:39:47.5028 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 11:39:47.5254 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 11:39:47.5496 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 11:39:47.5657 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 11:39:47.5795 Info Configuration initialized.
+2024-02-21 11:41:21.7784 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 11:41:21.8106 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 11:41:21.8275 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 11:41:21.8275 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 11:41:21.8519 Info Configuration initialized.
+2024-02-21 16:28:10.8074 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 16:28:10.8859 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 16:28:10.9195 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 16:28:10.9195 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 16:28:10.9195 Info Configuration initialized.
+2024-02-21 16:37:10.4905 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 16:37:10.5375 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 16:37:10.5553 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 16:37:10.5659 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 16:37:10.5783 Info Configuration initialized.
+2024-02-21 16:44:19.5299 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-21 16:44:19.5430 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-21 16:44:19.5576 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-21 16:44:19.5576 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-21 16:44:19.5786 Info Configuration initialized.
+2024-02-23 09:24:43.7527 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-23 09:24:43.9200 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-23 09:24:43.9547 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-23 09:24:43.9547 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-23 09:24:43.9929 Info Configuration initialized.
+2024-02-23 10:52:18.0720 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-23 10:52:18.1033 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-23 10:52:18.1340 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-23 10:52:18.1641 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=49, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-23 10:52:18.1968 Info Configuration initialized.
+2024-02-23 11:06:56.7225 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2024-02-23 11:06:56.7704 Info Registered target NLog.Targets.FileTarget(Name=otherFile-web)
+2024-02-23 11:06:56.8019 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-02-23 11:06:56.8211 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=49, FilePath=D:\GitHub\EngenierLenRoo\EngeneerLenRooAspNet\NLog.config
+2024-02-23 11:06:56.8496 Info Configuration initialized.

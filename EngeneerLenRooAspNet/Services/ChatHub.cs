@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EngeneerLenRooAspNet.Services
@@ -29,6 +30,13 @@ namespace EngeneerLenRooAspNet.Services
             var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user);
             if (chat != null && userSend != null && chat.ChatUsers.Contains(userSend))
             {
+                string regexUrl = "(https?:\\/\\/|ftps?:\\/\\/|www\\.)((?![.,?!;:()]*(\\s|$))[^\\s]){2,}";
+                if (Regex.IsMatch(message, regexUrl))
+                {
+                    string link = Regex.Match(message, regexUrl).Value;
+                    string linkResult = $"<a href=\"{link}\" class=\"text-decoration-none\">{link}</a>";
+                    message = message.Replace(link, linkResult);
+                }
                 var messageModel = new Message()
                 {
                     Chat = chat,
@@ -59,7 +67,7 @@ namespace EngeneerLenRooAspNet.Services
                     await Clients.All.SendAsync("Send", room, user, userName, messageModel.Id, message.Trim(),
                         DateTime.Now.ToShortTimeString(), chat.TypeChat is TypeChat.Direct ? "Direct" : "Group",
                         chat.TypeChat is TypeChat.Group ? chat.EmployeeAdministrator.Id : "",
-                        Newtonsoft.Json.JsonConvert.SerializeObject( new { IsNull = "exsist", Path = messageModel.File.Path, Name = messageModel.File.OriginalName, Type = messageModel.File.TypeFile.ToString(), Size = messageModel.File.GetSizeToString()}))
+                        Newtonsoft.Json.JsonConvert.SerializeObject(new { IsNull = "exsist", Path = messageModel.File.Path, Name = messageModel.File.OriginalName, Type = messageModel.File.TypeFile.ToString(), Size = messageModel.File.GetSizeToString() }))
                         .ConfigureAwait(true);
                 }
             }
@@ -79,7 +87,7 @@ namespace EngeneerLenRooAspNet.Services
             var userSend = await _context.Employees.FirstOrDefaultAsync(u => u.Id == user);
 
             List<Message> messagesRead = new();
-            if(chat.Messages != null)
+            if (chat.Messages != null)
             {
                 foreach (var messageItem in chat.Messages)
                 {

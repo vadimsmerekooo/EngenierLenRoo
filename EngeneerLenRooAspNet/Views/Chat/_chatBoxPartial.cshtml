@@ -120,13 +120,13 @@
     scrollToLowerChat();
     Read('@Model.User.Id', `@Model.ChatActive.Id`);
 
-    const uploadField = document.getElementById("fileUploadInput");
-    let fileName = "";
+    var uploadField = document.getElementById("fileUploadInput");
+    var fileName = "";
 
     if(uploadField){
         uploadField.onchange = function () {
             fileName = uploadField.files[0].name;
-            const parts = fileName.split('.')[1];
+            var parts = fileName.split('.')[1];
 
             if (parts == "img" || parts == "png" || parts == "jpeg" || parts == "jpg") {
                 if (this.files[0].size > 1042576) {
@@ -141,7 +141,7 @@
                 $("#errorUploadFile").toast("show");
             }
             else {
-                const elem = document.getElementById('fileUpload');
+                var elem = document.getElementById('fileUpload');
                 elem.innerHTML = `<button id="clearInputUploadFile" type="button" class="ml-2 mb-1 close" aria-label="Close" onclick="clearInputUploadFile('false');">
                                                 <i class="bi bi-file-earmark-check-fill  text-success"></i>
                                                 <span aria-hidden="true">×</span>
@@ -155,7 +155,7 @@
     }
 
     function clearInputUploadFile(isSend) {
-        const elem = document.getElementById('fileUpload');
+        var elem = document.getElementById('fileUpload');
         elem.innerHTML = `<button id="fileUploadButton" type="button" class="btn btn-link bg-light" onclick="document.getElementById('fileUploadInput').click();">
                                     <i id="paperClipUploadFile" class="bi bi-paperclip">
                                     </i>

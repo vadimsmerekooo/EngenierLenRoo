@@ -21,10 +21,13 @@ namespace EngeneerLenRooAspNet.Models
         [Required]
         [Display(Name = "Отдел")]
         public TypeDepartment? Department { get; set; } = TypeDepartment.Не_определен;
+        public string HashCode { get; set; }
         public string CabinetId { get; set; }
         public Cabinet Cabinet { get; set; }
+        [NotMapped]
         public List<Cartridge> Cartridges { get; set; } = new List<Cartridge>();
         public virtual List<Chat> Chats { get; set; } = new List<Chat>();
+
 
 
         public bool IsCanIWriteUser(Employee userDirect)

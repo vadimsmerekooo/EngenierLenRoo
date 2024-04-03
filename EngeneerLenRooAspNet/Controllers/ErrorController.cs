@@ -52,5 +52,7 @@ namespace EngeneerLenRooAspNet.Controllers
             }
             return View("ErrorStatusCode");
         }
+        [Route("error-return/{statusCode}")]
+        public IActionResult Error(int statusCode) => RedirectToAction("HttpStatusCodeHandler", new { statusCode = statusCode });
     }
 }

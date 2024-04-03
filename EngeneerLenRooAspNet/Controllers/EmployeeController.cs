@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -54,11 +55,13 @@ namespace EngeneerLenRooAspNet.Controllers
                 }
 
                 employee.Cabinet = await _context.Cabinets.FirstOrDefaultAsync(cab => cab.Id == employee.CabinetId);
+                employee.HashCode = $"centr_edu_{DateTime.Now.Hour}{DateTime.Now.Minute}";
+                
 
                 if (((List<string>)isValid).Count == 0)
                 {
                     var user = new IdentityUser { UserName = employee.Fio, Email = employee.Fio, EmailConfirmed = true };
-                    var result = await _userManager.CreateAsync(user, $"centr_edu");
+                    var result = await _userManager.CreateAsync(user, employee.HashCode);
                     if (result.Succeeded)
                     {
                         List<string> role = new List<string>() { "user" };
@@ -226,7 +229,7 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 Employee employee = await _context.Employees
                     .Include(cab => cab.Cabinet)
-                    .Include(th => th.Techniques)
+                    .Include(th => th.Techniques).AsSplitQuery()
                     .FirstOrDefaultAsync(emp => emp.Id == id);
                 var user = await _userManager.FindByIdAsync(id);
                 if (user != null && employee != null)

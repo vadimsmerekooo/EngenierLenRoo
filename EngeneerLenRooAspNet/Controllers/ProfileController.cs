@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EngeneerLenRooAspNet.Controllers
@@ -27,7 +28,8 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 return RedirectToAction("Index", "Chat");
             }
-            var employee = await _context.Employees.Include(c => c.Cabinet).Include(t => t.Techniques).Include(c => c.Cartridges).ThenInclude(c => c.Case).FirstOrDefaultAsync(e => e.Id == user.Id);
+            var employee = await _context.Employees.Include(c => c.Cabinet).Include(t => t.Techniques).AsSplitQuery().FirstOrDefaultAsync(e => e.Id == user.Id);
+            employee.Cartridges = await _context.Cartridges.Include(t => t.Technique).Include(c => c.Case).Include(c => c.EmployeeSet).Include(c => c.EmployeeGet).AsSplitQuery().Where(c => c.EmployeeGetId == employee.Id || c.EmployeeSetId == employee.Id).ToListAsync();
             if (employee == null && employee.Cabinet == null)
             {
                 return RedirectToAction("Index", "Chat");
@@ -49,7 +51,8 @@ namespace EngeneerLenRooAspNet.Controllers
             {
                 return RedirectToAction("Index", "Chat");
             }
-            var employee = await _context.Employees.Include(c => c.Cabinet).Include(t => t.Techniques).Include(c => c.Cartridges).ThenInclude(c => c.Case).FirstOrDefaultAsync(e => e.Id == user.Id);
+            var employee = await _context.Employees.Include(c => c.Cabinet).Include(t => t.Techniques).AsSplitQuery().FirstOrDefaultAsync(e => e.Id == user.Id);
+            employee.Cartridges = await _context.Cartridges.Include(t => t.Technique).Include(c => c.Case).Include(c => c.EmployeeSet).Include(c => c.EmployeeGet).AsSplitQuery().Where(c => c.EmployeeGetId == employee.Id || c.EmployeeSetId == employee.Id).ToListAsync();
             if (employee == null && employee.Cabinet == null)
             {
                 return RedirectToAction("Index", "Chat");

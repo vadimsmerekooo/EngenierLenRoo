@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EngeneerLenRooAspNet.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -93,6 +93,24 @@ namespace EngeneerLenRooAspNet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_File", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegistrationRequests",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Fio = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NumberCabinet = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Post = table.Column<int>(type: "int", nullable: false),
+                    Department = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegistrationRequests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +228,7 @@ namespace EngeneerLenRooAspNet.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Post = table.Column<int>(type: "int", nullable: false),
                     Department = table.Column<int>(type: "int", nullable: false),
+                    HashCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CabinetId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -219,35 +238,6 @@ namespace EngeneerLenRooAspNet.Migrations
                         name: "FK_Employees_Cabinets_CabinetId",
                         column: x => x.CabinetId,
                         principalTable: "Cabinets",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cartridges",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateGet = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateSet = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsIssued = table.Column<bool>(type: "bit", nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CaseId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cartridges", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cartridges_Cases_CaseId",
-                        column: x => x.CaseId,
-                        principalTable: "Cases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Cartridges_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
                         principalColumn: "Id");
                 });
 
@@ -358,6 +348,46 @@ namespace EngeneerLenRooAspNet.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Cartridges",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateGet = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateSet = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsIssued = table.Column<bool>(type: "bit", nullable: false),
+                    IsIssuedRight = table.Column<bool>(type: "bit", nullable: false),
+                    TechniqueId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EmployeeGetId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EmployeeSetId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CaseId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cartridges", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cartridges_Cases_CaseId",
+                        column: x => x.CaseId,
+                        principalTable: "Cases",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Cartridges_Employees_EmployeeGetId",
+                        column: x => x.EmployeeGetId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Cartridges_Employees_EmployeeSetId",
+                        column: x => x.EmployeeSetId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Cartridges_Techniques_TechniqueId",
+                        column: x => x.TechniqueId,
+                        principalTable: "Techniques",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -403,9 +433,19 @@ namespace EngeneerLenRooAspNet.Migrations
                 column: "CaseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cartridges_EmployeeId",
+                name: "IX_Cartridges_EmployeeGetId",
                 table: "Cartridges",
-                column: "EmployeeId");
+                column: "EmployeeGetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cartridges_EmployeeSetId",
+                table: "Cartridges",
+                column: "EmployeeSetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cartridges_TechniqueId",
+                table: "Cartridges",
+                column: "TechniqueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Chats_EmployeeAdministratorId",
@@ -476,7 +516,7 @@ namespace EngeneerLenRooAspNet.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "Techniques");
+                name: "RegistrationRequests");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -486,6 +526,9 @@ namespace EngeneerLenRooAspNet.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cases");
+
+            migrationBuilder.DropTable(
+                name: "Techniques");
 
             migrationBuilder.DropTable(
                 name: "Chats");

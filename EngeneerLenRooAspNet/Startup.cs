@@ -8,12 +8,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
+using NLog;
 
 namespace EngeneerLenRooAspNet
 {
     public class Startup
     {
-        public static readonly List<string> DBMap = new List<string>() { "Центр", "Октябрьский РОО", "Ленинский РОО", "ГрГГ" };
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +34,9 @@ namespace EngeneerLenRooAspNet
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            logger.Debug("init main");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -42,7 +48,6 @@ namespace EngeneerLenRooAspNet
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
 

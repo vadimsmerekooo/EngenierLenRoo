@@ -1,0 +1,30 @@
+﻿@model LogViewModel
+@{
+    ViewData["Title"] = "Обзор логов";
+}
+
+<table class="table table-sm" style="margin-left: -20%;">
+    <thead>
+        <tr>
+            <th scope="col">Дата</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Метод</th>
+            <th scope="col">Ошибка</th>
+            <th scope="col">Url</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model.Logs)
+        {
+            <tr class="table-@log.GetType()">
+                <th scope="row">@log.DateTime</th>
+                <td>@log.Type</td>
+                <td>@log.Method</td>
+                <td class="text-wrap">@log.Text</td>
+                <td>@log.Url</td>
+                <td>@log.Action</td>
+            </tr>
+        }
+    </tbody>
+</table>

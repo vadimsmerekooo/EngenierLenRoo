@@ -19,6 +19,7 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<File> File { get; set; }
+        public DbSet<RegistrationRequest> RegistrationRequests { get; set; }
 
 
 
@@ -38,6 +39,10 @@ namespace EngeneerLenRooAspNet.Areas.Identity.Data
                 .HasOne(u => u.EmployeeCreate);
             modelBuilder.Entity<Message>()
                 .HasOne(u => u.File);
+            modelBuilder.Entity<Cartridge>()
+                .HasOne(u => u.EmployeeGet);
+            modelBuilder.Entity<Cartridge>()
+                .HasOne(u => u.EmployeeSet);
 
             base.OnModelCreating(modelBuilder);
         }

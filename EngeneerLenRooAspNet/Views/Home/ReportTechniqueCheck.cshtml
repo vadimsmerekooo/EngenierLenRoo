@@ -29,12 +29,14 @@
                                     <th>Тип</th>
                                     <th>Инв. Номер</th>
                                     <th>Ip</th>
+                                    <th>Каб</th>
                                     <th>Сотрудник</th>
                                     <th>Кол-во</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -47,10 +49,11 @@
                                 {
                                     <tr>
                                         <th>@item.Name</th>
-                                        <th>@item.TypeTechnique</th>
+                                        <th>@(item.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Kit ? "к-т" : item.TypeTechnique)</th>
                                         <th>@item.InventoryNumber</th>
                                         <th>@item.IpComputer</th>
-                                        <th>@(item.InventoryNumber != 71 ? item.Employee.Fio : "-")</th>
+                                        <th>@(item.Employee is null ? "Не определен" : item.Employee.Cabinet.Name)</th>
+                                        <th>@(item.Employee is null ? "-" : item.Employee.Fio)</th>
                                         <th>
                                             @item.CountAll
                                         </th>

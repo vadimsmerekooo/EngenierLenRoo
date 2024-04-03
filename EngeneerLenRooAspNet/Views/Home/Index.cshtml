@@ -123,9 +123,12 @@
                                             <a class="card-link" asp-action="Info" asp-route-id="@item.Id">Просмотреть </a>
                                         </th>
                                         <th>
-                                            <form style="display: inline-block;" id="delete_cab_@(item.Id)_form" method="post" asp-action="Delete" asp-route-id="@item.Id">
-                                                <a href="javascript:{}" onclick="document.getElementById('delete_cab_@(item.Id)_form').submit();" class="card-link text-danger">Удалить кабинет</a>
-                                            </form>
+                                            @if(item.Employees.Sum(t => t.Techniques.Count()) == 0 && item.Employees.Count == 0)
+                                            {
+                                                <form style="display: inline-block;" id="delete_cab_@(item.Id)_form" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                                    <a href="javascript:{}" onclick="document.getElementById('delete_cab_@(item.Id)_form').submit();" class="card-link text-danger">Удалить кабинет</a>
+                                                </form>
+                                            }
                                         </th>
                                     </tr>
                                 }

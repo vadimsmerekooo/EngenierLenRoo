@@ -2,34 +2,78 @@
 
 @if (Model.Techniques.Count != 0)
 {
-    <div class="d-flex flex-wrap justify-content-start">
-        @{
-            foreach (Technique technique in Model.Techniques)
-            {
-                <div class="card card-technique border-primary text-left">
-                    <div class="card-body">
-                        <h6>@technique.Name</h6>
-                        <h6>Инв: @technique.InventoryNumber</h6>
-                        @if (User.IsInRole("admin"))
-                        {
-                            @if (technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc
-                       || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Modem
-                       || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+    if (Model.Techniques.Count > 6)
+    {
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Инвентарный</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Тип</th>
+                    <th scope="col">Мап</th>
+                    <th scope="col">Ip</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">-</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Technique technique in Model.Techniques.OrderBy(c => c.InventoryNumber))
+                    {
+                        <tr>
+                            <th scope="row">@technique.InventoryNumber</th>
+                            <td>@technique.Name</td>
+                            <td>@technique.TypeTechnique</td>
+                            <td>@technique.MapNubmer</td>
+                            <td>@technique.IpComputer</td>
+                            <td>@technique.Description</td>
+                            <td>
+                                @if (User.IsInRole("admin"))
+                                {
+                                    <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
+                                    <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
+                                    <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post">
+                                        <a href="javascript:{}" onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="d-flex flex-wrap justify-content-start">
+            @{
+                foreach (Technique technique in Model.Techniques)
+                {
+                    <div class="card card-technique border-primary text-left">
+                        <div class="card-body">
+                            <h6>@technique.Name</h6>
+                            <h6>Инв: @technique.InventoryNumber</h6>
+                            @if (User.IsInRole("admin"))
                             {
-                                <h6>Ip: @technique.IpComputer; Номер МАП: @technique.MapNubmer</h6>
+                                @if (technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Pc
+                           || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Modem
+                           || technique.TypeTechnique is EngeneerLenRooAspNet.Services.TypeTechnique.Printer)
+                                {
+                                    <h6>Ip: @technique.IpComputer; Номер МАП: @technique.MapNubmer</h6>
+                                }
+                                <p>@technique.Description</p>
+                                <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
+                                <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
+                                <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post">
+                                    <a href="javascript:{}" onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
+                                </form>
                             }
-                            <p>@technique.Description</p>
-                            <a class="card-link" asp-controller="Technique" asp-action="Edit" asp-route-id="@technique.Id" asp-route-empId="@Model.EmployeeId">Изменить</a>
-                            <a class="card-link text-info" asp-controller="Technique" asp-action="ChangeEmployee" asp-route-id="@technique.Id">Переместить</a>
-                            <form id="technique_@(technique.Id)_delete_form" style="display: inline-block;" asp-controller="Technique" asp-action="Delete" asp-route-id="@technique.Id" asp-route-cabId="@Model.CabinetId" method="post">
-                                <a href="javascript:{}" onclick="document.getElementById('technique_@(technique.Id)_delete_form').submit();" class="card-link text-danger">Удалить</a>
-                            </form>
-                        }
+                        </div>
                     </div>
-                </div>
+                }
             }
-        }
-    </div>
+        </div>
+    }
 }
 else
 {

@@ -50,6 +50,15 @@
         </a>
     </div>
     <div class="col">
+        <h6>Картридж</h6>
+        <hr />
+        <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Cartridge">
+            <div class="card border-primary">
+                <i class="bi bi-gear" style="font-size: 5rem;"></i>
+            </div>
+        </a>
+    </div>
+    <div class="col">
         <h6>Мышь</h6>
         <hr/>
         <a asp-action="Create" asp-route-empId="@Model.Employee.Id" asp-route-typeTechnique="Mouse">

@@ -14,41 +14,49 @@
 
 
 
-@foreach (var caseItem in Model.OrderByDescending(d => d.DateCreate))
+@foreach (var caseItem in Model)
 {
-    <div class="card border-danger">
+    <div class="card border-danger mt-3">
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <h5>Картриджей: @caseItem.Cartridge.Count()</h5>
-                    <h5>Дата создания: @caseItem.DateCreate</h5>
-                    @if(caseItem.DateSend != null)
+                    <p class="m-0">Картриджей: @caseItem.Cartridge.Count()</p>
+                </div>
+                <div class="col">
+                    <p class="m-0">Дата создания: <br> @caseItem.DateCreate</p>
+                </div>
+                <div class="col">
+                    @if (caseItem.DateSend != null)
                     {
-                        <h5>Дата отправки: @caseItem.DateSend</h5>
+                        <p class="m-0">Дата отправки:<br> @caseItem.DateSend</p>
                     }
+                </div>
+                <div class="col">
                     @if (caseItem.DateGet != null)
                     {
-                        <h5>Дата принятия: @caseItem.DateGet</h5>
+                        <p class="m-0">Дата принятия:<br> @caseItem.DateGet</p>
                     }
                 </div>
                 <div class="col text-right">
-                    
-                    @if(caseItem.DateSend is null && caseItem.DateGet is null)
+                    @if (caseItem.DateSend is null && caseItem.DateGet is null)
                     {
                         <a class="btn btn-success" asp-controller="Case" asp-action="Add" asp-route-caseId="@caseItem.Id" data-toggle="tooltip" data-placement="bottom" title="Добавить картридж">
                             <i class="bi bi-plus"></i>
                         </a>
-                        <a class="btn btn-primary" asp-controller="Case" asp-action="Send" asp-route-caseId="@caseItem.Id" data-toggle="tooltip" data-placement="bottom" title="Отправить на заправку">
-                            Отдать на заправку
-                        </a>
+                        if (caseItem.Cartridge.Count != 0)
+                        {
+                            <a class="btn btn-primary" asp-controller="Case" asp-action="Send" asp-route-caseId="@caseItem.Id" data-toggle="tooltip" data-placement="bottom" title="Отправить на заправку">
+                                <i class="bi bi-truck"></i>
+                            </a>
+                        }
                     }
-                    @if(caseItem.DateSend != null && caseItem.DateGet is null)
+                    @if (caseItem.DateSend != null && caseItem.DateGet is null)
                     {
                         <a class="btn btn-success" asp-controller="Case" asp-action="Get" asp-route-caseId="@caseItem.Id" data-toggle="tooltip" data-placement="bottom" title="Принять с заправки">
                             Принять с заправки
                         </a>
                     }
-                    @if(caseItem.Cartridge.Count == 0)
+                    @if (caseItem.Cartridge.Count == 0)
                     {
                         <a class="btn btn-danger" asp-controller="Case" asp-action="Delete" asp-route-caseId="@caseItem.Id" data-toggle="tooltip" data-placement="bottom" title="Удалить коробку">
                             <i class="bi bi-dash"></i>
@@ -59,10 +67,12 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">Сдал</th>
                         <th scope="col">Название</th>
                         <th scope="col">Дата сдачи</th>
+                        <th scope="col">Выдана замена сразу</th>
                         <th scope="col">Дата выдачи</th>
-                        <th scope="col">Сотрудник</th>
+                        <th scope="col">Получил</th>
                         <th scope="col">Кабинет</th>
                         <th scope="col"></th>
                     </tr>
@@ -71,17 +81,19 @@
                     @foreach (var cartridge in caseItem.Cartridge)
                     {
                         <tr class="@(cartridge.IsIssued ? "table-success" : "")">
-                            <th>@cartridge.Name</th>
+                            <th><a asp-controller="Profile" asp-action="UserProfile" asp-route-id="@(cartridge?.EmployeeGet?.Id)">@cartridge?.EmployeeGet?.Fio</a></th>
+                            <th>@cartridge.Technique.Name</th>
                             <th>@cartridge.DateGet</th>
+                            <th>@cartridge.IsIssuedRight</th>
                             <th>@cartridge.DateSet</th>
-                            <th>@cartridge?.Employee?.Fio</th>
-                            <th>@cartridge?.Employee?.Cabinet.Name</th>
+                            <th><a asp-controller="Profile" asp-action="UserProfile" asp-route-id="@(cartridge?.EmployeeSet?.Id)">@cartridge?.EmployeeSet?.Fio</a></th>
+                            <th><a asp-controller="Home" asp-action="Info" asp-route-id="@(cartridge?.EmployeeSet?.Cabinet?.Id)">@cartridge?.EmployeeSet?.Cabinet?.Name</a></th>
                             <th>
                                 @if (cartridge.DateSet is null && caseItem.DateSend is null)
                                 {
                                     <a class="btn btn-danger" asp-action="DeleteCartridge" asp-route-cartridgeId="@cartridge.Id">Удалить</a>
                                 }
-                                @if(caseItem.DateGet != null && !cartridge.IsIssued)
+                                @if (caseItem.DateGet != null && !cartridge.IsIssued)
                                 {
                                     <a class="btn btn-success" asp-action="IssuedCartridge" asp-route-cartridgeId="@cartridge.Id">Выдать</a>
                                 }

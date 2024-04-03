@@ -1,0 +1,21 @@
+﻿@model CartridgeViewModel
+@{
+    ViewData["Title"] = "Выбор картриджа";
+}
+
+
+<form method="post" asp-action="AddSelectCartridgeModel">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Technique"></label>
+        <select asp-for="TechniqueId" asp-items="ViewBag.Technique" class="techniqueId custom-select" id="techniqueId">
+        </select>
+        <span asp-validation-for="TechniqueId" class="text-danger"></span>
+        <input asp-for="EmployeeGetId" style="display: none;" />
+        <input asp-for="CaseId" style="display: none;" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success">Добавить</button>
+        <a asp-action="Index" class="btn btn-primary">Отмена</a>
+    </div>
+</form>

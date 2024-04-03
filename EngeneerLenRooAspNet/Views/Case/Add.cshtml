@@ -7,23 +7,27 @@
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="EmployeeGet"></label>
+        <select asp-for="EmployeeGetId" asp-items="ViewBag.Employees" class="employeeId custom-select" id="employeeId">
+        </select>
+        <span asp-validation-for="EmployeeGetId" class="text-danger"></span>
+        <input asp-for="CaseId" style="display: none;"/>
     </div>
     <div class="form-group">
-        <label asp-for="Employee"></label>
-        <select asp-for="EmployeeId" asp-items="ViewBag.Employees" class="employeeId custom-select" id="employeeId">
-            @*@foreach(var emp in Model.Employees)
-            {
-                <option value="@emp.Id">@emp.Fio</option>
-            }*@
-        </select>
-        <span asp-validation-for="EmployeeId" class="text-danger"></span>
-        <input asp-for="CaseId" style="display: none;"/>
+        <div class="checkbox">
+            <label asp-for="IsIssuedRight">
+                <input asp-for="IsIssuedRight" />
+                @Html.DisplayNameFor(m => m.IsIssuedRight)
+            </label>
+        </div>
     </div>
     <div class="form-group">
         <button class="btn btn-success">Добавить</button>
         <a asp-action="Index" class="btn btn-primary">Отмена</a>
     </div>
 </form>
+
+<div class="row">
+    <hr />
+    <p><small class="text-danger"><sup>*</sup>В списке доступны сотрудники, на которых записан <b>хотя-бы один</b> картридж!!! Если у выбранного сотрудника два картриджа, автоматически перейдет на страницу выбора картриджа!</small></p>
+</div>
